@@ -38,6 +38,10 @@ window.addEventListener('resize', () => {
   if (window.innerWidth > 860) setMenu(false);
 });
 
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') setMenu(false);
+});
+
 function applyTheme(theme) {
   const light = theme === 'light';
   body.classList.toggle('light-mode', light);
@@ -61,10 +65,15 @@ themeToggle.addEventListener('click', () => {
 });
 
 filterButtons.forEach((button) => {
+  button.setAttribute('aria-pressed', String(button.classList.contains('is-active')));
   button.addEventListener('click', () => {
     const filter = button.dataset.filter;
 
-    filterButtons.forEach((item) => item.classList.toggle('is-active', item === button));
+    filterButtons.forEach((item) => {
+      const active = item === button;
+      item.classList.toggle('is-active', active);
+      item.setAttribute('aria-pressed', String(active));
+    });
 
     projectCards.forEach((card) => {
       const technologies = card.dataset.tech.split(' ');
