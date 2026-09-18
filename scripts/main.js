@@ -131,165 +131,172 @@ window.addEventListener('load', () => {
   });
 });
 
-if (typeof THREE !== 'undefined') {
-  const palette = {
-    dark: { primary: 0xF4B942, secondary: 0x4FA7A3 },
-    light: { primary: 0x2F6F6D, secondary: 0xF4B942 },
-  };
+async function initThree() {
+  try {
+    const THREE = await import('https://cdnjs.cloudflare.com/ajax/libs/three.js/0.180.0/three.module.min.js');
+    const palette = {
+      dark: { primary: 0xF4B942, secondary: 0x4FA7A3 },
+      light: { primary: 0x2F6F6D, secondary: 0xF4B942 },
+    };
 
-  const currentPalette = () => body.classList.contains('light-mode') ? palette.light : palette.dark;
+    const currentPalette = () => body.classList.contains('light-mode') ? palette.light : palette.dark;
 
-  function createBackground() {
-    const container = document.querySelector('#three-bg');
-    if (!container) return;
+    function createBackground() {
+      const container = document.querySelector('#three-bg');
+      if (!container) return;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 1600);
-    camera.position.z = 520;
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 1600);
+      camera.position.z = 520;
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'low-power' });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    container.appendChild(renderer.domElement);
-
-    const count = window.innerWidth < 650 ? 58 : 110;
-    const positions = new Float32Array(count * 3);
-
-    for (let i = 0; i < count; i += 1) {
-      positions[i * 3] = (Math.random() - 0.5) * 1050;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 780;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 360;
-    }
-
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-    const material = new THREE.PointsMaterial({
-      color: currentPalette().secondary,
-      size: window.innerWidth < 650 ? 2.2 : 2.5,
-      transparent: true,
-      opacity: body.classList.contains('light-mode') ? 0.22 : 0.30,
-      sizeAttenuation: true,
-    });
-
-    const points = new THREE.Points(geometry, material);
-    scene.add(points);
-
-    const ringGeometry = new THREE.TorusGeometry(190, 0.8, 8, 96);
-    const ringMaterial = new THREE.MeshBasicMaterial({
-      color: currentPalette().primary,
-      transparent: true,
-      opacity: 0.08,
-      wireframe: true,
-    });
-    const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-    ring.rotation.x = 1.04;
-    ring.rotation.y = -0.45;
-    scene.add(ring);
-
-    let animationId = null;
-
-    function render() {
-      if (!reducedMotion) {
-        points.rotation.y += 0.00055;
-        points.rotation.x += 0.00016;
-        ring.rotation.z += 0.0008;
-      }
-      renderer.render(scene, camera);
-      animationId = requestAnimationFrame(render);
-    }
-
-    function resize() {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'low-power' });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
-    }
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      container.appendChild(renderer.domElement);
 
-    window.addEventListener('resize', resize, { passive: true });
-    window.addEventListener('portfolio-theme-change', () => {
-      const colors = currentPalette();
-      material.color.setHex(colors.secondary);
-      material.opacity = body.classList.contains('light-mode') ? 0.22 : 0.30;
-      ringMaterial.color.setHex(colors.primary);
-    });
+      const count = window.innerWidth < 650 ? 58 : 110;
+      const positions = new Float32Array(count * 3);
 
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden && animationId) {
-        cancelAnimationFrame(animationId);
-        animationId = null;
-      } else if (!document.hidden && !animationId) {
-        render();
+      for (let i = 0; i < count; i += 1) {
+        positions[i * 3] = (Math.random() - 0.5) * 1050;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 780;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 360;
       }
-    });
 
-    render();
-  }
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
-  function createHeroObject() {
-    const container = document.querySelector('#hero3d');
-    if (!container || window.innerWidth <= 650) return;
+      const material = new THREE.PointsMaterial({
+        color: currentPalette().secondary,
+        size: window.innerWidth < 650 ? 2.2 : 2.5,
+        transparent: true,
+        opacity: body.classList.contains('light-mode') ? 0.22 : 0.30,
+        sizeAttenuation: true,
+      });
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
-    camera.position.z = 5.2;
+      const points = new THREE.Points(geometry, material);
+      scene.add(points);
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'low-power' });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
-    container.appendChild(renderer.domElement);
+      const ringGeometry = new THREE.TorusGeometry(190, 0.8, 8, 96);
+      const ringMaterial = new THREE.MeshBasicMaterial({
+        color: currentPalette().primary,
+        transparent: true,
+        opacity: 0.08,
+        wireframe: true,
+      });
+      const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+      ring.rotation.x = 1.04;
+      ring.rotation.y = -0.45;
+      scene.add(ring);
 
-    const geometry = new THREE.IcosahedronGeometry(1.45, 1);
-    const material = new THREE.MeshBasicMaterial({
-      color: currentPalette().primary,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.72,
-    });
-    const mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
+      let animationId = null;
 
-    const coreGeometry = new THREE.IcosahedronGeometry(0.62, 0);
-    const coreMaterial = new THREE.MeshBasicMaterial({
-      color: currentPalette().secondary,
-      transparent: true,
-      opacity: 0.18,
-    });
-    const core = new THREE.Mesh(coreGeometry, coreMaterial);
-    scene.add(core);
-
-    function resize() {
-      const rect = container.getBoundingClientRect();
-      const width = Math.max(rect.width, 1);
-      const height = Math.max(rect.height, 1);
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height, false);
-    }
-
-    const resizeObserver = new ResizeObserver(resize);
-    resizeObserver.observe(container);
-    resize();
-
-    function render() {
-      if (!reducedMotion) {
-        mesh.rotation.x += 0.0022;
-        mesh.rotation.y += 0.0032;
-        core.rotation.x -= 0.0016;
-        core.rotation.y += 0.0021;
+      function render() {
+        if (!reducedMotion) {
+          points.rotation.y += 0.00055;
+          points.rotation.x += 0.00016;
+          ring.rotation.z += 0.0008;
+        }
+        renderer.render(scene, camera);
+        animationId = requestAnimationFrame(render);
       }
-      renderer.render(scene, camera);
-      requestAnimationFrame(render);
+
+      function resize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+      }
+
+      window.addEventListener('resize', resize, { passive: true });
+      window.addEventListener('portfolio-theme-change', () => {
+        const colors = currentPalette();
+        material.color.setHex(colors.secondary);
+        material.opacity = body.classList.contains('light-mode') ? 0.22 : 0.30;
+        ringMaterial.color.setHex(colors.primary);
+      });
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden && animationId) {
+          cancelAnimationFrame(animationId);
+          animationId = null;
+        } else if (!document.hidden && !animationId) {
+          render();
+        }
+      });
+
+      render();
     }
 
-    window.addEventListener('portfolio-theme-change', () => {
-      const colors = currentPalette();
-      material.color.setHex(colors.primary);
-      coreMaterial.color.setHex(colors.secondary);
-    });
+    function createHeroObject() {
+      const container = document.querySelector('#hero3d');
+      if (!container || window.innerWidth <= 650) return;
 
-    render();
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
+      camera.position.z = 5.2;
+
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'low-power' });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+      container.appendChild(renderer.domElement);
+
+      const geometry = new THREE.IcosahedronGeometry(1.45, 1);
+      const material = new THREE.MeshBasicMaterial({
+        color: currentPalette().primary,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.72,
+      });
+      const mesh = new THREE.Mesh(geometry, material);
+      scene.add(mesh);
+
+      const coreGeometry = new THREE.IcosahedronGeometry(0.62, 0);
+      const coreMaterial = new THREE.MeshBasicMaterial({
+        color: currentPalette().secondary,
+        transparent: true,
+        opacity: 0.18,
+      });
+      const core = new THREE.Mesh(coreGeometry, coreMaterial);
+      scene.add(core);
+
+      function resize() {
+        const rect = container.getBoundingClientRect();
+        const width = Math.max(rect.width, 1);
+        const height = Math.max(rect.height, 1);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height, false);
+      }
+
+      const resizeObserver = new ResizeObserver(resize);
+      resizeObserver.observe(container);
+      resize();
+
+      function render() {
+        if (!reducedMotion) {
+          mesh.rotation.x += 0.0022;
+          mesh.rotation.y += 0.0032;
+          core.rotation.x -= 0.0016;
+          core.rotation.y += 0.0021;
+        }
+        renderer.render(scene, camera);
+        requestAnimationFrame(render);
+      }
+
+      window.addEventListener('portfolio-theme-change', () => {
+        const colors = currentPalette();
+        material.color.setHex(colors.primary);
+        coreMaterial.color.setHex(colors.secondary);
+      });
+
+      render();
+    }
+
+    createBackground();
+    createHeroObject();
+  } catch (error) {
+    console.warn('Three.js não pôde ser carregado.', error);
   }
-
-  createBackground();
-  createHeroObject();
 }
+
+initThree();
