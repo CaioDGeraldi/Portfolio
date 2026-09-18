@@ -1,11 +1,11 @@
 # Portfolio
 
-Portfólio pessoal de Caio Darin Geraldi, desenvolvido como site estático com HTML, CSS e JavaScript.
+Portfólio pessoal de **CaioDGeraldi**, desenvolvido como site estático.
 
 ## Tecnologias
 
-- HTML5 semântico
-- CSS responsivo
+- HTML5
+- CSS
 - JavaScript
 - Three.js
 - Font Awesome
