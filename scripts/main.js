@@ -2,8 +2,6 @@ const body = document.body;
 const navLinks = document.querySelector('#navLinks');
 const menuToggle = document.querySelector('#menuToggle');
 const themeToggle = document.querySelector('#themeToggle');
-const filterButtons = document.querySelectorAll('.filter-button');
-const projectCards = document.querySelectorAll('.project-card');
 const revealElements = document.querySelectorAll('.reveal');
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -76,24 +74,6 @@ themeToggle.addEventListener('click', () => {
   const nextTheme = body.classList.contains('light-mode') ? 'dark' : 'light';
   localStorage.setItem('portfolio-theme', nextTheme);
   applyTheme(nextTheme);
-});
-
-filterButtons.forEach((button) => {
-  button.setAttribute('aria-pressed', String(button.classList.contains('is-active')));
-  button.addEventListener('click', () => {
-    const filter = button.dataset.filter;
-
-    filterButtons.forEach((item) => {
-      const active = item === button;
-      item.classList.toggle('is-active', active);
-      item.setAttribute('aria-pressed', String(active));
-    });
-
-    projectCards.forEach((card) => {
-      const technologies = card.dataset.tech.split(' ');
-      card.classList.toggle('is-hidden', filter !== 'all' && !technologies.includes(filter));
-    });
-  });
 });
 
 if ('IntersectionObserver' in window && !reducedMotion) {
