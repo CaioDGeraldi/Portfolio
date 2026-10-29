@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Retorna technical case study: modular Django architecture, PostgreSQL transactions, idempotent redemptions and concurrency testing.">
+  <meta name="theme-color" content="#1E2327">
+  <title>Retorna | Engineering Case Study</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="../styles/style.css">
+  <link rel="stylesheet" href="../styles/editorial.css">
+  <link rel="stylesheet" href="../styles/case-study.css">
+</head>
+<body class="case-page">
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+    <nav class="navbar case-navbar" aria-label="Main navigation">
+      <a class="logo" href="../index.html#projetos" data-localized-link aria-label="Back to portfolio">
+        <span class="logo-symbol">&lt;/&gt;</span><span class="logo-name">CaioDGeraldi</span>
+      </a>
+      <div class="case-nav-actions">
+        <a class="case-back-link" href="../index.html#projetos" data-localized-link><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> All projects</a>
+        <div class="language-picker" role="group" aria-label="Language / Idioma">
+          <a href="?lang=en" data-portfolio-lang="en" lang="en" hreflang="en" aria-label="English language">EN</a>
+          <span aria-hidden="true">/</span>
+          <a href="?lang=pt-BR" data-portfolio-lang="pt-BR" lang="pt-BR" hreflang="pt-BR" aria-label="Idioma português">PT</a>
+        </div>
+        <button id="caseThemeToggle" class="icon-button" type="button" aria-label="Toggle theme" title="Toggle theme">
+          <i class="fa-solid fa-sun" aria-hidden="true"></i>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="content" class="case-shell">
+    <div class="case-hero">
+      <p class="case-index">CASE STUDY / 01 <span aria-hidden="true">·</span> TEAM PROJECT</p>
+      <h1>Retorna<span class="case-title-dot">.</span></h1>
+      <p class="case-subtitle">Loyalty infrastructure built around predictable business rules.</p>
+      <p class="case-introduction">A configurable multi-company loyalty application developed for the Data System Challenge. External business systems generate events; the platform applies loyalty rules and records the result.</p>
+      <div class="case-links">
+        <a class="button button-primary" href="https://github.com/CaioDGeraldi/DataSystemChallenge" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i> Source repository</a>
+        <a class="button button-secondary" href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/apps/fidelidade/resgates.py" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-code" aria-hidden="true"></i> Redemption service</a>
+      </div>
+      <div class="case-metadata" aria-label="Project facts">
+        <div><span>ROLE</span><strong>Collaborative team project</strong></div>
+        <div><span>STACK</span><strong>Django · DRF · PostgreSQL</strong></div>
+        <div><span>FOCUS</span><strong>Data integrity & business rules</strong></div>
+      </div>
+    </div>
+
+    <nav class="case-toc" aria-label="On this page">
+      <span>ON THIS PAGE</span>
+      <a href="#problem">The problem</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#decisions">Engineering decisions</a>
+      <a href="#evidence">Evidence</a>
+    </nav>
+
+    <section class="case-section" id="problem">
+      <div class="case-section-heading"><span>01 / CONTEXT</span><h2>The problem</h2></div>
+      <div class="case-reading">
+        <p>A loyalty platform must do more than calculate a balance. Purchases and redemptions can arrive twice, requests can overlap, and different stores can use different policies. In those situations, a visually correct dashboard does not prove that the data is correct.</p>
+        <p>The central engineering requirement was to protect points history and business invariants when integrations retry operations or customers attempt concurrent redemptions.</p>
+      </div>
+    </section>
+
+    <section class="case-section" id="architecture">
+      <div class="case-section-heading"><span>02 / SYSTEM</span><h2>Architecture</h2></div>
+      <p class="case-section-summary">A modular Django monolith, with shared business services used by the web interface and versioned REST API.</p>
+      <div class="architecture-diagram" role="img" aria-label="External business systems connect to a REST API, which calls Django domain services backed by PostgreSQL and audit history.">
+        <div class="diagram-box diagram-input"><span>INPUT</span><strong>Sales / ERP / Commerce</strong></div>
+        <div class="diagram-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-down"></i></div>
+        <div class="diagram-box diagram-api"><span>INTEGRATION</span><strong>Versioned REST API</strong></div>
+        <div class="diagram-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-down"></i></div>
+        <div class="diagram-box diagram-domain"><span>APPLICATION</span><strong>Django domain services</strong><small>Companies · Customers · Loyalty</small></div>
+        <div class="diagram-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-down"></i></div>
+        <div class="diagram-box diagram-data"><span>PERSISTENCE</span><strong>PostgreSQL</strong><small>Transactions · Constraints · Audit</small></div>
+      </div>
+      <p class="case-diagram-note">Conceptual diagram, not a production infrastructure diagram.</p>
+    </section>
+
+    <section class="case-section" id="decisions">
+      <div class="case-section-heading"><span>03 / DESIGN</span><h2>Engineering decisions</h2></div>
+      <div class="case-decision-grid">
+        <article class="case-decision">
+          <span class="decision-number">01</span>
+          <h3>Idempotent operations</h3>
+          <p>A repeated request should not create a second redemption. The redemption service checks external identifiers and handles conflicting retries.</p>
+          <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/apps/fidelidade/resgates.py" target="_blank" rel="noopener noreferrer">Inspect implementation <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+        </article>
+        <article class="case-decision">
+          <span class="decision-number">02</span>
+          <h3>Concurrency control</h3>
+          <p>Transactional boundaries, row locks and PostgreSQL advisory locks guard balance-changing operations when requests arrive simultaneously.</p>
+          <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/apps/fidelidade/test_concorrencia_resgates.py" target="_blank" rel="noopener noreferrer">Inspect tests <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+        </article>
+        <article class="case-decision">
+          <span class="decision-number">03</span>
+          <h3>Modular boundaries</h3>
+          <p>Domain services centralize loyalty operations so the REST API and server-rendered interface do not have to duplicate rules.</p>
+          <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/tree/main/apps" target="_blank" rel="noopener noreferrer">Explore application modules <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+        </article>
+      </div>
+    </section>
+
+    <section class="case-section" id="evidence">
+      <div class="case-section-heading"><span>04 / VERIFICATION</span><h2>Evidence & limitations</h2></div>
+      <div class="case-evidence">
+        <div>
+          <h3>What can be inspected</h3>
+          <p>The repository includes business services, database-backed concurrency tests, API documentation, CI workflows and the development history.</p>
+          <div class="case-source-links">
+            <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/actions/runs/36492776096" target="_blank" rel="noopener noreferrer">Successful historical CI run <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/.github/workflows/ci.yml" target="_blank" rel="noopener noreferrer">CI workflow <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/docs/USO_DE_IA.md" target="_blank" rel="noopener noreferrer">AI-assisted development disclosure <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+          </div>
+        </div>
+        <aside class="case-disclosure">
+          <h3>Scope matters</h3>
+          <p>This is a collaborative challenge project, not a claim of sole authorship or commercial production deployment. The team documents the use of AI tools. A historical passing CI run is not a security audit or a load test.</p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="case-outro">
+      <p>OTHER WORK</p>
+      <h2>Explore more engineering projects.</h2>
+      <a class="button button-secondary" href="../index.html#projetos" data-localized-link>Back to selected work <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+    </div>
+  </main>
+
+  <footer class="case-footer">
+    <span>CaioDGeraldi <span aria-hidden="true">·</span> Engineering portfolio</span>
+    <a href="https://github.com/CaioDGeraldi" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </footer>
+
+  <script src="../scripts/i18n.js"></script>
+  <script src="../scripts/case.js"></script>
+</body>
+</html>
