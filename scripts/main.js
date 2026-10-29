@@ -5,16 +5,8 @@ const themeToggle = document.querySelector('#themeToggle');
 const filterButtons = document.querySelectorAll('.filter-button');
 const projectCards = document.querySelectorAll('.project-card');
 const revealElements = document.querySelectorAll('.reveal');
-const intro = document.querySelector('#intro');
-const introLeft = document.querySelector('.intro-word-left');
-const introRight = document.querySelector('.intro-word-right');
-const introCenter = document.querySelector('.intro-center');
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-function clamp(value, min, max) {
-  return Math.min(Math.max(value, min), max);
-}
 
 function localizedLabel(english, portuguese) {
   return document.documentElement.lang === 'pt-BR' ? portuguese : english;
@@ -115,37 +107,6 @@ if ('IntersectionObserver' in window && !reducedMotion) {
 } else {
   revealElements.forEach((element) => element.classList.add('is-visible'));
 }
-
-function updateIntro() {
-  if (!intro || reducedMotion) return;
-
-  const rect = intro.getBoundingClientRect();
-  const animationDistance = intro.offsetHeight - window.innerHeight;
-  if (animationDistance <= 0) return;
-
-  const progress = clamp(-rect.top / animationDistance, 0, 1);
-  const horizontalDistance = window.innerWidth < 650 ? 34 : 78;
-
-  if (introLeft) introLeft.style.transform = `translate3d(${-progress * horizontalDistance}px, 0, 0)`;
-  if (introRight) introRight.style.transform = `translate3d(${progress * horizontalDistance}px, 0, 0)`;
-  if (introCenter) {
-    introCenter.style.opacity = String(clamp(1 - progress * 1.7, 0, 1));
-    introCenter.style.transform = `scale(${1 + progress * 0.14})`;
-  }
-}
-
-let scrollFramePending = false;
-window.addEventListener('scroll', () => {
-  if (scrollFramePending) return;
-  scrollFramePending = true;
-  requestAnimationFrame(() => {
-    updateIntro();
-    scrollFramePending = false;
-  });
-}, { passive: true });
-
-window.addEventListener('resize', updateIntro);
-updateIntro();
 
 function findHorizontalOverflow() {
   const viewportWidth = document.documentElement.clientWidth;
@@ -330,4 +291,9 @@ async function initThree() {
   }
 }
 
-initThree();
+const allowDecorative3D = !reducedMotion
+  && window.matchMedia('(min-width: 1100px)').matches
+  && !navigator.connection?.saveData
+  && typeof WebGLRenderingContext !== 'undefined';
+
+if (allowDecorative3D) initThree();
