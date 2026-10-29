@@ -37,7 +37,7 @@ function createPage({ search = "", saved = null, languages = ["en-US"] } = {}) {
       return true;
     }
   };
-  const meta = { content: "Portfolio of CaioDGeraldi, a software developer focused on backend engineering, architecture and maintainable systems." };
+  const meta = { content: "Software developer portfolio by Caio Darin Geraldi. Explore Django and PostgreSQL projects, engineering decisions, tests and professional experience." };
   const document = {
     readyState: "complete",
     body: {},
@@ -49,7 +49,11 @@ function createPage({ search = "", saved = null, languages = ["en-US"] } = {}) {
     },
     querySelector(selector) { return selector === 'meta[name="description"]' ? meta : null; }
   };
-  const win = { location: { href: url.href, search: url.search } };
+  const events = [];
+  const win = {
+    location: { href: url.href, search: url.search },
+    dispatchEvent(event) { events.push({ type: event.type, language: event.detail?.language }); }
+  };
   const history = {
     replaceState(_state, _title, next) {
       const parsed = new URL(next, win.location.href);
@@ -64,9 +68,12 @@ function createPage({ search = "", saved = null, languages = ["en-US"] } = {}) {
   vm.runInNewContext(script, {
     document, window: win, history, localStorage,
     navigator: { languages, language: languages[0] },
-    NodeFilter: { SHOW_TEXT: 4 }, URL, URLSearchParams
+    NodeFilter: { SHOW_TEXT: 4 }, URL, URLSearchParams,
+    CustomEvent: class CustomEvent {
+      constructor(type, options) { this.type = type; this.detail = options?.detail; }
+    }
   }, { timeout: 1000 });
-  return { document, meta, nodes, en, pt, storage, win };
+  return { document, meta, nodes, en, pt, storage, win, events };
 }
 
 test("portfolio provides English and Portuguese controls and script", () => {
@@ -110,10 +117,22 @@ test("manual switch is reversible, saved and reflected in the URL", () => {
   assert.equal(page.nodes[0].nodeValue, "View projects");
   assert.equal(page.document.documentElement.lang, "en");
   assert.equal(page.pt.attrs["aria-current"], undefined);
+  assert.equal(page.events.at(-1).language, "en");
+  assert.ok(page.events.some(event => event.type === "portfolio-language-change" && event.language === "pt-BR"));
 });
 
 test("English from the GitHub link overrides a Portuguese browser", () => {
   const page = createPage({ search: "?lang=en&source=github", languages: ["pt-BR"] });
   assert.equal(page.document.documentElement.lang, "en");
   assert.equal(page.nodes[1].nodeValue, "Projects");
+});
+
+test("featured case study and navigation prioritize engineering evidence", () => {
+  const projects = html.indexOf('<section id="projetos"');
+  const experience = html.indexOf('<section id="experiencia"');
+  const skills = html.indexOf('<section id="skills"');
+  assert.ok(projects !== -1 && experience > projects && skills > experience);
+  assert.match(html, /class="project-card project-card-featured"/);
+  assert.match(html, /RECRUITER_CASE_STUDY\.md/);
+  assert.match(html, /href="#projetos">Jump to projects/);
 });
