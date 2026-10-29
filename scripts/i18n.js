@@ -178,7 +178,7 @@
     "Scope matters": "Contexto importa",
     "This is a collaborative challenge project, not a claim of sole authorship or commercial production deployment. The team documents the use of AI tools. A historical passing CI run is not a security audit or a load test.": "Este é um projeto de desafio desenvolvido em equipe, não uma alegação de autoria individual ou de implantação comercial em produção. A equipe documenta o uso de ferramentas de IA. Uma execução histórica bem-sucedida do CI não é auditoria de segurança nem teste de carga.",
     "OTHER WORK": "OUTROS PROJETOS",
-    "Explore more engineering projects.": "Explore outros projetos de engenharia.",
+    "Explore the rest of the portfolio.": "Explore o restante do portfólio.",
     "Back to selected work": "Voltar aos projetos selecionados",
     "Engineering portfolio": "Portfólio de engenharia"
   }));
