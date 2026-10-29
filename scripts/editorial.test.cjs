@@ -18,6 +18,15 @@ test("homepage immediately presents the work, without a full-screen intro", () =
   assert.match(home, /styles\/editorial\.css/);
 });
 
+test("only Retorna appears in the public project showcase", () => {
+  const projectCards = [...home.matchAll(/class="project-card(?:\s|")/g)];
+  assert.equal(projectCards.length, 1);
+  assert.match(home, /<h3>Retorna<\/h3>/);
+  assert.doesNotMatch(home, /Kambio|Fractaw Modules|Intelligent Markdown IDE/);
+  assert.doesNotMatch(home, /data-filter=/);
+  assert.doesNotMatch(home, /class="all-projects-link"/);
+});
+
 test("Retorna has a navigable, source-linked technical case study", () => {
   assert.match(casePage, /<html lang="en">/);
   assert.match(casePage, /<main id="content"/);
