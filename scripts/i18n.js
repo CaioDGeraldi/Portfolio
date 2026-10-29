@@ -190,6 +190,7 @@
         url.searchParams.set("lang", lang);
         history.replaceState(null, "", url.pathname + url.search + url.hash);
       }
+      window.dispatchEvent(new CustomEvent("portfolio-language-change", { detail: { language: lang } }));
     }
 
     links.forEach(link => {
