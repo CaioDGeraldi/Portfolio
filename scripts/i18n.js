@@ -99,7 +99,14 @@
     "View Retorna on GitHub": "Ver Retorna no GitHub",
     "View Kambio on GitHub": "Ver Kambio no GitHub",
     "View portfolio source on GitHub": "Ver código do portfólio no GitHub",
-    "Technologies I am learning": "Tecnologias que estou estudando"
+    "Technologies I am learning": "Tecnologias que estou estudando",
+    "Software developer portfolio by Caio Darin Geraldi. Explore Django and PostgreSQL projects, engineering decisions, tests and professional experience.": "Portfólio de Caio Darin Geraldi. Explore projetos Django e PostgreSQL, decisões de engenharia, testes e experiência profissional.",
+    "Jump to projects": "Ir aos projetos",
+    "Based in Brazil · Interested in international teams": "No Brasil · Interesse em equipes internacionais",
+    "Get in touch": "Entrar em contato",
+    "FEATURED / BACKEND": "DESTAQUE / BACK-END",
+    "Technical case study": "Estudo de caso técnico",
+    "Concurrency tests": "Testes de concorrência"
   }));
 
   function normalizeLanguage(value) {
