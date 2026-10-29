@@ -33,6 +33,27 @@ Open `index.html` directly, or serve this directory through any local static HTT
 - Semantic HTML, navigation landmarks and keyboard-focused controls are used where available.
 - Responsive layout and reduced-motion behavior should be checked manually across browsers and devices.
 
+
+## Editorial portfolio and case studies
+
+The landing page prioritizes engineering work, with a compact introduction, evidence-linked featured projects and no mandatory full-screen animation. The design retains the Fractaw dark/light palette.
+
+- **Retorna case study:** `projects/retorna.html`. Covers the engineering problem, a conceptual architecture diagram, concurrency/idempotency approaches, code evidence and honest team-project attribution.
+- **Languages:** `?lang=en` / `?lang=pt-BR` override browser or saved preferences. Localized links carry the selected language between the homepage and case-study pages.
+- **Accessibility:** skip links, semantic headings, visible focus, responsive navigation, reduced-motion support and a textual description of the architecture diagram.
+- **Performance:** decorative WebGL is limited to wider screens without reduced-motion or data-saver preferences. Project content stays accessible with JavaScript disabled, though localization and theme preferences require JavaScript.
+
+### Verify
+
+```sh
+node --check scripts/main.js
+node --check scripts/i18n.js
+node --check scripts/case.js
+node --test scripts/*.test.cjs
+```
+
+The tests validate language behavior and structural invariants. They do **not** replace visual testing at mobile/desktop widths, accessibility audits or deployment verification.
+
 ## Publication
 
 The project can be published directly from the main branch through GitHub Pages. Deployment configuration and the actual live URL should be checked before adding availability guarantees.
