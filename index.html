@@ -5,36 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Software developer portfolio by Caio Darin Geraldi. Explore Django and PostgreSQL projects, engineering decisions, tests and professional experience.">
   <meta name="theme-color" content="#1E2327">
+  <meta name="color-scheme" content="dark light">
   <title>CaioDGeraldi | Software Developer</title>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <link rel="stylesheet" href="./styles/style.css">
   <link rel="stylesheet" href="./styles/refinements.css">
+  <link rel="stylesheet" href="./styles/editorial.css">
 </head>
 <body>
   <a class="skip-link" href="#sobre">Skip to content</a>
   <div id="three-bg" aria-hidden="true"></div>
 
-  <section id="intro" class="intro-scroll" aria-label="Portfolio introduction">
-    <div class="intro-sticky">
-      <p class="intro-eyebrow">CAIODGERALDI · SOFTWARE ENGINEERING</p>
-      <div class="intro-title" aria-hidden="true">
-        <span class="intro-word intro-word-left">MY</span>
-        <span class="intro-word intro-word-right">PORTFOLIO</span>
-      </div>
-      <div class="intro-center">
-        <span class="code-mark">&lt;CaioDGeraldi /&gt;</span>
-        <p>scroll to explore</p>
-        <i class="fa-solid fa-arrow-down" aria-hidden="true"></i>
-        <a class="intro-skip" href="#projetos">Jump to projects <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
-      </div>
-      <div class="intro-line" aria-hidden="true"></div>
-    </div>
-  </section>
-
   <header class="site-header">
     <nav class="navbar" aria-label="Main navigation">
-      <a class="logo" href="#sobre" aria-label="Go to introduction">&lt;CaioDGeraldi /&gt;</a>
+      <a class="logo" href="#sobre" aria-label="Go to introduction"><span class="logo-symbol">&lt;/&gt;</span><span class="logo-name">CaioDGeraldi</span></a>
       <div class="nav-links" id="navLinks">
         <a href="#sobre">About</a>
         <a href="#projetos">Projects</a>
@@ -79,20 +64,25 @@
     <div class="content-column">
       <section id="sobre" class="hero-section section-card">
         <div id="heroModules" aria-hidden="true"></div>
-        <p class="eyebrow">Hello, I am</p>
+        <p class="eyebrow">PORTFOLIO / SOFTWARE ENGINEERING</p>
         <p class="hero-availability"><span class="availability-dot" aria-hidden="true"></span>Based in Brazil · Interested in international teams</p>
-        <h2>CaioDGeraldi.</h2>
-        <h3>Backend · Architecture · Software Engineering</h3>
-        <p>I study Systems Development and build projects focused on backend development, software architecture and engineering practices.</p>
-        <p>I am especially interested in modularity, domain modeling, relational databases and the engineering trade-offs that keep systems understandable as they evolve.</p>
+        <h2 class="hero-headline">Backend engineering, <span>from rules to reliability.</span></h2>
+        <p class="hero-lead">I'm Caio, a software development student with professional experience maintaining business systems.</p>
+        <p class="hero-description">My focus is on Django, relational databases and engineering decisions that make software easier to test, understand and evolve. I care about what happens when requests fail, repeat or arrive at the same time.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="#projetos"><i class="fa-solid fa-code"></i> View projects</a>
           <a class="button button-secondary" href="#contato"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Get in touch</a>
         </div>
+        <div class="hero-proof" role="list" aria-label="Technical focus">
+          <div role="listitem"><span>01 / BACKEND</span><strong>Python & Django</strong></div>
+          <div role="listitem"><span>02 / DATA</span><strong>PostgreSQL & SQL</strong></div>
+          <div role="listitem"><span>03 / QUALITY</span><strong>Tests & CI</strong></div>
+        </div>
       </section>
 
       <section id="projetos" class="reveal">
-        <div class="section-title"><span>01.</span><h2>Projects</h2></div>
+        <div class="section-title"><span>01.</span><h2>Selected work</h2></div>
+        <p class="section-description">Projects worth opening: the engineering decisions, trade-offs and source code are part of the story.</p>
         <div class="project-filters" aria-label="Filter projects">
           <button class="filter-button is-active" type="button" data-filter="all">All</button>
           <button class="filter-button" type="button" data-filter="python">Python</button>
@@ -102,13 +92,13 @@
         </div>
         <div class="projects-grid">
           <article class="project-card project-card-featured" data-tech="python django architecture domain">
-            <div class="project-visual"><i class="fa-solid fa-database" aria-hidden="true"></i><span class="project-visual-caption">FEATURED / BACKEND</span></div>
+            <div class="project-visual"><div class="project-visual-mark" aria-hidden="true"><i class="fa-solid fa-database"></i><span class="project-visual-flow"><i></i><i></i><i></i></span></div><span class="project-visual-caption">FEATURED / BACKEND</span></div>
             <div class="project-content">
               <div class="project-topline"><div><span>Team software project</span><h3>Retorna</h3></div><a class="project-link" href="https://github.com/CaioDGeraldi/DataSystemChallenge" target="_blank" rel="noopener noreferrer" aria-label="View Retorna on GitHub"><i class="fa-brands fa-github"></i></a></div>
               <p>Configurable multi-company loyalty platform built with Django, PostgreSQL and a versioned REST API. Includes transactional redemptions, idempotency, concurrency tests and automated CI.</p>
               <div class="project-evidence">
-                <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/47eb9be8c2f061de29e043bed41bdc33d11083f2/docs/RECRUITER_CASE_STUDY.md" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Technical case study</a>
-                <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/apps/fidelidade/test_concorrencia_resgates.py" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-vial-circle-check" aria-hidden="true"></i> Concurrency tests</a>
+                <a href="./projects/retorna.html" class="evidence-primary"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Read case study</a>
+                <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/apps/fidelidade/test_concorrencia_resgates.py" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-vial-circle-check" aria-hidden="true"></i> Inspect tests</a>
               </div>
               <div class="tag-list"><span>Python</span><span>Django</span><span>PostgreSQL</span><span>REST API</span><span>Testing</span></div>
             </div>
