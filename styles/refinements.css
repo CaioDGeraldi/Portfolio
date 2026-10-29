@@ -229,3 +229,44 @@
     font-size: 0.96rem;
   }
 }
+
+
+/* Compact, keyboard-accessible language selector next to the existing theme menu. */
+.language-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  padding: 5px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+.language-picker a {
+  padding: 6px 5px;
+  border-radius: 7px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.language-picker a:hover,
+.language-picker a[aria-current="true"] {
+  background: var(--surface-soft);
+  color: var(--text);
+}
+
+.language-picker a:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+@media (max-width: 650px) {
+  .nav-actions { gap: 4px; }
+  .language-picker { padding: 3px; font-size: 0.68rem; }
+  .language-picker a { padding: 5px 3px; }
+  .logo { max-width: calc(100vw - 202px); }
+}
