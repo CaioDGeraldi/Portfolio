@@ -8,10 +8,9 @@ Personal portfolio for a **Backend Software Developer** based in Brazil and prep
 
 ## Featured engineering work
 
-- **[Retorna](https://github.com/CaioDGeraldi/DataSystemChallenge):** team-developed multi-company loyalty application built with Django, Django REST Framework and PostgreSQL. Includes transaction-safe redemptions, idempotency, concurrency tests and CI.
-- **Fractaw Modules:** private modular Django ERP project, still in development.
-- **[Kambio](https://github.com/CaioDGeraldi/Kambio):** desktop learning project with Delphi / Object Pascal and FireMonkey.
-- **Portfolio:** this static website, built with HTML, CSS, JavaScript and Three.js.
+**[Retorna](https://github.com/CaioDGeraldi/DataSystemChallenge)** is the sole featured project on the public portfolio. It is a team-developed multi-company loyalty application using Django, Django REST Framework and PostgreSQL, with transaction-safe redemptions, idempotency, concurrency tests and CI.
+
+Explore the [Retorna case study](projects/retorna.html) for engineering context, architecture and source evidence.
 
 ## Technology
 
@@ -36,7 +35,7 @@ Open `index.html` directly, or serve this directory through any local static HTT
 
 ## Editorial portfolio and case studies
 
-The landing page prioritizes engineering work, with a compact introduction, evidence-linked featured projects and no mandatory full-screen animation. The design retains the Fractaw dark/light palette.
+The landing page prioritizes engineering work, with a compact introduction, an evidence-linked featured project and no mandatory full-screen animation. The design retains the Fractaw dark/light palette.
 
 - **Retorna case study:** `projects/retorna.html`. Covers the engineering problem, a conceptual architecture diagram, concurrency/idempotency approaches, code evidence and honest team-project attribution.
 - **Languages:** `?lang=en` / `?lang=pt-BR` override browser or saved preferences. Localized links carry the selected language between the homepage and case-study pages.
