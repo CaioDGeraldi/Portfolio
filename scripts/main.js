@@ -16,11 +16,17 @@ function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
 
+function localizedLabel(english, portuguese) {
+  return document.documentElement.lang === 'pt-BR' ? portuguese : english;
+}
+
 function setMenu(open) {
   navLinks.classList.toggle('is-open', open);
   body.classList.toggle('menu-open', open);
   menuToggle.setAttribute('aria-expanded', String(open));
-  menuToggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+  menuToggle.setAttribute('aria-label', open
+    ? localizedLabel('Close menu', 'Fechar menu')
+    : localizedLabel('Open menu', 'Abrir menu'));
   menuToggle.innerHTML = open
     ? '<i class="fa-solid fa-xmark"></i>'
     : '<i class="fa-solid fa-bars"></i>';
@@ -48,11 +54,27 @@ function applyTheme(theme) {
   themeToggle.innerHTML = light
     ? '<i class="fa-solid fa-moon"></i>'
     : '<i class="fa-solid fa-sun"></i>';
-  themeToggle.setAttribute('aria-label', light ? 'Usar tema escuro' : 'Usar tema claro');
-  themeToggle.title = light ? 'Usar tema escuro' : 'Usar tema claro';
+  const themeLabel = light
+    ? localizedLabel('Switch to dark theme', 'Usar tema escuro')
+    : localizedLabel('Switch to light theme', 'Usar tema claro');
+  themeToggle.setAttribute('aria-label', themeLabel);
+  themeToggle.title = themeLabel;
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', light ? '#F4F7F9' : '#1E2327');
   window.dispatchEvent(new CustomEvent('portfolio-theme-change', { detail: { light } }));
 }
+
+window.addEventListener('portfolio-language-change', () => {
+  // Labels assigned at runtime are not static nodes managed by i18n.js.
+  menuToggle.setAttribute('aria-label',
+    navLinks.classList.contains('is-open')
+      ? localizedLabel('Close menu', 'Fechar menu')
+      : localizedLabel('Open menu', 'Abrir menu'));
+  const themeLabel = body.classList.contains('light-mode')
+    ? localizedLabel('Switch to dark theme', 'Usar tema escuro')
+    : localizedLabel('Switch to light theme', 'Usar tema claro');
+  themeToggle.setAttribute('aria-label', themeLabel);
+  themeToggle.title = themeLabel;
+});
 
 const savedTheme = localStorage.getItem('portfolio-theme');
 const initialTheme = savedTheme || 'dark';
