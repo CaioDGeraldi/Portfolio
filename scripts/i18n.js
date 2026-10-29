@@ -118,7 +118,7 @@
     "03 / QUALITY": "03 / QUALIDADE",
     "Tests & CI": "Testes e CI",
     "Selected work": "Projetos selecionados",
-    "Projects worth opening: the engineering decisions, trade-offs and source code are part of the story.": "Projetos que vale a pena explorar: decisões técnicas, escolhas arquiteturais e código fazem parte da história.",
+    "A closer look at the engineering decisions, trade-offs and source code behind Retorna.": "Uma análise das decisões de engenharia, dos compromissos técnicos e do código por trás do Retorna.",
     "Read case study": "Ler estudo de caso",
     "Inspect tests": "Ver testes",
     "Back to portfolio": "Voltar ao portfólio",
