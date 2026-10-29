@@ -248,3 +248,11 @@ body {
   #three-bg, #heroModules { display: none; }
   .project-card, .hero-actions .button { transition: none; }
 }
+
+
+/* Keep content visible even when scripts are blocked or disabled. */
+.reveal,
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
