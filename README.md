@@ -4,6 +4,8 @@ Personal portfolio for a **Backend Software Developer** based in Brazil and prep
 
 **Live site:** https://caiodgeraldi.github.io/Portfolio/
 
+**Localized entry points:** [English](https://caiodgeraldi.github.io/Portfolio/?lang=en&source=github) · [Português](https://caiodgeraldi.github.io/Portfolio/?lang=pt-BR&source=github)
+
 ## Featured engineering work
 
 - **[Retorna](https://github.com/CaioDGeraldi/DataSystemChallenge):** team-developed multi-company loyalty application built with Django, Django REST Framework and PostgreSQL. Includes transaction-safe redemptions, idempotency, concurrency tests and CI.
@@ -21,9 +23,13 @@ Personal portfolio for a **Backend Software Developer** based in Brazil and prep
 
 Open `index.html` directly, or serve this directory through any local static HTTP server.
 
-## Accessibility and international audience
+## Localization and accessibility
 
-- The public-facing page is written in English.
+- The English copy in `index.html` is the source text. `scripts/i18n.js` contains Brazilian Portuguese translations. The UI does not depend on referrer headers.
+- Language resolution follows explicit `?lang=en` / `?lang=pt-BR` in the link, then the visitor's saved selection, then the browser's language, then English.
+- GitHub profile links include an explicit language parameter; a `source` parameter is optional and has no effect on the chosen language.
+- The EN/PT control updates visible copy, `html[lang]`, metadata, accessible labels, URL and local preference without reloading.
+- `scripts/i18n.test.cjs` tests the language rules using Node's built-in test runner; `.github/workflows/portfolio-l10n.yml` runs these checks in pull requests.
 - Semantic HTML, navigation landmarks and keyboard-focused controls are used where available.
 - Responsive layout and reduced-motion behavior should be checked manually across browsers and devices.
 
