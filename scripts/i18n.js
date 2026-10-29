@@ -106,7 +106,81 @@
     "Get in touch": "Entrar em contato",
     "FEATURED / BACKEND": "DESTAQUE / BACK-END",
     "Technical case study": "Estudo de caso técnico",
-    "Concurrency tests": "Testes de concorrência"
+    "Concurrency tests": "Testes de concorrência",
+    "PORTFOLIO / SOFTWARE ENGINEERING": "PORTFÓLIO / ENGENHARIA DE SOFTWARE",
+    "Backend engineering,": "Engenharia de back-end,",
+    "from rules to reliability.": "das regras à confiabilidade.",
+    "I'm Caio, a software development student with professional experience maintaining business systems.": "Sou Caio, estudante de Desenvolvimento de Sistemas com experiência profissional em manutenção de sistemas empresariais.",
+    "My focus is on Django, relational databases and engineering decisions that make software easier to test, understand and evolve. I care about what happens when requests fail, repeat or arrive at the same time.": "Meu foco é Django, bancos de dados relacionais e decisões que tornam o software mais fácil de testar, compreender e evoluir. Dou atenção ao que acontece quando requisições falham, se repetem ou chegam ao mesmo tempo.",
+    "Technical focus": "Focos técnicos",
+    "01 / BACKEND": "01 / BACK-END",
+    "02 / DATA": "02 / DADOS",
+    "03 / QUALITY": "03 / QUALIDADE",
+    "Tests & CI": "Testes e CI",
+    "Selected work": "Projetos selecionados",
+    "A closer look at the engineering decisions, trade-offs and source code behind Retorna.": "Uma análise das decisões de engenharia, dos compromissos técnicos e do código por trás do Retorna.",
+    "Read case study": "Ler estudo de caso",
+    "Inspect tests": "Ver testes",
+    "Back to portfolio": "Voltar ao portfólio",
+    "All projects": "Todos os projetos",
+    "Retorna technical case study: modular Django architecture, PostgreSQL transactions, idempotent redemptions and concurrency testing.": "Estudo de caso técnico do Retorna: arquitetura modular em Django, transações PostgreSQL, resgates idempotentes e testes de concorrência.",
+    "Retorna | Engineering Case Study": "Retorna | Estudo de caso técnico",
+    "Skip to content": "Pular para o conteúdo",
+    "CASE STUDY / 01": "ESTUDO DE CASO / 01",
+    "TEAM PROJECT": "PROJETO EM EQUIPE",
+    "Loyalty infrastructure built around predictable business rules.": "Infraestrutura de fidelidade construída sobre regras de negócio previsíveis.",
+    "A configurable multi-company loyalty application developed for the Data System Challenge. External business systems generate events; the platform applies loyalty rules and records the result.": "Aplicação de fidelidade multiempresa configurável desenvolvida para o Data System Challenge. Sistemas empresariais externos geram eventos; a plataforma aplica as regras de fidelidade e registra o resultado.",
+    "Source repository": "Repositório do projeto",
+    "Redemption service": "Serviço de resgates",
+    "Project facts": "Dados do projeto",
+    "ROLE": "PAPEL",
+    "Collaborative team project": "Projeto colaborativo em equipe",
+    "STACK": "TECNOLOGIAS",
+    "FOCUS": "FOCO",
+    "Data integrity & business rules": "Integridade dos dados e regras de negócio",
+    "On this page": "Nesta página",
+    "ON THIS PAGE": "NESTA PÁGINA",
+    "The problem": "O problema",
+    "Engineering decisions": "Decisões de engenharia",
+    "Evidence": "Evidências",
+    "01 / CONTEXT": "01 / CONTEXTO",
+    "A loyalty platform must do more than calculate a balance. Purchases and redemptions can arrive twice, requests can overlap, and different stores can use different policies. In those situations, a visually correct dashboard does not prove that the data is correct.": "Uma plataforma de fidelidade precisa fazer mais do que calcular um saldo. Compras e resgates podem chegar duas vezes, requisições podem se sobrepor e lojas podem usar políticas diferentes. Nessas situações, um dashboard correto visualmente não comprova a integridade dos dados.",
+    "The central engineering requirement was to protect points history and business invariants when integrations retry operations or customers attempt concurrent redemptions.": "O requisito central de engenharia era proteger o histórico de pontos e as invariantes de negócio quando integrações repetem operações ou clientes tentam resgates simultâneos.",
+    "02 / SYSTEM": "02 / SISTEMA",
+    "A modular Django monolith, with shared business services used by the web interface and versioned REST API.": "Um monólito modular Django, com serviços de negócio compartilhados pela interface web e API REST versionada.",
+    "External business systems connect to a REST API, which calls Django domain services backed by PostgreSQL and audit history.": "Sistemas empresariais externos se conectam à API REST, que chama os serviços de domínio Django apoiados pelo PostgreSQL e histórico de auditoria.",
+    "INPUT": "ENTRADA",
+    "Sales / ERP / Commerce": "Vendas / ERP / Comércio",
+    "INTEGRATION": "INTEGRAÇÃO",
+    "Versioned REST API": "API REST versionada",
+    "APPLICATION": "APLICAÇÃO",
+    "Django domain services": "Serviços de domínio Django",
+    "Companies · Customers · Loyalty": "Empresas · Clientes · Fidelidade",
+    "PERSISTENCE": "PERSISTÊNCIA",
+    "Transactions · Constraints · Audit": "Transações · Restrições · Auditoria",
+    "Conceptual diagram, not a production infrastructure diagram.": "Diagrama conceitual, não um diagrama de infraestrutura de produção.",
+    "03 / DESIGN": "03 / PROJETO",
+    "Idempotent operations": "Operações idempotentes",
+    "A repeated request should not create a second redemption. The redemption service checks external identifiers and handles conflicting retries.": "Uma requisição repetida não deve criar um segundo resgate. O serviço verifica identificadores externos e trata tentativas repetidas conflitantes.",
+    "Inspect implementation": "Examinar implementação",
+    "Concurrency control": "Controle de concorrência",
+    "Transactional boundaries, row locks and PostgreSQL advisory locks guard balance-changing operations when requests arrive simultaneously.": "Transações, bloqueios de linhas e advisory locks do PostgreSQL protegem operações que alteram o saldo quando as requisições chegam ao mesmo tempo.",
+    "Modular boundaries": "Limites modulares",
+    "Domain services centralize loyalty operations so the REST API and server-rendered interface do not have to duplicate rules.": "Serviços de domínio centralizam operações de fidelidade para que a API REST e a interface renderizada no servidor não precisem duplicar regras.",
+    "Explore application modules": "Explorar módulos da aplicação",
+    "04 / VERIFICATION": "04 / VERIFICAÇÃO",
+    "Evidence & limitations": "Evidências e limites",
+    "What can be inspected": "O que pode ser verificado",
+    "The repository includes business services, database-backed concurrency tests, API documentation, CI workflows and the development history.": "O repositório inclui serviços de negócio, testes de concorrência com banco de dados, documentação de API, workflows de CI e histórico do desenvolvimento.",
+    "Successful historical CI run": "Execução histórica bem-sucedida do CI",
+    "CI workflow": "Workflow de CI",
+    "AI-assisted development disclosure": "Declaração de uso de IA no desenvolvimento",
+    "Scope matters": "Contexto importa",
+    "This is a collaborative challenge project, not a claim of sole authorship or commercial production deployment. The team documents the use of AI tools. A historical passing CI run is not a security audit or a load test.": "Este é um projeto de desafio desenvolvido em equipe, não uma alegação de autoria individual ou de implantação comercial em produção. A equipe documenta o uso de ferramentas de IA. Uma execução histórica bem-sucedida do CI não é auditoria de segurança nem teste de carga.",
+    "OTHER WORK": "OUTROS PROJETOS",
+    "Explore the rest of the portfolio.": "Explore o restante do portfólio.",
+    "Back to selected work": "Voltar aos projetos selecionados",
+    "Engineering portfolio": "Portfólio de engenharia"
   }));
 
   function normalizeLanguage(value) {
@@ -167,6 +241,7 @@
     const originalDescription = meta?.content;
     const originalTitle = document.title;
     const links = [...document.querySelectorAll("[data-portfolio-lang]")];
+    const localizedLinks = [...document.querySelectorAll("[data-localized-link]")];
 
     function apply(lang, updateUrl = false) {
       document.documentElement.lang = lang;
@@ -178,6 +253,14 @@
         element.setAttribute(name, (lang === "pt-BR" && translations.get(english)) || english);
       }
       if (meta) meta.content = (lang === "pt-BR" && translations.get(originalDescription)) || originalDescription;
+      for (const link of localizedLinks) {
+        const original = link.dataset.originalHref || link.getAttribute("href");
+        if (!original) continue;
+        link.dataset.originalHref = original;
+        const target = new URL(original, window.location.href);
+        target.searchParams.set("lang", lang);
+        link.setAttribute("href", target.pathname + target.search + target.hash);
+      }
       document.title = (lang === "pt-BR" && translations.get(originalTitle)) || originalTitle;
       for (const link of links) {
         const active = link.dataset.portfolioLang === lang;

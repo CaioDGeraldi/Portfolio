@@ -133,6 +133,7 @@ test("featured case study and navigation prioritize engineering evidence", () =>
   const skills = html.indexOf('<section id="skills"');
   assert.ok(projects !== -1 && experience > projects && skills > experience);
   assert.match(html, /class="project-card project-card-featured"/);
-  assert.match(html, /RECRUITER_CASE_STUDY\.md/);
-  assert.match(html, /href="#projetos">Jump to projects/);
+  assert.match(html, /data-localized-link class="evidence-primary"/);
+  assert.match(html, /href="\.\/projects\/retorna\.html"/);
+  assert.doesNotMatch(html, /id="intro"/);
 });
