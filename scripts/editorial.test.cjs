@@ -157,6 +157,23 @@ test("Retorna illustrates its configurable loyalty journey without a fake UI", (
   }
 });
 
+test("recruiter profile gives evidence without inventing credentials or a resume", () => {
+  const profile = read("profile.html");
+  const script = read("scripts/profile.js");
+  const printCSS = read("styles/profile.css");
+  assert.match(home, /href="\.\/profile\.html" data-localized-link/);
+  assert.match(profile, /Soma Soluções/);
+  assert.match(profile, /ETEC Alberto Feres/);
+  assert.match(profile, /https:\/\/github\.com\/CaioDGeraldi/);
+  assert.match(profile, /projects\/retorna\.html/);
+  assert.match(profile, /projects\/fractaw\.html/);
+  assert.match(profile, /not a formal employment record or certification/);
+  assert.match(script, /portfolio-theme/);
+  assert.match(script, /window\.print\(\)/);
+  assert.match(printCSS, /@media print/);
+  assert.match(dictionary, /"Print or save this profile as PDF":/);
+});
+
 test("content remains accessible when JavaScript is disabled", () => {
   assert.doesNotMatch(home, /<section[^>]*data-scene[^>]*hidden/);
   assert.match(stageCSS, /without JavaScript, scenes are normal document sections/i);
