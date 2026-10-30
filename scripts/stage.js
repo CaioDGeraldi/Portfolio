@@ -55,6 +55,7 @@
   let current = stageFromHash();
   let moving = false;
   let pendingHistoryScene = null;
+  let pendingUserScene = null;
   let lastWheelAt = 0;
 
   function announce() {
@@ -95,7 +96,11 @@
   }
 
   function navigate(id, { updateHistory = true, moveFocus = true } = {}) {
-    if (!sceneIds.includes(id) || moving || id === current) return;
+    if (!sceneIds.includes(id) || id === current) return;
+    if (moving) {
+      pendingUserScene = { id, updateHistory, moveFocus };
+      return;
+    }
     moving = true;
     const change = () => swapStage(id);
 
@@ -104,22 +109,21 @@
       transition.updateCallbackDone.then(() => {
         if (updateHistory) history.pushState({ scene: id }, "", "#" + id);
       }).catch(() => {});
-      transition.finished.then(() => {
+      function finishTransition() {
         if (moveFocus) focusHeading();
         moving = false;
         if (pendingHistoryScene) {
           const target = pendingHistoryScene;
           pendingHistoryScene = null;
+          pendingUserScene = null;
           navigate(target, { updateHistory: false });
+        } else if (pendingUserScene) {
+          const nextChange = pendingUserScene;
+          pendingUserScene = null;
+          navigate(nextChange.id, { updateHistory: nextChange.updateHistory, moveFocus: nextChange.moveFocus });
         }
-      }).catch(() => {
-        moving = false;
-        if (pendingHistoryScene) {
-          const target = pendingHistoryScene;
-          pendingHistoryScene = null;
-          navigate(target, { updateHistory: false });
-        }
-      });
+      }
+      transition.finished.then(finishTransition, finishTransition);
     } else {
       change();
       if (updateHistory) history.pushState({ scene: id }, "", "#" + id);
