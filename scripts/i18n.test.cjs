@@ -25,7 +25,7 @@ function createPage({ search = "", saved = null, languages = ["en-US"] } = {}) {
   const pt = makeElement({ "aria-label": "Idioma português" });
   pt.dataset.portfolioLang = "pt-BR";
   const attrElement = makeElement({ "aria-label": "Main navigation" });
-  const nodes = ["View projects", "Projects", "Backend Software Developer", "Unchanged proper noun"]
+  const nodes = ["Explore the work", "Business software should fit the business.", "Retorna", "Unchanged proper noun"]
     .map(value => ({ nodeValue: value, parentElement: { closest: () => null } }));
   let current = -1;
   const walker = {
@@ -37,12 +37,12 @@ function createPage({ search = "", saved = null, languages = ["en-US"] } = {}) {
       return true;
     }
   };
-  const meta = { content: "Software developer portfolio by Caio Darin Geraldi. Explore Django and PostgreSQL projects, engineering decisions, tests and professional experience." };
+  const meta = { content: "Caio Darin Geraldi: software development, Fractaw's business problem, and the Retorna engineering case study." };
   const document = {
     readyState: "complete",
     body: {},
     documentElement: { lang: "en" },
-    title: "CaioDGeraldi | Software Developer",
+    title: "Caio Darin Geraldi | Software Development",
     createTreeWalker() { return walker; },
     querySelectorAll(selector) {
       return selector === "[data-portfolio-lang]" ? [en, pt] : [attrElement, en, pt];
@@ -85,24 +85,24 @@ test("portfolio provides English and Portuguese controls and script", () => {
 test("explicit Portuguese URL overrides stored and browser languages", () => {
   const page = createPage({ search: "?lang=pt-BR&source=github", saved: "en", languages: ["en-US"] });
   assert.equal(page.document.documentElement.lang, "pt-BR");
-  assert.equal(page.nodes[0].nodeValue, "Ver projetos");
-  assert.equal(page.nodes[1].nodeValue, "Projetos");
+  assert.equal(page.nodes[0].nodeValue, "Conheça os projetos");
+  assert.equal(page.nodes[1].nodeValue, "O software empresarial deve se adaptar à empresa.");
   assert.equal(page.nodes[3].nodeValue, "Unchanged proper noun");
-  assert.equal(page.document.title, "CaioDGeraldi | Desenvolvedor de Software");
-  assert.equal(page.meta.content.startsWith("Portfólio de"), true);
+  assert.equal(page.document.title, "Caio Darin Geraldi | Desenvolvimento de Software");
+  assert.equal(page.meta.content.startsWith("Caio Darin Geraldi: desenvolvimento"), true);
   assert.equal(page.pt.attrs["aria-current"], "true");
 });
 
 test("saved preference takes precedence over browser language", () => {
   const page = createPage({ saved: "en", languages: ["pt-BR"] });
   assert.equal(page.document.documentElement.lang, "en");
-  assert.equal(page.nodes[0].nodeValue, "View projects");
+  assert.equal(page.nodes[0].nodeValue, "Explore the work");
 });
 
 test("browser language is used when URL and stored preference are absent", () => {
   const page = createPage({ languages: ["pt-BR", "en-US"] });
   assert.equal(page.document.documentElement.lang, "pt-BR");
-  assert.equal(page.nodes[0].nodeValue, "Ver projetos");
+  assert.equal(page.nodes[0].nodeValue, "Conheça os projetos");
 });
 
 test("manual switch is reversible, saved and reflected in the URL", () => {
@@ -110,11 +110,11 @@ test("manual switch is reversible, saved and reflected in the URL", () => {
   let prevented = false;
   page.pt.handlers.click({ preventDefault() { prevented = true; } });
   assert.equal(prevented, true);
-  assert.equal(page.nodes[0].nodeValue, "Ver projetos");
+  assert.equal(page.nodes[0].nodeValue, "Conheça os projetos");
   assert.equal(page.storage.get("caiodgeraldi.portfolio.language"), "pt-BR");
   assert.match(page.win.location.href, /lang=pt-BR/);
   page.en.handlers.click({ preventDefault() {} });
-  assert.equal(page.nodes[0].nodeValue, "View projects");
+  assert.equal(page.nodes[0].nodeValue, "Explore the work");
   assert.equal(page.document.documentElement.lang, "en");
   assert.equal(page.pt.attrs["aria-current"], undefined);
   assert.equal(page.events.at(-1).language, "en");
@@ -124,16 +124,14 @@ test("manual switch is reversible, saved and reflected in the URL", () => {
 test("English from the GitHub link overrides a Portuguese browser", () => {
   const page = createPage({ search: "?lang=en&source=github", languages: ["pt-BR"] });
   assert.equal(page.document.documentElement.lang, "en");
-  assert.equal(page.nodes[1].nodeValue, "Projects");
+  assert.equal(page.nodes[1].nodeValue, "Business software should fit the business.");
 });
 
-test("featured case study and navigation prioritize engineering evidence", () => {
-  const projects = html.indexOf('<section id="projetos"');
-  const experience = html.indexOf('<section id="experiencia"');
-  const skills = html.indexOf('<section id="skills"');
-  assert.ok(projects !== -1 && experience > projects && skills > experience);
-  assert.match(html, /class="project-card project-card-featured"/);
-  assert.match(html, /data-localized-link class="evidence-primary"/);
-  assert.match(html, /href="\.\/projects\/retorna\.html"/);
-  assert.doesNotMatch(html, /id="intro"/);
+test("scenes link to both original project case studies", () => {
+  assert.match(html, /id="intro" data-scene/);
+  assert.match(html, /id="fractaw" data-scene/);
+  assert.match(html, /id="retorna" data-scene/);
+  assert.match(html, /data-localized-link>Explore Fractaw's idea/);
+  assert.match(html, /data-localized-link>Explore Retorna's case/);
+  assert.match(html, /scripts\/stage\.js/);
 });

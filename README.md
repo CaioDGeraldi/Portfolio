@@ -1,58 +1,75 @@
-# Portfolio | CaioDGeraldi
+# Caio Geraldi | Portfolio
 
-Personal portfolio for a **Backend Software Developer** based in Brazil and preparing for international software engineering opportunities.
+A bilingual personal portfolio built as a small **scene-based presentation**. The position of the content is fixed. Navigation changes the scene instead of making visitors scroll past stacked sections.
 
-**Live site:** https://caiodgeraldi.github.io/Portfolio/
+**Published address:** https://caiodgeraldi.github.io/Portfolio/
 
-**Localized entry points:** [English](https://caiodgeraldi.github.io/Portfolio/?lang=en&source=github) · [Português](https://caiodgeraldi.github.io/Portfolio/?lang=pt-BR&source=github)
+**Direct language links:** [English](https://caiodgeraldi.github.io/Portfolio/?lang=en&source=github) · [Português](https://caiodgeraldi.github.io/Portfolio/?lang=pt-BR&source=github)
 
-## Featured engineering work
+## Concept
 
-**[Retorna](https://github.com/CaioDGeraldi/DataSystemChallenge)** is the sole featured project on the public portfolio. It is a team-developed multi-company loyalty application using Django, Django REST Framework and PostgreSQL, with transaction-safe redemptions, idempotency, concurrency tests and CI.
+The visitor sees five concise scenes: introduction, **Fractaw**, **Retorna**, experience and contact. The name is revealed briefly on the opening scene. All other changes are crossfades in the same viewport; no full-page scrolling or elaborate dashboard animations.
 
-Explore the [Retorna case study](projects/retorna.html) for engineering context, architecture and source evidence.
+Fractaw is the **central product idea**, presented through the business problem it aims to solve. The codebase is private and the prototype is not represented as a deployed commercial ERP.
 
-## Technology
+Retorna is the **engineering evidence**, a collaborative Django/PostgreSQL challenge project with source links, idempotent redemption logic, tests, architecture decisions and AI-use disclosure.
 
-- HTML5, CSS, JavaScript and Three.js.
-- Static hosting on GitHub Pages.
-- No application backend or build step.
+Each project has a separate, direct-linkable case-study page:
+- [Fractaw: product vision](projects/fractaw.html)
+- [Retorna: engineering case study](projects/retorna.html)
 
-## Run locally
+## Identity and sources
 
-Open `index.html` directly, or serve this directory through any local static HTTP server.
+The project logos are **the actual SVG files from the project repositories**. No invented marks, AI-generated mock-ups, stock photos, fake testimonials, fabricated metrics or generic technology illustrations.
 
-## Localization and accessibility
+| Portfolio asset | Original repository file |
+| --- | --- |
+| `assets/fractaw-logo-dark.svg` | `CaioDGeraldi/FractawModules/frontend/src/brand/fractaw-logo-lockup-dark.svg` |
+| `assets/fractaw-logo-light.svg` | `CaioDGeraldi/FractawModules/frontend/src/brand/fractaw-logo-lockup.svg` |
+| `assets/retorna-logo-dark.svg` | `CaioDGeraldi/DataSystemChallenge/frontend/public/retorna/brand/retorna-logo-dark.svg` |
+| `assets/retorna-logo-light.svg` | `CaioDGeraldi/DataSystemChallenge/frontend/public/retorna/brand/retorna-logo-light.svg` |
+| `assets/retorna-symbol.svg` | `CaioDGeraldi/DataSystemChallenge/frontend/public/retorna/brand/retorna-symbol.svg` |
 
-- The English copy in `index.html` is the source text. `scripts/i18n.js` contains Brazilian Portuguese translations. The UI does not depend on referrer headers.
-- Language resolution follows explicit `?lang=en` / `?lang=pt-BR` in the link, then the visitor's saved selection, then the browser's language, then English.
-- GitHub profile links include an explicit language parameter; a `source` parameter is optional and has no effect on the chosen language.
-- The EN/PT control updates visible copy, `html[lang]`, metadata, accessible labels, URL and local preference without reloading.
-- `scripts/i18n.test.cjs` tests the language rules using Node's built-in test runner; `.github/workflows/portfolio-l10n.yml` runs these checks in pull requests.
-- Semantic HTML, navigation landmarks and keyboard-focused controls are used where available.
-- Responsive layout and reduced-motion behavior should be checked manually across browsers and devices.
+The Fractaw asset's appearance is shared here to present the product concept; private implementation details are not copied.
 
+## Implementation
 
-## Editorial portfolio and case studies
+- Semantic HTML, vanilla CSS and JavaScript, with no build step.
+- Enhanced navigation in `scripts/stage.js` uses the View Transitions API when supported. Otherwise, scene changes are immediate.
+- Five native `<section>` elements remain readable with **JavaScript disabled**. In enhanced mode, only the active scene is visible to keyboard/screen-reader navigation.
+- Direct hashes (`#fractaw`, `#retorna`, etc.), browser back/forward, keyboard navigation, next/previous controls and restrained mouse-wheel scene changes are supported.
+- The active scene remains in the same position. When a panel is too tall on a small screen, **that panel alone** can scroll to prevent content clipping.
+- Respects `prefers-reduced-motion`. No forced 3D, autoplay video or infinite motion.
+- The EN/PT selector updates visible strings, metadata and `html[lang]`; links to case studies carry the explicit language preference.
+- A saved theme preference is shared with the project detail pages.
 
-The landing page prioritizes engineering work, with a compact introduction, an evidence-linked featured project and no mandatory full-screen animation. The design retains the Fractaw dark/light palette.
+## Run and validate
 
-- **Retorna case study:** `projects/retorna.html`. Covers the engineering problem, a conceptual architecture diagram, concurrency/idempotency approaches, code evidence and honest team-project attribution.
-- **Languages:** `?lang=en` / `?lang=pt-BR` override browser or saved preferences. Localized links carry the selected language between the homepage and case-study pages.
-- **Accessibility:** skip links, semantic headings, visible focus, responsive navigation, reduced-motion support and a textual description of the architecture diagram.
-- **Performance:** decorative WebGL is limited to wider screens without reduced-motion or data-saver preferences. Project content stays accessible with JavaScript disabled, though localization and theme preferences require JavaScript.
-
-### Verify
+Start a local static server from the repository root:
 
 ```sh
-node --check scripts/main.js
+python -m http.server 8000
+```
+
+Open http://localhost:8000/ and test both languages and themes.
+
+```sh
 node --check scripts/i18n.js
+node --check scripts/stage.js
 node --check scripts/case.js
 node --test scripts/*.test.cjs
 ```
 
-The tests validate language behavior and structural invariants. They do **not** replace visual testing at mobile/desktop widths, accessibility audits or deployment verification.
+A GitHub Actions workflow runs the checks for every PR to `main`.
+
+## Design principles
+
+- Content explains a *real problem, decision or constraint*.
+- No made-up business traction or individual authorship claims for team work.
+- Project identities take priority over decorative badges.
+- Accessible scene navigation and clear direct links take priority over visual spectacle.
+- Contrast, small viewport behavior and focus management must be verified manually before publication.
 
 ## Publication
 
-The project can be published directly from the main branch through GitHub Pages. Deployment configuration and the actual live URL should be checked before adding availability guarantees.
+GitHub Pages publishes from `main` after review and squash merge. Visual QA on desktop/mobile remains required in addition to structural tests.

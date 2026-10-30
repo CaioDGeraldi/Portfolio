@@ -1,0 +1,54 @@
+/* Original project assets and restrained case-study presentation. */
+.theme-light-only { display: none !important; }
+body.light-mode .theme-dark-only { display: none !important; }
+body.light-mode .theme-light-only { display: block !important; }
+.case-original-mark {
+  display: flex; align-items: center; width: min(100%, 410px);
+  min-height: 92px; margin-bottom: 11px;
+}
+.case-original-mark img { display: block; max-height: 120px; width: 100%; object-fit: contain; object-position: left center; }
+.case-original-mark .brand-logo { width: min(100%, 355px); }
+.case-original-mark .retorna-official-logo { width: min(100%, 350px); height: auto; }
+.case-hero { background: var(--card); }
+.case-hero::after { display: none; }
+.case-hero .case-subtitle { max-width: 770px; }
+.case-hero .case-original-mark + h1 { font-size: clamp(3.25rem, 8vw, 7rem); margin-top: 6px; }
+.case-decision, .case-evidence > div, .case-disclosure { background: var(--card); }
+.approach-flow {
+  display: grid; gap: 0; width: min(100%, 800px);
+  margin-inline: auto; padding: clamp(20px, 4vw, 46px);
+  border: 1px solid var(--border); border-radius: 14px; background: var(--card);
+}
+.approach-common, .approach-modules > div {
+  display: grid; justify-items: center; gap: 9px; text-align: center;
+  border: 1px solid var(--border-strong); padding: 22px; border-radius: 10px;
+}
+.approach-common { background: var(--surface-soft); }
+.approach-common > span, .approach-modules > div > span {
+  color: var(--text-faint); letter-spacing: .12em;
+  font: 700 .65rem/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.approach-common strong, .approach-modules strong { font-size: .92rem; }
+.approach-modules small { color: var(--text-muted); font-size: .79rem; }
+.approach-branch {
+  height: 64px; position: relative;
+  display: flex; align-items: flex-start; justify-content: center;
+}
+.approach-branch::before {
+  content: ""; display: block; height: 32px; width: 1px; background: var(--primary);
+}
+.approach-branch::after {
+  content: ""; display: block; position: absolute; bottom: 16px; width: 50%; height: 16px;
+  border: 1px solid var(--primary); border-bottom: 0; border-radius: 8px 8px 0 0;
+}
+.approach-modules { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; }
+.approach-modules > div { border-color: var(--border); padding: 19px; }
+@media (max-width: 600px) {
+  .approach-modules { grid-template-columns: 1fr; gap: 12px; }
+  .approach-branch { height: 35px; }
+  .approach-branch::after { display: none; }
+  .approach-branch::before { height: 35px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}

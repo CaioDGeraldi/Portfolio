@@ -2,224 +2,134 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Software developer portfolio by Caio Darin Geraldi. Explore Django and PostgreSQL projects, engineering decisions, tests and professional experience.">
-  <meta name="theme-color" content="#1E2327">
-  <meta name="color-scheme" content="dark light">
-  <title>CaioDGeraldi | Software Developer</title>
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-  <link rel="stylesheet" href="./styles/style.css">
-  <link rel="stylesheet" href="./styles/refinements.css">
-  <link rel="stylesheet" href="./styles/editorial.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Caio Darin Geraldi: software development, Fractaw's business problem, and the Retorna engineering case study.">
+  <meta name="theme-color" content="#141619">
+  <title>Caio Darin Geraldi | Software Development</title>
+  <link rel="stylesheet" href="./styles/stage.css">
 </head>
 <body>
-  <a class="skip-link" href="#sobre">Skip to content</a>
-  <div id="three-bg" aria-hidden="true"></div>
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="site-header">
-    <nav class="navbar" aria-label="Main navigation">
-      <a class="logo" href="#sobre" aria-label="Go to introduction"><span class="logo-symbol">&lt;/&gt;</span><span class="logo-name">CaioDGeraldi</span></a>
-      <div class="nav-links" id="navLinks">
-        <a href="#sobre">About</a>
-        <a href="#projetos">Projects</a>
-        <a href="#experiencia">Experience</a>
-        <a href="#skills">Skills</a>
-        <a href="#formacao">Education</a>
-        <a href="#certificados">Certificates</a>
-      </div>
-      <div class="nav-actions">
+    <a class="site-brand" href="#intro" data-scene-link aria-label="Go to introduction">
+      <span class="site-brand-mark" aria-hidden="true">C.</span>
+      <span>Caio Geraldi</span>
+    </a>
+    <div class="header-actions">
+      <span class="header-role">SOFTWARE DEVELOPMENT · BRAZIL</span>
       <div class="language-picker" role="group" aria-label="Language / Idioma">
-        <a href="?lang=en" data-portfolio-lang="en" lang="en" hreflang="en" aria-label="English language">EN</a>
+        <a href="?lang=en" lang="en" hreflang="en" data-portfolio-lang="en" aria-label="English language">EN</a>
         <span aria-hidden="true">/</span>
-        <a href="?lang=pt-BR" data-portfolio-lang="pt-BR" lang="pt-BR" hreflang="pt-BR" aria-label="Idioma português">PT</a>
+        <a href="?lang=pt-BR" lang="pt-BR" hreflang="pt-BR" data-portfolio-lang="pt-BR" aria-label="Idioma português">PT</a>
       </div>
-        <button id="themeToggle" class="icon-button" type="button" aria-label="Toggle theme" title="Toggle theme"><i class="fa-solid fa-sun"></i></button>
-        <button id="menuToggle" class="icon-button menu-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks" title="Menu"><i class="fa-solid fa-bars"></i></button>
-      </div>
-    </nav>
+      <button class="theme-button" type="button" id="themeToggle" aria-label="Switch to light theme" title="Switch to light theme"><span aria-hidden="true">◐</span></button>
+    </div>
   </header>
 
-  <main class="portfolio-shell">
-    <aside class="profile-card" aria-label="Contact information">
-      <div class="profile-heading">
-        <div class="profile-avatar" aria-hidden="true"><i class="fa-brands fa-github"></i></div>
-        <h1>CaioDGeraldi</h1>
-        <p>Backend Software Developer</p>
-      </div>
-      <div class="divider"></div>
-      <div class="profile-info">
-        <div class="info-item"><div class="info-icon"><i class="fa-solid fa-envelope"></i></div><div><span>Email</span><a href="mailto:chdgeraldi@gmail.com">chdgeraldi@gmail.com</a></div></div>
-        <div class="info-item"><div class="info-icon"><i class="fa-solid fa-location-dot"></i></div><div><span>Location</span><p>Araras, SP</p></div></div>
-        <div class="info-item"><div class="info-icon"><i class="fa-brands fa-github"></i></div><div><span>GitHub</span><a href="https://github.com/CaioDGeraldi" target="_blank" rel="noopener noreferrer">CaioDGeraldi</a></div></div>
-        <div class="info-item"><div class="info-icon"><i class="fa-brands fa-linkedin-in"></i></div><div><span>LinkedIn</span><a href="https://www.linkedin.com/in/caio-geraldi/" target="_blank" rel="noopener noreferrer">CaioDGeraldi</a></div></div>
-      </div>
-      <div class="profile-socials" aria-label="Professional profiles">
-        <a href="https://github.com/CaioDGeraldi" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/caio-geraldi/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-        <a href="mailto:chdgeraldi@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
-      </div>
-    </aside>
-
-    <div class="content-column">
-      <section id="sobre" class="hero-section section-card">
-        <div id="heroModules" aria-hidden="true"></div>
-        <p class="eyebrow">PORTFOLIO / SOFTWARE ENGINEERING</p>
-        <p class="hero-availability"><span class="availability-dot" aria-hidden="true"></span>Based in Brazil · Interested in international teams</p>
-        <h2 class="hero-headline">Backend engineering, <span>from rules to reliability.</span></h2>
-        <p class="hero-lead">I'm Caio, a software development student with professional experience maintaining business systems.</p>
-        <p class="hero-description">My focus is on Django, relational databases and engineering decisions that make software easier to test, understand and evolve. I care about what happens when requests fail, repeat or arrive at the same time.</p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="#projetos"><i class="fa-solid fa-code"></i> View projects</a>
-          <a class="button button-secondary" href="#contato"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Get in touch</a>
-        </div>
-        <div class="hero-proof" role="list" aria-label="Technical focus">
-          <div role="listitem"><span>01 / BACKEND</span><strong>Python & Django</strong></div>
-          <div role="listitem"><span>02 / DATA</span><strong>PostgreSQL & SQL</strong></div>
-          <div role="listitem"><span>03 / QUALITY</span><strong>Tests & CI</strong></div>
-        </div>
-      </section>
-
-      <section id="projetos" class="reveal">
-        <div class="section-title"><span>01.</span><h2>Selected work</h2></div>
-        <p class="section-description">A closer look at the engineering decisions, trade-offs and source code behind Retorna.</p>
-        <div class="projects-grid">
-          <article class="project-card project-card-featured" data-tech="python django architecture domain">
-            <div class="project-visual"><div class="project-visual-mark" aria-hidden="true"><i class="fa-solid fa-database"></i><span class="project-visual-flow"><i></i><i></i><i></i></span></div><span class="project-visual-caption">FEATURED / BACKEND</span></div>
-            <div class="project-content">
-              <div class="project-topline"><div><span>Team software project</span><h3>Retorna</h3></div><a class="project-link" href="https://github.com/CaioDGeraldi/DataSystemChallenge" target="_blank" rel="noopener noreferrer" aria-label="View Retorna on GitHub"><i class="fa-brands fa-github"></i></a></div>
-              <p>Configurable multi-company loyalty platform built with Django, PostgreSQL and a versioned REST API. Includes transactional redemptions, idempotency, concurrency tests and automated CI.</p>
-              <div class="project-evidence">
-                <a href="./projects/retorna.html" data-localized-link class="evidence-primary"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Read case study</a>
-                <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/apps/fidelidade/test_concorrencia_resgates.py" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-vial-circle-check" aria-hidden="true"></i> Inspect tests</a>
-              </div>
-              <div class="tag-list"><span>Python</span><span>Django</span><span>PostgreSQL</span><span>REST API</span><span>Testing</span></div>
+  <main id="main" class="stage-main" tabindex="-1">
+    <div class="stage-frame">
+      <div class="stage-index" aria-hidden="true"><span id="sceneNumber">01</span><span class="stage-index-rule"></span><span>05</span></div>
+      <div class="stage-window" id="stageWindow">
+        <section class="stage-scene stage-intro" id="intro" data-scene aria-labelledby="introTitle">
+          <div class="scene-inner intro-inner">
+            <p class="scene-kicker"><span class="scene-kicker-line" aria-hidden="true"></span> SOFTWARE DEVELOPMENT / PORTFOLIO</p>
+            <h1 id="introTitle" class="intro-title"><span class="name-reveal">Caio</span><span class="name-reveal name-reveal-delayed">Geraldi<span class="accent-period">.</span></span></h1>
+            <p class="intro-tagline">I build software around real problems, not just technology.</p>
+            <div class="intro-actions">
+              <a class="text-action primary-action" href="#fractaw" data-scene-link>Explore the work <span aria-hidden="true">↗</span></a>
+              <a class="text-action secondary-action" href="#about" data-scene-link>About me <span aria-hidden="true">↗</span></a>
             </div>
-          </article>
-
-        </div>
-      </section>
-
-      <section id="experiencia" class="reveal">
-        <div class="section-title"><span>02.</span><h2>Experience</h2></div>
-        <article class="experience-card">
-          <div class="experience-marker" aria-hidden="true"></div>
-          <div class="experience-content">
-            <div class="experience-topline"><div><span class="status-pill">Professional experience</span><h3>Soma Soluções</h3></div><i class="fa-solid fa-briefcase"></i></div>
-            <h4>Systems Development Intern</h4>
-            <p>Worked on software development and maintenance using Delphi / Object Pascal and Oracle Database.</p>
-            <div class="tag-list"><span>Delphi</span><span>Object Pascal</span><span>Oracle Database</span></div>
+            <p class="scene-footnote">BACKEND · SYSTEMS · SOFTWARE ENGINEERING</p>
           </div>
-        </article>
+        </section>
 
-        <div class="company-experiences">
-          <div class="subsection-heading">
-            <span>Educational experiences</span>
-            <h3>Industry learning activities</h3>
+        <section class="stage-scene stage-project" id="fractaw" data-scene aria-labelledby="fractawTitle">
+          <div class="scene-inner project-inner">
+            <div class="project-heading">
+              <div class="project-number">01 / CENTRAL IDEA</div>
+              <div class="project-logo-frame fractaw-logo-frame">
+                <img src="./assets/fractaw-logo-dark.svg" alt="Fractaw official logo" class="brand-logo fractaw-logo theme-dark-only" width="700" height="280">
+                <img src="./assets/fractaw-logo-light.svg" alt="" aria-hidden="true" class="brand-logo fractaw-logo theme-light-only" width="700" height="280">
+              </div>
+            </div>
+            <div class="project-description">
+              <p class="scene-kicker">FRACTAW / PRODUCT VISION</p>
+              <h2 id="fractawTitle">Business software should fit the business.</h2>
+              <p class="project-lead">Fractaw starts with a practical problem: companies face fragmented systems, repeated work and software that forces everyone into the same workflow.</p>
+              <p class="project-detail">The idea is a modular management platform. A business adopts the capabilities it needs instead of managing disconnected tools. The concept comes first; the private codebase is not the product story here.</p>
+              <div class="project-facts" aria-label="Fractaw concept highlights"><span>Modularity</span><span>Business workflows</span><span>Product architecture</span></div>
+              <a class="text-action primary-action" href="./projects/fractaw.html" data-localized-link>Explore Fractaw's idea <span aria-hidden="true">↗</span></a>
+            </div>
           </div>
-          <div class="company-grid">
-            <article class="company-card">
-              <div class="company-card-heading"><i class="fa-solid fa-people-group" aria-hidden="true"></i><h4>Dev&amp;Co. Logística</h4></div>
-              <p>Eight sessions covering organizational structure, cross-team collaboration, requirements, prototyping, Git Flow and UX with Figma.</p>
-            </article>
-            <article class="company-card">
-              <div class="company-card-heading"><i class="fa-solid fa-compass" aria-hidden="true"></i><h4>Fundação Iochpe</h4></div>
-              <p>Activities on teamwork, personal development, innovation and creativity as part of professional learning.</p>
-            </article>
-            <article class="company-card">
-              <div class="company-card-heading"><i class="fa-solid fa-microchip" aria-hidden="true"></i><h4>Tebe</h4></div>
-              <p>School project involving sensor-based industrial monitoring, an introduction to Git and collaborative technical review.</p>
-            </article>
+        </section>
+
+        <section class="stage-scene stage-project" id="retorna" data-scene aria-labelledby="retornaTitle">
+          <div class="scene-inner project-inner">
+            <div class="project-heading">
+              <div class="project-number">02 / ENGINEERING CASE</div>
+              <div class="project-logo-frame retorna-logo-frame">
+                <img src="./assets/retorna-logo-dark.svg" alt="Retorna official logo" class="brand-logo retorna-logo theme-dark-only" width="973" height="210">
+                <img src="./assets/retorna-logo-light.svg" alt="" aria-hidden="true" class="brand-logo retorna-logo theme-light-only" width="973" height="210">
+              </div>
+            </div>
+            <div class="project-description">
+              <p class="scene-kicker">RETORNA / COLLABORATIVE PROJECT</p>
+              <h2 id="retornaTitle">What happens when a request arrives twice?</h2>
+              <p class="project-lead">Retorna is a multi-company loyalty application where business rules must remain consistent even under retries and concurrent requests.</p>
+              <p class="project-detail">Django, PostgreSQL, transactional redemptions, idempotency and automated tests. The case study shows the trade-offs and the source that a reviewer can inspect.</p>
+              <div class="project-facts" aria-label="Retorna technologies"><span>Django</span><span>PostgreSQL</span><span>Concurrency tests</span></div>
+              <a class="text-action primary-action" href="./projects/retorna.html" data-localized-link>Explore Retorna's case <span aria-hidden="true">↗</span></a>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="skills" class="reveal">
-        <div class="section-title"><span>03.</span><h2>Skills</h2></div>
-        <div class="skills-grid">
-          <article class="skill-card"><div class="card-heading"><i class="fa-solid fa-server"></i><h3>Backend and languages</h3></div><div class="tag-list"><span>Python</span><span>Django</span><span>Delphi</span><span>Object Pascal</span></div></article>
-          <article class="skill-card"><div class="card-heading"><i class="fa-solid fa-code"></i><h3>Web</h3></div><div class="tag-list"><span>HTML</span><span>CSS</span></div></article>
-          <article class="skill-card"><div class="card-heading"><i class="fa-solid fa-database"></i><h3>Databases</h3></div><div class="tag-list"><span>MySQL</span><span>PostgreSQL</span><span>Oracle</span></div></article>
-          <article class="skill-card"><div class="card-heading"><i class="fa-solid fa-screwdriver-wrench"></i><h3>Tools</h3></div><div class="tag-list"><span>Git</span><span>GitHub</span><span>Linux</span></div></article>
-          <article class="skill-card skill-card-wide"><div class="card-heading"><i class="fa-solid fa-diagram-project"></i><h3>Engineering</h3></div><div class="tag-list"><span>Software architecture</span><span>Domain modeling</span><span>Requirements engineering</span><span>Modularity</span><span>Testing</span></div></article>
-        </div>
-      </section>
-
-      <section id="formacao" class="reveal">
-        <div class="section-title"><span>04.</span><h2>Education and interests</h2></div>
-        <div class="education-layout">
-          <div class="education-path">
-            <article class="education-card">
-              <span class="status-pill">In progress</span>
-              <h3>Technical Program in Systems Development</h3>
-              <p>ETEC Alberto Feres · AMS</p>
-            </article>
-            <div class="education-connector" aria-hidden="true"><i class="fa-solid fa-arrow-down"></i></div>
-            <article class="education-card education-card-next">
-              <span class="status-pill">Planned next step via AMS</span>
-              <h3>FATEC — Systems Analysis and Development</h3>
-              <p>Planned higher-education pathway through the ETEC AMS program.</p>
-            </article>
+        <section class="stage-scene stage-about" id="about" data-scene aria-labelledby="aboutTitle">
+          <div class="scene-inner about-inner">
+            <p class="scene-kicker"><span class="scene-kicker-line" aria-hidden="true"></span> ABOUT / EXPERIENCE</p>
+            <h2 id="aboutTitle" class="large-heading">Curiosity is useful.<br>Engineering discipline makes it last.</h2>
+            <p class="about-summary">I'm studying Systems Development at ETEC Alberto Feres (AMS). I worked with Delphi / Object Pascal and Oracle Database at Soma Soluções, and I focus my independent work on Python, Django, databases and maintainable system design.</p>
+            <div class="about-grid">
+              <div><span class="meta-label">EXPERIENCE</span><strong>Soma Soluções</strong><p>Systems development internship · Delphi / Oracle</p></div>
+              <div><span class="meta-label">EDUCATION</span><strong>ETEC Alberto Feres</strong><p>Systems Development · AMS</p></div>
+              <div><span class="meta-label">CURRENT FOCUS</span><strong>Backend & Architecture</strong><p>Python · Django · SQL · Testing</p></div>
+            </div>
           </div>
-          <article class="interests-card">
-            <h3>Areas of interest</h3>
-            <div class="tag-list"><span>Software engineering</span><span>Software architecture</span><span>Back-end</span><span>Modular systems</span><span>Domain modeling</span><span>Databases</span><span>Testing and quality</span><span>Linux and infrastructure</span><span>AI-assisted development</span></div>
-          </article>
-        </div>
-      </section>
+        </section>
 
-      <section id="estudando" class="reveal">
-        <div class="section-title"><span>05.</span><h2>Currently learning</h2></div>
-        <div class="study-track" aria-label="Technologies I am learning">
-          <span>JavaScript</span><span>TypeScript</span><span>React</span><span>PostgreSQL</span><span>Docker</span><span>Linux</span><span>Rust</span><span>Svelte</span>
-        </div>
-        <div class="reading-card"><i class="fa-solid fa-book-open"></i><div><span>Currently reading</span><strong>Clean Code — Robert C. Martin</strong></div></div>
-      </section>
-
-      <section id="certificados" class="reveal">
-        <div class="section-title"><span>06.</span><h2>Certificates</h2></div>
-        <div class="certificates-grid" id="certificatesGrid">
-          <article class="certificate-card">
-            <div class="certificate-heading"><i class="fa-brands fa-github" aria-hidden="true"></i><span>DIO Pro</span></div>
-            <h3>GitHub Certification Training</h3>
-            <div class="certificate-meta"><span>10 h</span><span>Apr 3, 2026</span></div>
-          </article>
-          <article class="certificate-card">
-            <div class="certificate-heading"><i class="fa-solid fa-code" aria-hidden="true"></i><span>Udemy</span></div>
-            <h3>Complete Web Development — 20 courses + 20 projects</h3>
-            <div class="certificate-meta"><span>120 h</span><span>Oct 13, 2025</span></div>
-          </article>
-          <article class="certificate-card">
-            <div class="certificate-heading"><i class="fa-brands fa-react" aria-hidden="true"></i><span>TIC em Trilhas · Venturus</span></div>
-            <h3>Introduction to React.js</h3>
-            <div class="certificate-meta"><span>30 h</span><span>Apr 3, 2025</span></div>
-          </article>
-          <article class="certificate-card">
-            <div class="certificate-heading"><i class="fa-solid fa-video" aria-hidden="true"></i><span>Udemy</span></div>
-            <h3>Video Editing and Recording with Movavi</h3>
-            <div class="certificate-meta"><span>5 h</span><span>Apr 21, 2020</span></div>
-          </article>
-        </div>
-      </section>
-
-      <section id="contato" class="contact-section reveal">
-        <p class="eyebrow">Contact</p>
-        <h2>GitHub, LinkedIn and email.</h2>
-        <p>Get in touch using the professional links below.</p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="mailto:chdgeraldi@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
-          <a class="button button-secondary" href="https://www.linkedin.com/in/caio-geraldi/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
-        </div>
-      </section>
+        <section class="stage-scene stage-contact" id="contact" data-scene aria-labelledby="contactTitle">
+          <div class="scene-inner contact-inner">
+            <p class="scene-kicker"><span class="scene-kicker-line" aria-hidden="true"></span> CONTACT / NEXT STEP</p>
+            <h2 id="contactTitle" class="large-heading">Have a problem worth solving?</h2>
+            <p class="contact-summary">I'm interested in software engineering opportunities, including international teams. The best introduction is a technical conversation.</p>
+            <div class="contact-links">
+              <a href="mailto:chdgeraldi@gmail.com">Email <span aria-hidden="true">↗</span></a>
+              <a href="https://github.com/CaioDGeraldi" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+              <a href="https://www.linkedin.com/in/caio-geraldi/" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+            </div>
+            <p class="scene-footnote">BASED IN BRAZIL · OPEN TO INTERNATIONAL COLLABORATION</p>
+          </div>
+        </section>
+      </div>
     </div>
   </main>
 
-  <footer>
-    <p>CaioDGeraldi <span aria-hidden="true">·</span> Backend, architecture and software engineering.</p>
+  <footer class="scene-footer">
+    <p class="scene-status" id="sceneStatus" role="status" aria-live="polite">Scene 01 of 05</p>
+    <nav class="scene-navigation" aria-label="Portfolio scenes">
+      <a href="#intro" data-scene-link aria-current="step"><span>01</span>Intro</a>
+      <a href="#fractaw" data-scene-link><span>02</span>Fractaw</a>
+      <a href="#retorna" data-scene-link><span>03</span>Retorna</a>
+      <a href="#about" data-scene-link><span>04</span>About</a>
+      <a href="#contact" data-scene-link><span>05</span>Contact</a>
+    </nav>
+    <div class="scene-controls">
+      <button type="button" id="prevScene" aria-label="Previous scene" title="Previous scene"><span aria-hidden="true">←</span></button>
+      <button type="button" id="nextScene" aria-label="Next scene" title="Next scene"><span aria-hidden="true">→</span></button>
+    </div>
   </footer>
 
   <script src="./scripts/i18n.js"></script>
-  <script src="./scripts/main.js"></script>
-  <script src="./scripts/modules.js"></script>
+  <script src="./scripts/stage.js"></script>
 </body>
 </html>
