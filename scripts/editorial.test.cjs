@@ -136,6 +136,27 @@ test("viewport improvements preserve readable scenes and touch navigation", () =
   assert.match(stageScript, /event\.repeat/);
 });
 
+test("Fractaw uses a real source screenshot with clear fictional fixture scope", () => {
+  assert.match(fractaw, /id="preview"/);
+  assert.match(fractaw, /docs\/evidencias\/ux143\/modularidade-1440\.png/);
+  assert.match(fractaw, /loading="lazy"/);
+  assert.match(fractaw, /fictional school fixture/);
+  assert.match(fractaw, /not a commercial deployment/);
+  assert.match(fractaw, /styles\/case-evidence\.css/);
+});
+
+test("Retorna illustrates its configurable loyalty journey without a fake UI", () => {
+  assert.match(retorna, /id="journey"/);
+  assert.match(retorna, /<ol class="loyalty-journey"/);
+  assert.match(retorna, /business's configured loyalty policies/);
+  assert.match(retorna, /Product README and scope/);
+  assert.match(retorna, /Conceptual product journey/);
+  assert.match(retorna, /styles\/case-evidence\.css/);
+  for (const phrase of ["Module selection in the prototype", "How a loyalty event becomes a reward"]) {
+    assert.ok(dictionary.includes(JSON.stringify(phrase) + ":"), "Missing translation " + phrase);
+  }
+});
+
 test("content remains accessible when JavaScript is disabled", () => {
   assert.doesNotMatch(home, /<section[^>]*data-scene[^>]*hidden/);
   assert.match(stageCSS, /without JavaScript, scenes are normal document sections/i);
