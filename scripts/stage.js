@@ -171,8 +171,33 @@
     moveBy(direction);
   }, { passive: true });
 
+  // Touchscreens preserve normal scrolling inside long scenes. At the top/bottom,
+  // a deliberate vertical swipe switches to the adjacent scene.
+  const stageWindow = document.querySelector("#stageWindow");
+  let touchStart = null;
+  stageWindow?.addEventListener("touchstart", event => {
+    if (event.touches.length !== 1 || event.target.closest("a, button, input, select, textarea")) {
+      touchStart = null;
+      return;
+    }
+    const point = event.touches[0];
+    touchStart = { x: point.clientX, y: point.clientY };
+  }, { passive: true });
+  stageWindow?.addEventListener("touchend", event => {
+    if (!touchStart || moving || event.changedTouches.length !== 1) return;
+    const point = event.changedTouches[0];
+    const dx = point.clientX - touchStart.x;
+    const dy = point.clientY - touchStart.y;
+    touchStart = null;
+    if (Math.abs(dy) < 70 || Math.abs(dy) < Math.abs(dx) * 1.3) return;
+    const direction = dy < 0 ? 1 : -1;
+    if (sceneCanScroll(direction)) return;
+    moveBy(direction);
+  }, { passive: true });
+  stageWindow?.addEventListener("touchcancel", () => { touchStart = null; });
+
   document.addEventListener("keydown", event => {
-    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    if (event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
     const element = event.target;
     if (element?.closest("input, textarea, select, [contenteditable='true']")) return;
     let direction = 0;
