@@ -256,3 +256,8 @@ html.stage-mode .stage-intro .name-reveal-delayed { animation-delay: 160ms; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none !important; }
   * { transition-duration: 0.01ms !important; }
 }
+
+/* The original marks have separate light/dark source variants. */
+.theme-light-only { display: none !important; }
+body.light-mode .theme-dark-only { display: none !important; }
+body.light-mode .theme-light-only { display: block !important; }
