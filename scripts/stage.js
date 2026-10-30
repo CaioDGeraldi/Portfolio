@@ -54,6 +54,7 @@
   }
   let current = stageFromHash();
   let moving = false;
+  let pendingHistoryScene = null;
   let lastWheelAt = 0;
 
   function announce() {
@@ -106,7 +107,19 @@
       transition.finished.then(() => {
         if (moveFocus) focusHeading();
         moving = false;
-      }).catch(() => { moving = false; });
+        if (pendingHistoryScene) {
+          const target = pendingHistoryScene;
+          pendingHistoryScene = null;
+          navigate(target, { updateHistory: false });
+        }
+      }).catch(() => {
+        moving = false;
+        if (pendingHistoryScene) {
+          const target = pendingHistoryScene;
+          pendingHistoryScene = null;
+          navigate(target, { updateHistory: false });
+        }
+      });
     } else {
       change();
       if (updateHistory) history.pushState({ scene: id }, "", "#" + id);
@@ -141,8 +154,16 @@
     if (following) navigate(following);
   });
 
-  window.addEventListener("popstate", () => navigate(stageFromHash(), { updateHistory: false }));
-  window.addEventListener("hashchange", () => navigate(stageFromHash(), { updateHistory: false }));
+  function syncFromAddress() {
+    const target = stageFromHash();
+    if (moving) {
+      pendingHistoryScene = target;
+      return;
+    }
+    navigate(target, { updateHistory: false });
+  }
+  window.addEventListener("popstate", syncFromAddress);
+  window.addEventListener("hashchange", syncFromAddress);
   window.addEventListener("portfolio-language-change", () => { announce(); updateThemeButton(); });
 
   function sceneCanScroll(delta) {
