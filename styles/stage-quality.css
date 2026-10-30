@@ -190,3 +190,17 @@ html.stage-mode .scene-footer .scene-navigation {
 }
 html.stage-mode .scene-footer .scene-controls { flex: 0 0 auto; }
 html.stage-mode .intro-title { overflow-wrap: anywhere; }
+
+/* Keep the cue's visible label in the accessibility tree on very short screens. */
+@media (max-height: 480px) {
+  .scroll-cue-label {
+    display: block;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
