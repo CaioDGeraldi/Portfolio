@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Retorna technical case study: modular Django architecture, PostgreSQL transactions, idempotent redemptions and concurrency testing.">
+  <meta name="description" content="Retorna is a multi-company loyalty platform with configurable points, rewards, campaigns, store-level policies and API integrations.">
   <meta name="theme-color" content="#1E2327">
   <title>Retorna | Engineering Case Study</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
@@ -41,8 +41,8 @@
         <img src="../assets/retorna-logo-light.svg" class="brand-logo retorna-official-logo theme-light-only" width="973" height="210" alt="" aria-hidden="true">
       </div>
       <h1>Retorna<span class="case-title-dot">.</span></h1>
-      <p class="case-subtitle">Loyalty infrastructure built around predictable business rules.</p>
-      <p class="case-introduction">A configurable multi-company loyalty application developed for the Data System Challenge. External business systems generate events; the platform applies loyalty rules and records the result.</p>
+      <p class="case-subtitle">A loyalty program that fits different businesses and stores.</p>
+      <p class="case-introduction">Retorna is a collaborative loyalty platform designed to reward returning customers. Companies can define loyalty policies, adapt rules for individual stores and run temporary campaigns. Existing sales systems connect through a versioned API instead of being replaced.</p>
       <div class="case-links">
         <a class="button button-primary" href="https://github.com/CaioDGeraldi/DataSystemChallenge" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i> Source repository</a>
         <a class="button button-secondary" href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/apps/fidelidade/resgates.py" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-code" aria-hidden="true"></i> Redemption service</a>
@@ -50,14 +50,14 @@
       <div class="case-metadata" aria-label="Project facts">
         <div><span>ROLE</span><strong>Collaborative team project</strong></div>
         <div><span>STACK</span><strong>Django · DRF · PostgreSQL</strong></div>
-        <div><span>FOCUS</span><strong>Data integrity & business rules</strong></div>
+        <div><span>FOCUS</span><strong>Loyalty programs & flexible policies</strong></div>
       </div>
     </div>
 
     <nav class="case-toc" aria-label="On this page">
       <span>ON THIS PAGE</span>
       <a href="#problem">The problem</a>
-      <a href="#architecture">Architecture</a>
+      <a href="#architecture">The approach</a>
       <a href="#decisions">Engineering decisions</a>
       <a href="#evidence">Evidence</a>
     </nav>
@@ -65,14 +65,14 @@
     <section class="case-section" id="problem">
       <div class="case-section-heading"><span>01 / CONTEXT</span><h2>The problem</h2></div>
       <div class="case-reading">
-        <p>A loyalty platform must do more than calculate a balance. Purchases and redemptions can arrive twice, requests can overlap, and different stores can use different policies. In those situations, a visually correct dashboard does not prove that the data is correct.</p>
-        <p>The central engineering requirement was to protect points history and business invariants when integrations retry operations or customers attempt concurrent redemptions.</p>
+        <p>A business wants to reward customers for coming back. But a loyalty program becomes difficult to manage when every store has different rewards, campaigns or rules for earning and redeeming points. Disconnected spreadsheets or ad hoc integrations make the customer experience inconsistent.</p>
+        <p>Retorna addresses that with a multi-company loyalty model: a company can operate several stores, define configurable policies and connect external sales channels through an API. Keeping balances and redemptions consistent is an important technical requirement within that broader product.</p>
       </div>
     </section>
 
     <section class="case-section" id="architecture">
-      <div class="case-section-heading"><span>02 / SYSTEM</span><h2>Architecture</h2></div>
-      <p class="case-section-summary">A modular Django monolith, with shared business services used by the web interface and versioned REST API.</p>
+      <div class="case-section-heading"><span>02 / PRODUCT</span><h2>The approach</h2></div>
+      <p class="case-section-summary">A shared loyalty platform sits alongside existing sales systems. External operations supply the transaction facts; Retorna applies configured loyalty rules, maintains history and returns the result. Django services keep the API and web interface aligned.</p>
       <div class="architecture-diagram" role="img" aria-label="External business systems connect to a REST API, which calls Django domain services backed by PostgreSQL and audit history.">
         <div class="diagram-box diagram-input"><span>INPUT</span><strong>Sales / ERP / Commerce</strong></div>
         <div class="diagram-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-down"></i></div>
@@ -86,25 +86,25 @@
     </section>
 
     <section class="case-section" id="decisions">
-      <div class="case-section-heading"><span>03 / DESIGN</span><h2>Engineering decisions</h2></div>
+      <div class="case-section-heading"><span>03 / DESIGN</span><h2>Product and engineering decisions</h2></div>
       <div class="case-decision-grid">
         <article class="case-decision">
           <span class="decision-number">01</span>
-          <h3>Idempotent operations</h3>
-          <p>A repeated request should not create a second redemption. The redemption service checks external identifiers and handles conflicting retries.</p>
-          <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/apps/fidelidade/resgates.py" target="_blank" rel="noopener noreferrer">Inspect implementation <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+          <h3>Configurable loyalty policies</h3>
+          <p>The product model supports companies with multiple stores, configurable earning and redemption policies, store overrides and temporary campaigns instead of a single hard-coded program.</p>
+          <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/docs/ARQUITETURA_PRODUTO.md" target="_blank" rel="noopener noreferrer">Inspect product model <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
         </article>
         <article class="case-decision">
           <span class="decision-number">02</span>
-          <h3>Concurrency control</h3>
-          <p>Transactional boundaries, row locks and PostgreSQL advisory locks guard balance-changing operations when requests arrive simultaneously.</p>
-          <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/apps/fidelidade/test_concorrencia_resgates.py" target="_blank" rel="noopener noreferrer">Inspect tests <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+          <h3>Integrate, don't replace</h3>
+          <p>Retorna is not a point-of-sale system or ERP. Existing tools send business events through a versioned API; the loyalty platform applies its rules and records the result.</p>
+          <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/docs/INTEGRACAO_API.md" target="_blank" rel="noopener noreferrer">Inspect integration strategy <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
         </article>
         <article class="case-decision">
           <span class="decision-number">03</span>
-          <h3>Modular boundaries</h3>
-          <p>Domain services centralize loyalty operations so the REST API and server-rendered interface do not have to duplicate rules.</p>
-          <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/tree/main/apps" target="_blank" rel="noopener noreferrer">Explore application modules <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+          <h3>Reliable points and redemptions</h3>
+          <p>Core balance-changing operations use transactional services. Idempotency and concurrency tests address repeated or simultaneous redemption requests without making those edge cases the product's purpose.</p>
+          <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/apps/fidelidade/test_concorrencia_resgates.py" target="_blank" rel="noopener noreferrer">Inspect redemption tests <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
         </article>
       </div>
     </section>
