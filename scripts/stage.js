@@ -54,6 +54,8 @@
   }
   let current = stageFromHash();
   let moving = false;
+  let pendingHistoryScene = null;
+  let pendingUserScene = null;
   let lastWheelAt = 0;
 
   function announce() {
@@ -94,7 +96,11 @@
   }
 
   function navigate(id, { updateHistory = true, moveFocus = true } = {}) {
-    if (!sceneIds.includes(id) || moving || id === current) return;
+    if (!sceneIds.includes(id) || id === current) return;
+    if (moving) {
+      pendingUserScene = { id, updateHistory, moveFocus };
+      return;
+    }
     moving = true;
     const change = () => swapStage(id);
 
@@ -103,10 +109,21 @@
       transition.updateCallbackDone.then(() => {
         if (updateHistory) history.pushState({ scene: id }, "", "#" + id);
       }).catch(() => {});
-      transition.finished.then(() => {
+      function finishTransition() {
         if (moveFocus) focusHeading();
         moving = false;
-      }).catch(() => { moving = false; });
+        if (pendingHistoryScene) {
+          const target = pendingHistoryScene;
+          pendingHistoryScene = null;
+          pendingUserScene = null;
+          navigate(target, { updateHistory: false });
+        } else if (pendingUserScene) {
+          const nextChange = pendingUserScene;
+          pendingUserScene = null;
+          navigate(nextChange.id, { updateHistory: nextChange.updateHistory, moveFocus: nextChange.moveFocus });
+        }
+      }
+      transition.finished.then(finishTransition, finishTransition);
     } else {
       change();
       if (updateHistory) history.pushState({ scene: id }, "", "#" + id);
@@ -141,8 +158,16 @@
     if (following) navigate(following);
   });
 
-  window.addEventListener("popstate", () => navigate(stageFromHash(), { updateHistory: false }));
-  window.addEventListener("hashchange", () => navigate(stageFromHash(), { updateHistory: false }));
+  function syncFromAddress() {
+    const target = stageFromHash();
+    if (moving) {
+      pendingHistoryScene = target;
+      return;
+    }
+    navigate(target, { updateHistory: false });
+  }
+  window.addEventListener("popstate", syncFromAddress);
+  window.addEventListener("hashchange", syncFromAddress);
   window.addEventListener("portfolio-language-change", () => { announce(); updateThemeButton(); });
 
   function sceneCanScroll(delta) {
@@ -171,8 +196,33 @@
     moveBy(direction);
   }, { passive: true });
 
+  // Touchscreens preserve normal scrolling inside long scenes. At the top/bottom,
+  // a deliberate vertical swipe switches to the adjacent scene.
+  const stageWindow = document.querySelector("#stageWindow");
+  let touchStart = null;
+  stageWindow?.addEventListener("touchstart", event => {
+    if (event.touches.length !== 1 || event.target.closest("a, button, input, select, textarea")) {
+      touchStart = null;
+      return;
+    }
+    const point = event.touches[0];
+    touchStart = { x: point.clientX, y: point.clientY };
+  }, { passive: true });
+  stageWindow?.addEventListener("touchend", event => {
+    if (!touchStart || moving || event.changedTouches.length !== 1) return;
+    const point = event.changedTouches[0];
+    const dx = point.clientX - touchStart.x;
+    const dy = point.clientY - touchStart.y;
+    touchStart = null;
+    if (Math.abs(dy) < 70 || Math.abs(dy) < Math.abs(dx) * 1.3) return;
+    const direction = dy < 0 ? 1 : -1;
+    if (sceneCanScroll(direction)) return;
+    moveBy(direction);
+  }, { passive: true });
+  stageWindow?.addEventListener("touchcancel", () => { touchStart = null; });
+
   document.addEventListener("keydown", event => {
-    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    if (event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
     const element = event.target;
     if (element?.closest("input, textarea, select, [contenteditable='true']")) return;
     let direction = 0;

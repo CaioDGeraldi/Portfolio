@@ -1,0 +1,13 @@
+{
+  "name": "caiodgeraldi-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Browser-only test tooling for the static portfolio; not shipped to visitors",
+  "scripts": {
+    "test:unit": "node --test scripts/*.test.cjs",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1"
+  }
+}

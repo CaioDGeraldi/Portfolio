@@ -124,6 +124,18 @@ test("Retorna prioritizes configurable programs, not technical edge cases", () =
   assert.doesNotMatch(home, /What happens when a request arrives twice/);
 });
 
+test("viewport improvements preserve readable scenes and touch navigation", () => {
+  const quality = read("styles/stage-quality.css");
+  assert.match(home, /styles\/stage-quality\.css/);
+  assert.match(quality, /100dvh/);
+  assert.match(quality, /align-items: safe center/);
+  assert.match(quality, /overflow-y: auto/);
+  assert.match(stageScript, /touchstart/);
+  assert.match(stageScript, /touchend/);
+  assert.match(stageScript, /sceneCanScroll\(direction\)/);
+  assert.match(stageScript, /event\.repeat/);
+});
+
 test("content remains accessible when JavaScript is disabled", () => {
   assert.doesNotMatch(home, /<section[^>]*data-scene[^>]*hidden/);
   assert.match(stageCSS, /without JavaScript, scenes are normal document sections/i);

@@ -1,0 +1,192 @@
+/* Responsive and keyboard-first refinements.
+   The scene stays fixed while its content may scroll INSIDE the scene. */
+@supports (height: 100dvh) {
+  html.stage-mode,
+  html.stage-mode body { height: 100dvh; }
+}
+html.stage-mode .stage-frame,
+html.stage-mode .stage-window,
+html.stage-mode .stage-main {
+  min-height: 0;
+  min-width: 0;
+}
+html.stage-mode .stage-scene {
+  min-width: 0;
+  min-height: 0;
+  align-items: safe center;
+  scroll-padding-block: 20px 76px;
+  overflow-x: clip;
+  overflow-y: auto;
+}
+html.stage-mode .stage-scene .scene-inner {
+  flex-shrink: 0;
+  min-width: 0;
+  margin-inline: auto;
+  padding-block: clamp(52px, 6vh, 70px) 82px;
+}
+html.stage-mode .stage-intro .scene-inner {
+  padding-block: clamp(52px, 7vh, 76px) 82px;
+}
+html.stage-mode .stage-index {
+  pointer-events: none;
+}
+.intro-title {
+  font-size: clamp(3.1rem, min(10.5vw, 14vh), 9.2rem);
+  line-height: 1.02;
+  letter-spacing: -.065em;
+  overflow-wrap: normal;
+}
+.intro-title > span { max-width: 100%; width: max-content; }
+.project-description,
+.project-inner,
+.project-heading { min-width: 0; }
+.project-description h2,
+.large-heading { overflow-wrap: anywhere; text-wrap: balance; }
+.project-detail,
+.about-summary,
+.contact-summary { line-height: 1.65; }
+.scene-kicker,
+.project-number,
+.meta-label,
+.scene-footnote,
+.header-role,
+.scene-status {
+  font-size: clamp(.78rem, 1vw, .84rem);
+  line-height: 1.5;
+  letter-spacing: .035em;
+  font-weight: 600;
+}
+.project-facts span { font-size: .78rem; }
+.scene-navigation a { font-size: .87rem; font-weight: 600; }
+.scene-navigation a span { font-size: .76rem; }
+.scene-controls button,
+.theme-button {
+  min-width: 44px;
+  min-height: 44px;
+  cursor: pointer;
+}
+.language-picker a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 32px;
+}
+.scene-navigation a { min-height: 44px; }
+.scroll-cue {
+  min-height: 44px;
+  bottom: 10px;
+  background: var(--bg);
+}
+.scroll-cue:focus-visible,
+.theme-button:focus-visible,
+.scene-controls button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+@media (max-height: 700px) {
+  html.stage-mode .stage-intro .scene-inner,
+  html.stage-mode .stage-scene .scene-inner {
+    padding-top: 38px;
+    padding-bottom: 77px;
+  }
+  .intro-title { font-size: clamp(3rem, min(9.6vw, 13vh), 7rem); }
+}
+@media (max-height: 480px) {
+  html.stage-mode .stage-intro .scene-inner,
+  html.stage-mode .stage-scene .scene-inner {
+    padding-top: 24px;
+    padding-bottom: 68px;
+  }
+  .intro-title { font-size: clamp(2.8rem, min(9vw, 11vh), 5.4rem); }
+  .intro-actions { gap: 16px; }
+  .intro-tagline { font-size: .93rem; }
+}
+@media (max-width: 700px) {
+  .stage-main,
+  .site-header,
+  .scene-footer { width: min(calc(100% - 30px), var(--width)); }
+  html.stage-mode .stage-scene { align-items: safe center; }
+  html.stage-mode .stage-intro .scene-inner,
+  html.stage-mode .stage-scene .scene-inner {
+    padding-top: 42px;
+    padding-bottom: 76px;
+  }
+  .intro-title {
+    font-size: clamp(2.85rem, min(12vw, 14vh), 6.4rem);
+    letter-spacing: -.06em;
+  }
+  .project-logo-frame { max-height: 145px; }
+  .project-description h2 { font-size: clamp(1.85rem, 6.5vw, 3.3rem); }
+  .about-grid > div { grid-template-columns: minmax(95px, 30%) minmax(0, 1fr); }
+  .scene-navigation a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 37px;
+    min-height: 44px;
+    padding-inline: 4px;
+  }
+  .scene-controls button { min-width: 44px; min-height: 44px; }
+  .scene-footer { min-height: 66px; }
+}
+@media (max-width: 700px) and (max-height: 480px) {
+  html.stage-mode .stage-scene .scene-inner {
+    padding-top: 24px;
+    padding-bottom: 67px;
+  }
+  .intro-title { font-size: clamp(2.65rem, min(11vw, 11vh), 4.8rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue-arrow { animation: none !important; }
+}
+/* Zoom and text enlargement: allow readable content rather than clipping it. */
+@media (max-width: 380px) {
+  .header-actions { gap: 4px; }
+  .site-brand > span:last-child { font-size: .76rem; }
+  .scene-navigation { gap: 0; }
+  .scene-navigation a { min-width: 33px; }
+  .intro-title { font-size: clamp(2.6rem, 11vw, 4.3rem); }
+}
+
+/* Browser QA regression: intrinsic flex widths must never enlarge the stage. */
+html.stage-mode .stage-main,
+html.stage-mode .stage-frame,
+html.stage-mode .stage-window,
+html.stage-mode .stage-scene { max-width: 100%; min-width: 0; }
+html.stage-mode .stage-scene .scene-inner {
+  box-sizing: border-box;
+  width: min(100%, 970px);
+  max-width: 100%;
+  flex: 0 1 auto;
+}
+html.stage-mode .stage-project .scene-inner { width: min(100%, 1080px); }
+html.stage-mode .intro-title {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+html.stage-mode .intro-title > span {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+html.stage-mode .scroll-cue {
+  max-width: calc(100% - 24px);
+}
+@media (max-width: 700px) {
+  html.stage-mode .intro-title { font-size: clamp(2.5rem, 10.5vw, 5rem); }
+}
+
+/* A one-column grid must not grow to its children's min-content width. */
+html.stage-mode body { grid-template-columns: minmax(0, 1fr); width: 100%; max-width: 100%; }
+html.stage-mode .site-header,
+html.stage-mode .scene-footer,
+html.stage-mode .stage-main { min-width: 0; max-width: min(calc(100% - 30px), var(--width)); }
+html.stage-mode .scene-footer .scene-navigation {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+html.stage-mode .scene-footer .scene-controls { flex: 0 0 auto; }
+html.stage-mode .intro-title { overflow-wrap: anywhere; }
