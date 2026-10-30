@@ -178,3 +178,15 @@ html.stage-mode .scroll-cue {
 @media (max-width: 700px) {
   html.stage-mode .intro-title { font-size: clamp(2.5rem, 10.5vw, 5rem); }
 }
+
+/* A one-column grid must not grow to its children's min-content width. */
+html.stage-mode body { grid-template-columns: minmax(0, 1fr); width: 100%; max-width: 100%; }
+html.stage-mode .site-header,
+html.stage-mode .scene-footer,
+html.stage-mode .stage-main { min-width: 0; max-width: min(calc(100% - 30px), var(--width)); }
+html.stage-mode .scene-footer .scene-navigation {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+html.stage-mode .scene-footer .scene-controls { flex: 0 0 auto; }
+html.stage-mode .intro-title { overflow-wrap: anywhere; }
