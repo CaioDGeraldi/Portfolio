@@ -257,6 +257,10 @@ html.stage-mode .stage-intro .name-reveal-delayed { animation-delay: 160ms; }
   * { transition-duration: 0.01ms !important; }
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
+
 /* The original marks have separate light/dark source variants. */
 .theme-light-only { display: none !important; }
 body.light-mode .theme-dark-only { display: none !important; }
