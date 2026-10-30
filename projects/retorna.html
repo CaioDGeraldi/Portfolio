@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="../styles/editorial.css">
   <link rel="stylesheet" href="../styles/case-study.css">
   <link rel="stylesheet" href="../styles/project-brand.css">
+  <link rel="stylesheet" href="../styles/case-evidence.css">
 </head>
 <body class="case-page">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -57,6 +58,7 @@
     <nav class="case-toc" aria-label="On this page">
       <span>ON THIS PAGE</span>
       <a href="#problem">The problem</a>
+      <a href="#journey">Loyalty journey</a>
       <a href="#architecture">The approach</a>
       <a href="#decisions">Engineering decisions</a>
       <a href="#evidence">Evidence</a>
@@ -70,8 +72,36 @@
       </div>
     </section>
 
+    <section class="case-section" id="journey">
+      <div class="case-section-heading"><span>02 / PRODUCT FLOW</span><h2>How a loyalty event becomes a reward</h2></div>
+      <p class="case-section-summary">The product is designed to fit alongside the company's existing sales tools. The sequence below illustrates its documented responsibilities, rather than showing a recording of a deployed system.</p>
+      <ol class="loyalty-journey" aria-label="Conceptual Retorna loyalty journey">
+        <li>
+          <span class="journey-step">01 / SALES EVENT</span>
+          <h3>The business records a sale</h3>
+          <p>An existing point-of-sale system, ERP or e-commerce integration sends a transaction event to Retorna.</p>
+        </li>
+        <li>
+          <span class="journey-step">02 / CONFIGURATION</span>
+          <h3>The right policy applies</h3>
+          <p>The company policy, store-specific overrides and any applicable campaign determine how loyalty points or rewards work.</p>
+        </li>
+        <li>
+          <span class="journey-step">03 / HISTORY</span>
+          <h3>Points stay traceable</h3>
+          <p>Business services apply the rules and maintain a history that can support balances and later redemptions.</p>
+        </li>
+        <li>
+          <span class="journey-step">04 / RETURN VISIT</span>
+          <h3>The customer has a reason to come back</h3>
+          <p>The accumulated loyalty value can be used within the configured redemption policies, encouraging repeat visits.</p>
+        </li>
+      </ol>
+      <p class="case-diagram-note">Conceptual product journey based on the repository's architecture and integration documentation. Not a claim that all features are commercially deployed.</p>
+    </section>
+
     <section class="case-section" id="architecture">
-      <div class="case-section-heading"><span>02 / PRODUCT</span><h2>The approach</h2></div>
+      <div class="case-section-heading"><span>03 / ARCHITECTURE</span><h2>The approach</h2></div>
       <p class="case-section-summary">Rather than replacing a point-of-sale system or ERP, Retorna receives sales events from those tools, applies the business's configured loyalty policies, records the points history and returns a result. Shared Django services support both the interface and the versioned API.</p>
       <div class="architecture-diagram" role="img" aria-label="External business systems connect to a REST API, which calls Django domain services backed by PostgreSQL and audit history.">
         <div class="diagram-box diagram-input"><span>INPUT</span><strong>Sales / ERP / Commerce</strong></div>
@@ -86,7 +116,7 @@
     </section>
 
     <section class="case-section" id="decisions">
-      <div class="case-section-heading"><span>03 / DESIGN</span><h2>Product and engineering decisions</h2></div>
+      <div class="case-section-heading"><span>04 / DESIGN</span><h2>Product and engineering decisions</h2></div>
       <div class="case-decision-grid">
         <article class="case-decision">
           <span class="decision-number">01</span>
@@ -110,12 +140,14 @@
     </section>
 
     <section class="case-section" id="evidence">
-      <div class="case-section-heading"><span>04 / VERIFICATION</span><h2>Evidence & limitations</h2></div>
+      <div class="case-section-heading"><span>05 / VERIFICATION</span><h2>Evidence & limitations</h2></div>
       <div class="case-evidence">
         <div>
           <h3>What can be inspected</h3>
           <p>The repository includes business services, database-backed concurrency tests, API documentation, CI workflows and the development history.</p>
           <div class="case-source-links">
+            <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/README.md" target="_blank" rel="noopener noreferrer">Product README and scope <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+            <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/docs/ARQUITETURA_PRODUTO.md" target="_blank" rel="noopener noreferrer">Product architecture and business rules <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
             <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/actions/runs/36492776096" target="_blank" rel="noopener noreferrer">Successful historical CI run <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
             <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/.github/workflows/ci.yml" target="_blank" rel="noopener noreferrer">CI workflow <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
             <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/docs/USO_DE_IA.md" target="_blank" rel="noopener noreferrer">AI-assisted development disclosure <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
