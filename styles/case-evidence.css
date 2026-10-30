@@ -63,3 +63,17 @@
 @media (prefers-reduced-motion: reduce) {
   .case-screenshot img { transition: none; }
 }
+
+/* Axe/WCAG contrast regression: technical micro-labels on dark cards. */
+.case-page .case-metadata span,
+.case-page .approach-common > span,
+.case-page .approach-modules > div > span,
+.case-page .diagram-box > span {
+  color: #b7c1c7;
+}
+body.light-mode.case-page .case-metadata span,
+body.light-mode.case-page .approach-common > span,
+body.light-mode.case-page .approach-modules > div > span,
+body.light-mode.case-page .diagram-box > span {
+  color: #46535b;
+}

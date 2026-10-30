@@ -74,7 +74,7 @@
     next.disabled = position === scenes.length;
     if (cue) {
       cue.hidden = position === scenes.length;
-      cue.setAttribute("aria-label", safeLanguage() === "pt-BR" ? "Ir para a próxima cena" : "Go to next scene");
+      // The visible cue text is the accessible name in both languages.
     }
   }
 
