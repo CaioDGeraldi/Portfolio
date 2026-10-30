@@ -12,19 +12,16 @@ permissions:
 jobs:
   chromium:
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.56.1-noble
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
-      - name: Install pinned browser test dependency
+      - name: Install pinned browser test dependency (browsers provided by image)
         run: npm install --no-package-lock --ignore-scripts --no-audit --no-fund
-      - name: Install Chromium
-        run: npx playwright install --with-deps chromium
       - name: Test responsive layout, navigation, language and theme
         run: npm run test:e2e
       - name: Upload failure screenshots and traces
