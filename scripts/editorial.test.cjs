@@ -4,69 +4,95 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const root = path.join(__dirname, "..");
-const home = fs.readFileSync(path.join(root, "index.html"), "utf8");
-const casePage = fs.readFileSync(path.join(root, "projects/retorna.html"), "utf8");
-const dictionary = fs.readFileSync(path.join(__dirname, "i18n.js"), "utf8");
-const caseScript = fs.readFileSync(path.join(__dirname, "case.js"), "utf8");
-const mainScript = fs.readFileSync(path.join(__dirname, "main.js"), "utf8");
+const read = relative => fs.readFileSync(path.join(root, relative), "utf8");
+const home = read("index.html");
+const fractaw = read("projects/fractaw.html");
+const retorna = read("projects/retorna.html");
+const dictionary = read("scripts/i18n.js");
+const stageScript = read("scripts/stage.js");
+const caseScript = read("scripts/case.js");
+const stageCSS = read("styles/stage.css");
 
-test("homepage immediately presents the work, without a full-screen intro", () => {
-  assert.doesNotMatch(home, /id="intro"/);
-  assert.match(home, /class="hero-headline"/);
+test("five in-place scenes have correct navigation targets", () => {
+  const ids = [...home.matchAll(/<section\b[^>]*id="([^"]+)"[^>]*data-scene/g)].map(m => m[1]);
+  assert.deepEqual(ids, ["intro", "fractaw", "retorna", "about", "contact"]);
+  for (const id of ids) {
+    assert.ok(home.includes('href="#' + id + '" data-scene-link'));
+    assert.ok(home.includes('aria-labelledby="' + id + 'Title"'));
+  }
+  assert.match(home, /id="stageWindow"/);
+  assert.match(home, /id="prevScene"/);
+  assert.match(home, /id="nextScene"/);
+  assert.match(stageCSS, /html\.stage-mode \.stage-scene\[hidden\]/);
+  assert.match(stageScript, /document\.startViewTransition/);
+  assert.match(stageScript, /history\.pushState/);
+  assert.match(stageScript, /focusHeading/);
+  assert.match(stageScript, /prefers-reduced-motion/);
+});
+
+test("Fractaw is a concept and Retorna is a source-backed collaborative project", () => {
+  assert.match(home, /href="\.\/projects\/fractaw\.html" data-localized-link/);
   assert.match(home, /href="\.\/projects\/retorna\.html" data-localized-link/);
-  assert.match(home, /href="#projetos"/);
-  assert.match(home, /styles\/editorial\.css/);
+  assert.doesNotMatch(home, /Kambio|Intelligent Markdown IDE/);
+  assert.match(home, /Fractaw starts with a practical problem/);
+  assert.match(home, /RETORNA \/ COLLABORATIVE PROJECT/);
+  assert.match(retorna, /team documents the use of AI tools/);
+  assert.match(retorna, /test_concorrencia_resgates\.py/);
+  assert.match(fractaw, /Not a commercial claim/);
+  assert.match(fractaw, /No customer adoption, production deployment/);
+  assert.match(fractaw, /Conceptual model illustrating the product direction/);
 });
 
-test("only Retorna appears in the public project showcase", () => {
-  const projectCards = [...home.matchAll(/class="project-card(?:\s|")/g)];
-  assert.equal(projectCards.length, 1);
-  assert.match(home, /<h3>Retorna<\/h3>/);
-  assert.doesNotMatch(home, /Kambio|Fractaw Modules|Intelligent Markdown IDE/);
-  assert.doesNotMatch(home, /data-filter=/);
-  assert.doesNotMatch(home, /class="all-projects-link"/);
-});
-
-test("Retorna has a navigable, source-linked technical case study", () => {
-  assert.match(casePage, /<html lang="en">/);
-  assert.match(casePage, /<main id="content"/);
-  assert.match(casePage, /<h1>Retorna/);
-  for (const anchor of ["problem", "architecture", "decisions", "evidence"]) {
-    assert.match(casePage, new RegExp('id="' + anchor + '"'));
-    assert.match(casePage, new RegExp('href="#' + anchor + '"'));
+test("original brand assets are included and used rather than placeholder icons", () => {
+  for (const asset of [
+    "assets/fractaw-logo-dark.svg", "assets/fractaw-logo-light.svg",
+    "assets/retorna-logo-dark.svg", "assets/retorna-logo-light.svg"
+  ]) {
+    const svg = read(asset);
+    assert.match(svg, /<svg\b/);
+    assert.match(svg, /<path\b/);
+    assert.doesNotMatch(svg, /<script|<image|<foreignObject/i);
+    assert.match(home, new RegExp(asset.replaceAll(".", "\\.")));
   }
-  assert.match(casePage, /apps\/fidelidade\/resgates\.py/);
-  assert.match(casePage, /test_concorrencia_resgates\.py/);
-  assert.match(casePage, /team documents the use of AI tools/);
-  assert.match(casePage, /scripts\/i18n\.js/);
-  assert.match(casePage, /scripts\/case\.js/);
+  assert.match(fractaw, /Fractaw official logo/);
+  assert.match(retorna, /Retorna official logo/);
+  assert.match(stageCSS, /body\.light-mode \.theme-light-only/);
 });
 
-test("all local case navigation links support explicit locale routing", () => {
-  const localLinks = [...casePage.matchAll(/<a\b[^>]*data-localized-link[^>]*>/g)];
-  assert.ok(localLinks.length >= 2);
-  for (const match of localLinks) {
-    assert.match(match[0], /href="\.\.\/index\.html#projetos"/);
+test("case studies provide problem, decisions and honest evidence limits", () => {
+  for (const [page, anchors] of [
+    [fractaw, ["problem", "approach", "thinking", "scope"]],
+    [retorna, ["problem", "architecture", "decisions", "evidence"]]
+  ]) {
+    assert.match(page, /<main id="content"/);
+    assert.match(page, /scripts\/i18n\.js/);
+    assert.match(page, /scripts\/case\.js/);
+    for (const id of anchors) {
+      assert.ok(page.includes('id="' + id + '"'), id);
+      assert.ok(page.includes('href="#' + id + '"'), id);
+    }
   }
-  assert.match(dictionary, /target\.searchParams\.set\("lang", lang\)/);
-});
-
-test("new project content has Portuguese translations", () => {
-  const essentialLabels = [
-    "Selected work", "Read case study", "The problem", "Engineering decisions",
-    "Evidence & limitations", "Loyalty infrastructure built around predictable business rules.",
-    "Architecture", "Source repository", "TEAM PROJECT", "Back to selected work"
-  ];
-  for (const label of essentialLabels) {
-    // Locale keys are JSON string literals in the dictionary.
-    assert.ok(dictionary.includes(JSON.stringify(label) + ":"), "Missing PT translation: " + label);
-  }
-});
-
-test("decorative 3D is optional and case-study theme stays independent", () => {
-  assert.match(mainScript, /allowDecorative3D/);
-  assert.match(mainScript, /saveData/);
-  assert.doesNotMatch(mainScript, /function updateIntro\(/);
+  assert.match(fractaw, /href="\.\/retorna\.html" data-localized-link/);
+  assert.match(retorna, /href="\.\/fractaw\.html" data-localized-link/);
   assert.match(caseScript, /portfolio-theme/);
-  assert.match(caseScript, /portfolio-language-change/);
+});
+
+test("content has Portuguese translations for navigation and each project", () => {
+  for (const key of [
+    "Explore the work", "Business software should fit the business.",
+    "Explore Fractaw's idea", "Explore Retorna's case",
+    "Have a problem worth solving?", "The approach",
+    "Not a commercial claim", "Fractaw product vision",
+    "What happens when a request arrives twice?"
+  ]) {
+    assert.ok(dictionary.includes(JSON.stringify(key) + ":"), "Missing translation: " + key);
+  }
+  assert.match(dictionary, /searchParams\.set\("lang", lang\)/);
+});
+
+test("content remains accessible when JavaScript is disabled", () => {
+  assert.doesNotMatch(home, /<section[^>]*data-scene[^>]*hidden/);
+  assert.match(stageCSS, /without JavaScript, scenes are normal document sections/i);
+  assert.match(home, /class="skip-link"/);
+  assert.match(stageScript, /stage-mode/);
 });
