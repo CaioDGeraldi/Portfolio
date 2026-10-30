@@ -23,12 +23,17 @@ for (const viewport of sizes) {
         stageRight: stage.getBoundingClientRect().right,
         documentWidth: document.documentElement.scrollWidth,
         windowWidth: innerWidth,
+        mainWidth: document.querySelector(".stage-main").getBoundingClientRect().width,
+        sceneWidth: stage.getBoundingClientRect().width,
+        introWidth: document.querySelector(".intro-inner").getBoundingClientRect().width,
+        footerWidth: document.querySelector(".scene-footer").getBoundingClientRect().width,
+        computedFont: getComputedStyle(document.querySelector("#introTitle")).fontSize,
         scrollableHeight: stage.scrollHeight,
         clientHeight: stage.clientHeight
       };
     });
     expect(metrics.titleLeft).toBeGreaterThanOrEqual(-1);
-    expect(metrics.titleRight).toBeLessThanOrEqual(viewport.width + 2);
+    expect(metrics.titleRight, JSON.stringify(metrics)).toBeLessThanOrEqual(viewport.width + 2);
     expect(metrics.documentWidth).toBeLessThanOrEqual(viewport.width + 2);
     expect(metrics.scrollableHeight).toBeGreaterThanOrEqual(metrics.clientHeight);
     // The name is reachable without scrolling; tall content may scroll *inside* a scene.
