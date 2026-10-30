@@ -11,6 +11,7 @@
   const links = Array.from(document.querySelectorAll("[data-scene-link]"));
   const prev = document.querySelector("#prevScene");
   const next = document.querySelector("#nextScene");
+  const cue = document.querySelector("#scrollCue");
   const counter = document.querySelector("#sceneNumber");
   const status = document.querySelector("#sceneStatus");
   const theme = document.querySelector("#themeToggle");
@@ -69,6 +70,10 @@
     }
     prev.disabled = position === 1;
     next.disabled = position === scenes.length;
+    if (cue) {
+      cue.hidden = position === scenes.length;
+      cue.setAttribute("aria-label", safeLanguage() === "pt-BR" ? "Ir para a próxima cena" : "Go to next scene");
+    }
   }
 
   function swapStage(id) {
@@ -128,6 +133,10 @@
     if (previous) navigate(previous);
   });
   next.addEventListener("click", () => {
+    const following = sceneIds[sceneIds.indexOf(current) + 1];
+    if (following) navigate(following);
+  });
+  cue?.addEventListener("click", () => {
     const following = sceneIds[sceneIds.indexOf(current) + 1];
     if (following) navigate(following);
   });
