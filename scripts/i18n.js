@@ -304,7 +304,7 @@
     "The approach combines shared organizational services with independent business modules. A school and a beverage distributor can rely on a common foundation while keeping their daily operations different.": "A abordagem combina serviços organizacionais compartilhados com módulos independentes. Uma escola e um distribuidor de bebidas podem usar a mesma base sem perder as particularidades das operações diárias.",
     "Fractaw product vision": "Visão de produto Fractaw",
     "Back to selected work": "Voltar aos projetos selecionados",
-    "Engineering portfolio": "Portfólio de engenharia"
+    "Engineering portfolio": "Portfólio de engenharia",
     "Software that fits your business, not the other way around.": "Software que se adapta à empresa, não o contrário.",
     "Companies often pay for software features they never use, while still relying on disconnected tools. Fractaw aims to change that with a modular management platform.": "Muitas empresas pagam por funções que nunca usam e ainda precisam de ferramentas desconectadas. O Fractaw propõe mudar isso com uma plataforma modular de gestão.",
     "The approach is to let each business select the capabilities it needs and adapt workflows to its reality, keeping shared data and services connected instead of forcing a one-size-fits-all system.": "A proposta é permitir que cada empresa escolha os recursos necessários e adapte os processos à sua realidade, mantendo dados e serviços conectados, sem impor um sistema igual para todos.",
