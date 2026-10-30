@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Retorna is a multi-company loyalty platform with configurable points, rewards, campaigns, store-level policies and API integrations.">
+  <meta name="description" content="Retorna is a configurable multi-company loyalty platform that adapts points, rewards, campaigns and store-specific policies to each business.">
   <meta name="theme-color" content="#1E2327">
   <title>Retorna | Engineering Case Study</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
@@ -41,8 +41,8 @@
         <img src="../assets/retorna-logo-light.svg" class="brand-logo retorna-official-logo theme-light-only" width="973" height="210" alt="" aria-hidden="true">
       </div>
       <h1>Retorna<span class="case-title-dot">.</span></h1>
-      <p class="case-subtitle">A loyalty program that fits different businesses and stores.</p>
-      <p class="case-introduction">Retorna is a collaborative loyalty platform designed to reward returning customers. Companies can define loyalty policies, adapt rules for individual stores and run temporary campaigns. Existing sales systems connect through a versioned API instead of being replaced.</p>
+      <p class="case-subtitle">Loyalty programs should fit the business, not force the business to fit.</p>
+      <p class="case-introduction">Retorna is a collaborative loyalty platform designed around each company's needs. Businesses can configure how customers earn points, define rewards and redemptions, adapt policies for individual stores and run temporary campaigns. Existing sales systems connect through an API rather than being replaced.</p>
       <div class="case-links">
         <a class="button button-primary" href="https://github.com/CaioDGeraldi/DataSystemChallenge" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i> Source repository</a>
         <a class="button button-secondary" href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/apps/fidelidade/resgates.py" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-code" aria-hidden="true"></i> Redemption service</a>
@@ -50,7 +50,7 @@
       <div class="case-metadata" aria-label="Project facts">
         <div><span>ROLE</span><strong>Collaborative team project</strong></div>
         <div><span>STACK</span><strong>Django · DRF · PostgreSQL</strong></div>
-        <div><span>FOCUS</span><strong>Loyalty programs & flexible policies</strong></div>
+        <div><span>FOCUS</span><strong>Adaptable loyalty programs</strong></div>
       </div>
     </div>
 
@@ -65,14 +65,14 @@
     <section class="case-section" id="problem">
       <div class="case-section-heading"><span>01 / CONTEXT</span><h2>The problem</h2></div>
       <div class="case-reading">
-        <p>A business wants to reward customers for coming back. But a loyalty program becomes difficult to manage when every store has different rewards, campaigns or rules for earning and redeeming points. Disconnected spreadsheets or ad hoc integrations make the customer experience inconsistent.</p>
-        <p>Retorna addresses that with a multi-company loyalty model: a company can operate several stores, define configurable policies and connect external sales channels through an API. Keeping balances and redemptions consistent is an important technical requirement within that broader product.</p>
+        <p>Businesses want to encourage customers to return, but loyalty programs rarely work the same way everywhere. Fixed rules make it difficult to reflect each company's reward strategy, and multiple stores may need different policies or temporary campaigns.</p>
+        <p>Retorna's model is configurable by company, with store-level overrides, reward and redemption policies, and campaign rules. It connects to existing sales channels through an API so the loyalty program can fit the company's operations. Transactional integrity supports the experience behind the scenes.</p>
       </div>
     </section>
 
     <section class="case-section" id="architecture">
       <div class="case-section-heading"><span>02 / PRODUCT</span><h2>The approach</h2></div>
-      <p class="case-section-summary">A shared loyalty platform sits alongside existing sales systems. External operations supply the transaction facts; Retorna applies configured loyalty rules, maintains history and returns the result. Django services keep the API and web interface aligned.</p>
+      <p class="case-section-summary">Rather than replacing a point-of-sale system or ERP, Retorna receives sales events from those tools, applies the business's configured loyalty policies, records the points history and returns a result. Shared Django services support both the interface and the versioned API.</p>
       <div class="architecture-diagram" role="img" aria-label="External business systems connect to a REST API, which calls Django domain services backed by PostgreSQL and audit history.">
         <div class="diagram-box diagram-input"><span>INPUT</span><strong>Sales / ERP / Commerce</strong></div>
         <div class="diagram-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-down"></i></div>
@@ -90,8 +90,8 @@
       <div class="case-decision-grid">
         <article class="case-decision">
           <span class="decision-number">01</span>
-          <h3>Configurable loyalty policies</h3>
-          <p>The product model supports companies with multiple stores, configurable earning and redemption policies, store overrides and temporary campaigns instead of a single hard-coded program.</p>
+          <h3>Rules that match each business</h3>
+          <p>Each business can define points and redemption policies, override rules for individual stores and use temporary campaigns instead of being limited to one hard-coded loyalty program.</p>
           <a href="https://github.com/CaioDGeraldi/DataSystemChallenge/blob/main/docs/ARQUITETURA_PRODUTO.md" target="_blank" rel="noopener noreferrer">Inspect product model <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
         </article>
         <article class="case-decision">
