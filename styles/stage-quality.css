@@ -148,3 +148,33 @@ html.stage-mode .stage-index {
   .scene-navigation a { min-width: 33px; }
   .intro-title { font-size: clamp(2.6rem, 11vw, 4.3rem); }
 }
+
+/* Browser QA regression: intrinsic flex widths must never enlarge the stage. */
+html.stage-mode .stage-main,
+html.stage-mode .stage-frame,
+html.stage-mode .stage-window,
+html.stage-mode .stage-scene { max-width: 100%; min-width: 0; }
+html.stage-mode .stage-scene .scene-inner {
+  box-sizing: border-box;
+  width: min(100%, 970px);
+  max-width: 100%;
+  flex: 0 1 auto;
+}
+html.stage-mode .stage-project .scene-inner { width: min(100%, 1080px); }
+html.stage-mode .intro-title {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+html.stage-mode .intro-title > span {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+html.stage-mode .scroll-cue {
+  max-width: calc(100% - 24px);
+}
+@media (max-width: 700px) {
+  html.stage-mode .intro-title { font-size: clamp(2.5rem, 10.5vw, 5rem); }
+}
