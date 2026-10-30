@@ -60,7 +60,14 @@ node --check scripts/case.js
 node --test scripts/*.test.cjs
 ```
 
-A GitHub Actions workflow runs the checks for every PR to `main`.
+A GitHub Actions workflow runs the checks for every PR to `main`. The browser suite also runs Chromium at small viewport sizes and audits active scenes and the two case studies with `@axe-core/playwright` against WCAG 2.0, 2.1 and 2.2 A/AA rules that can be automated.
+
+```sh
+npm install --no-package-lock
+npm run test:e2e
+```
+
+**Automated accessibility checks are not full WCAG 2.2 AA certification.** Manual reviews are still required for keyboard behavior, screen readers, motion, zoom, contrast judgment and visual quality.
 
 ## Design principles
 
