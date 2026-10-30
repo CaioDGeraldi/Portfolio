@@ -31,3 +31,9 @@ for (const project of ["fractaw", "retorna"]) {
     await inspect(page);
   });
 }
+
+test("WCAG automated checks: bilingual recruiter profile", async ({ page }) => {
+  await page.goto("/profile.html?lang=pt-BR");
+  await expect(page.locator("html")).toHaveAttribute("lang", "pt-BR");
+  await inspect(page);
+});
