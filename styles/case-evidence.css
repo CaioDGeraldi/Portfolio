@@ -1,0 +1,65 @@
+/* Grounded evidence for project case studies, not marketing mockups. */
+.case-screenshot {
+  margin: 24px auto 0;
+  max-width: 1080px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--card);
+}
+.case-screenshot > a { display: block; }
+.case-screenshot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.case-screenshot a:focus-visible { outline: 3px solid var(--primary); outline-offset: -3px; }
+.case-screenshot figcaption {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: .88rem;
+  line-height: 1.6;
+}
+.loyalty-journey {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: stages;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.loyalty-journey > li {
+  min-width: 0;
+  padding: clamp(20px, 3vw, 28px);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+}
+.journey-step {
+  display: block;
+  margin-bottom: 18px;
+  font: 650 .75rem/1.45 var(--mono, monospace);
+  letter-spacing: .035em;
+  color: var(--primary);
+}
+.loyalty-journey h3 {
+  margin: 0 0 10px;
+  font-size: 1.14rem;
+  letter-spacing: -.025em;
+}
+.loyalty-journey p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .92rem;
+  line-height: 1.7;
+}
+@media (max-width: 680px) {
+  .loyalty-journey { grid-template-columns: 1fr; }
+  .case-screenshot figcaption { padding: 13px 15px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .case-screenshot img { transition: none; }
+}
