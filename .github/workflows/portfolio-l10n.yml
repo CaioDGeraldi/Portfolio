@@ -20,8 +20,7 @@ jobs:
       - name: Check JavaScript syntax
         run: |
           node --check scripts/i18n.js
-          node --check scripts/main.js
-          node --check scripts/modules.js
+          node --check scripts/stage.js
           node --check scripts/case.js
-      - name: Verify translations and language selection
+      - name: Verify localization, scene navigation, official logos and case studies
         run: node --test scripts/*.test.cjs
