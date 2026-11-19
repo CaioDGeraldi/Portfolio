@@ -494,7 +494,16 @@
     "Product thinking, engineering and public innovation": "Produto, engenharia e inovação pública",
     "WINNING PROJECT / 1ST INOVA ARARAS 2026": "PROJETO VENCEDOR / 1º INOVA ARARAS 2026",
     "A public-innovation proposal for Araras' commercial centre. Vem pro Centro connects local business discovery, routes, shared loyalty and in-person visits. The case study distinguishes the functional prototype from the broader proposal.": "Uma proposta de inovação pública para o comércio do Centro de Araras. O Vem pro Centro conecta descoberta de negócios locais, rotas, fidelidade coletiva e visitas presenciais. O estudo de caso diferencia o protótipo funcional da proposta mais ampla.",
-    "Read Centro em Movimento's case": "Conhecer o estudo de caso do Centro em Movimento"
+    "Read Centro em Movimento's case": "Conhecer o estudo de caso do Centro em Movimento",
+
+
+    "Project repository": "Repositório do projeto",
+    "Interface implementation": "Implementação da interface",
+    "Institutional proposal": "Proposta institucional",
+    "Product design": "Design de produto",
+    "Functional prototype": "Protótipo funcional",
+    "From discovery to another visit": "Da descoberta a uma nova visita",
+    "Centro em Movimento official logo": "Logotipo oficial do Centro em Movimento"
 
   }));
 

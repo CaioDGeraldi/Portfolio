@@ -89,7 +89,14 @@ test("content has Portuguese translations for navigation and each project", () =
     "A loyalty program shaped around each business.",
     "Turn digital discovery into reasons to visit.",
     "Explore the project case",
-    "Product thinking, engineering and public innovation"
+    "Product thinking, engineering and public innovation",
+    "Project repository",
+    "Interface implementation",
+    "Institutional proposal",
+    "Product design",
+    "Functional prototype",
+    "From discovery to another visit",
+    "Centro em Movimento official logo"
   ]) {
     assert.ok(dictionary.includes(JSON.stringify(key) + ":"), "Missing translation: " + key);
   }
