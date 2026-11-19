@@ -8,14 +8,15 @@ const read = relative => fs.readFileSync(path.join(root, relative), "utf8");
 const home = read("index.html");
 const fractaw = read("projects/fractaw.html");
 const retorna = read("projects/retorna.html");
+const centro = read("projects/centro-em-movimento.html");
 const dictionary = read("scripts/i18n.js");
 const stageScript = read("scripts/stage.js");
 const caseScript = read("scripts/case.js");
 const stageCSS = read("styles/stage.css");
 
-test("five in-place scenes have correct navigation targets", () => {
+test("six in-place scenes have correct navigation targets", () => {
   const ids = [...home.matchAll(/<section\b[^>]*id="([^"]+)"[^>]*data-scene/g)].map(m => m[1]);
-  assert.deepEqual(ids, ["intro", "fractaw", "retorna", "about", "contact"]);
+  assert.deepEqual(ids, ["intro", "fractaw", "retorna", "centro-em-movimento", "about", "contact"]);
   for (const id of ids) {
     assert.ok(home.includes('href="#' + id + '" data-scene-link'));
     assert.ok(home.includes('aria-labelledby="' + id + 'Title"'));
@@ -63,7 +64,8 @@ test("original brand assets are included and used rather than placeholder icons"
 test("case studies provide problem, decisions and honest evidence limits", () => {
   for (const [page, anchors] of [
     [fractaw, ["problem", "approach", "thinking", "scope"]],
-    [retorna, ["problem", "architecture", "decisions", "evidence"]]
+    [retorna, ["problem", "architecture", "decisions", "evidence"]],
+    [centro, ["context", "proposal", "experience", "prototype", "boundaries", "recognition"]]
   ]) {
     assert.match(page, /<main id="content"/);
     assert.match(page, /scripts\/i18n\.js/);
@@ -84,7 +86,10 @@ test("content has Portuguese translations for navigation and each project", () =
     "Explore Fractaw's idea", "Explore Retorna's case",
     "Have a problem worth solving?", "The approach",
     "Not a commercial claim", "Fractaw product vision",
-    "A loyalty program shaped around each business."
+    "A loyalty program shaped around each business.",
+    "Turn digital discovery into reasons to visit.",
+    "Explore the project case",
+    "Product thinking, engineering and public innovation"
   ]) {
     assert.ok(dictionary.includes(JSON.stringify(key) + ":"), "Missing translation: " + key);
   }

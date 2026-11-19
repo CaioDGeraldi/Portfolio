@@ -16,7 +16,7 @@ async function inspect(page) {
   expect(issues, JSON.stringify(issues, null, 2)).toEqual([]);
 }
 
-for (const scene of ["intro", "fractaw", "retorna", "about", "contact"]) {
+for (const scene of ["intro", "fractaw", "retorna", "centro-em-movimento", "about", "contact"]) {
   test(`WCAG automated checks: home scene ${scene}`, async ({ page }) => {
     await page.goto(`/?lang=en#${scene}`);
     await expect(page.locator(`#${scene}`)).toBeVisible();
@@ -24,7 +24,7 @@ for (const scene of ["intro", "fractaw", "retorna", "about", "contact"]) {
   });
 }
 
-for (const project of ["fractaw", "retorna"]) {
+for (const project of ["fractaw", "retorna", "centro-em-movimento"]) {
   test(`WCAG automated checks: ${project} case study`, async ({ page }) => {
     await page.goto(`/projects/${project}.html?lang=pt-BR`);
     await expect(page.locator("html")).toHaveAttribute("lang", "pt-BR");

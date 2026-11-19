@@ -63,8 +63,8 @@
     const padded = String(position).padStart(2, "0");
     counter.textContent = padded;
     status.textContent = safeLanguage() === "pt-BR"
-      ? "Cena " + padded + " de 05"
-      : "Scene " + padded + " of 05";
+      ? "Cena " + padded + " de " + String(scenes.length).padStart(2, "0")
+      : "Scene " + padded + " of " + String(scenes.length).padStart(2, "0");
     for (const link of links) {
       const active = link.getAttribute("href") === "#" + current;
       if (active) link.setAttribute("aria-current", "step");

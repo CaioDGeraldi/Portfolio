@@ -77,3 +77,13 @@ body.light-mode.case-page .approach-modules > div > span,
 body.light-mode.case-page .diagram-box > span {
   color: #46535b;
 }
+
+/* Original wordmark used in the Centro em Movimento case study. */
+.case-hero .centro-case-logo {
+  display: block;
+  width: min(100%, 460px);
+  max-height: 170px;
+  object-fit: contain;
+  object-position: left center;
+  margin: 0 0 24px;
+}
