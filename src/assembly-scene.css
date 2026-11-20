@@ -8,11 +8,11 @@
   color: var(--ink);
   contain: layout paint;
   transition:
-    left 720ms cubic-bezier(.22, 1, .36, 1),
-    top 720ms cubic-bezier(.22, 1, .36, 1),
+    left 680ms cubic-bezier(.22, 1, .36, 1),
+    top 680ms cubic-bezier(.22, 1, .36, 1),
     width 420ms cubic-bezier(.22, 1, .36, 1),
     height 420ms cubic-bezier(.22, 1, .36, 1),
-    opacity 260ms ease;
+    opacity 220ms ease;
 }
 
 .assembly-scene canvas {
@@ -22,40 +22,12 @@
   height: 100% !important;
 }
 
-.assembly-caption {
-  position: absolute;
-  z-index: 2;
-  right: 8%;
-  bottom: 2%;
-  left: 8%;
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: .56rem;
-  letter-spacing: .09em;
-  text-align: center;
-  text-shadow: 0 1px 8px var(--bg);
-}
-
-.assembly-progress {
-  height: 2px;
-  margin-top: 7px;
-  overflow: hidden;
-  background: var(--line);
-}
-
-.assembly-progress i {
-  display: block;
-  height: 100%;
-  background: var(--accent-solid);
-  transition: width 180ms linear;
-}
-
 .assembly-fallback {
   display: block;
   width: 100%;
   height: 100%;
-  opacity: .92;
-  filter: drop-shadow(0 12px 16px rgba(30, 35, 39, .18));
+  opacity: .96;
+  filter: drop-shadow(0 14px 18px rgba(30, 35, 39, .2));
 }
 
 .content-shell,
@@ -66,27 +38,18 @@
 
 @media (max-width: 900px) {
   .assembly-scene {
-    opacity: .76;
-  }
-
-  .assembly-caption {
-    font-size: .5rem;
+    opacity: .86;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 760px) {
   .assembly-scene {
-    opacity: .46;
-  }
-
-  .assembly-caption {
-    display: none;
+    opacity: .82;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .assembly-scene,
-  .assembly-progress i {
+  .assembly-scene {
     transition: none !important;
   }
 }
