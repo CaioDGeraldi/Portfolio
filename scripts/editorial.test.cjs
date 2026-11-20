@@ -61,6 +61,7 @@ test("the visual system follows its design direction and supports small screens"
   assert.match(styles, /prefers-reduced-motion: reduce/);
   assert.match(styles, /project-card-featured/);
   assert.doesNotMatch(styles, /radial-gradient|hover:scale/);
+  assert.doesNotMatch(styles, /\\n/);
 });
 
 test("profile and source-backed case studies remain available", () => {
