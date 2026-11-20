@@ -103,7 +103,7 @@ test("favicon, GitHub avatar and project visual assets are present", async ({ pa
 
 
 test("professional profile reflects verified CV experience and Inova recognition in both languages", async ({ page }) => {
-  await page.goto("/profile.html?lang=en");
+  await page.goto("profile.html?lang=en");
   await expect(page.locator(".profile-intro")).toContainText("Backend developer in training");
   await expect(page.locator(".profile-intro")).toContainText("Delphi/Object Pascal");
   await expect(page.locator(".profile-item").first()).toContainText("2 months");
