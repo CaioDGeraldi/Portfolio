@@ -209,6 +209,25 @@ export default function App() {
           </div>
         </section>
 
+        <section className="content-section ai-section" id="ai">
+          <div className="content-shell ai-layout">
+            <div className="ai-intro" data-reveal>
+              <p className="section-eyebrow">{language === "pt-BR" ? "PRÁTICA DE DESENVOLVIMENTO" : "DEVELOPMENT PRACTICE"}</p>
+              <h2>{copy.ai.title}</h2>
+              <p>{copy.ai.intro}</p>
+              <p className="ai-note">{copy.ai.note}</p>
+            </div>
+            <div className="ai-groups">
+              {copy.ai.groups.map(group => (
+                <div className="ai-group" key={group.title} data-reveal>
+                  <h3>{group.title}</h3>
+                  <ul>{group.items.map(item => <li key={item}>{item}</li>)}</ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section className="contact-section" id="contact">
           <div className="content-shell contact-shell">
             <div className="contact-copy" data-reveal>
