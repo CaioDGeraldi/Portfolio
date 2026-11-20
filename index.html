@@ -1,159 +1,31 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Caio Darin Geraldi: software development, Fractaw's business problem, and the Retorna engineering case study.">
-  <meta name="theme-color" content="#141619">
-  <title>Caio Darin Geraldi | Software Development</title>
-  <link rel="stylesheet" href="./styles/stage.css">
-  <link rel="stylesheet" href="./styles/stage-quality.css">
-</head>
-<body>
-  <a class="skip-link" href="#main">Skip to content</a>
-
-  <header class="site-header">
-    <a class="site-brand" href="#intro" data-scene-link>
-      <span class="site-brand-mark" aria-hidden="true">C.</span>
-      <span>Caio Geraldi</span>
-    </a>
-    <div class="header-actions">
-      <span class="header-role">SOFTWARE DEVELOPMENT · BRAZIL</span>
-      <div class="language-picker" role="group" aria-label="Language / Idioma">
-        <a href="?lang=en" lang="en" hreflang="en" data-portfolio-lang="en" aria-label="EN English language">EN</a>
-        <span aria-hidden="true">/</span>
-        <a href="?lang=pt-BR" lang="pt-BR" hreflang="pt-BR" data-portfolio-lang="pt-BR" aria-label="PT Idioma português">PT</a>
-      </div>
-      <button class="theme-button" type="button" id="themeToggle" aria-label="Switch to light theme" title="Switch to light theme"><span aria-hidden="true">◐</span></button>
-    </div>
-  </header>
-
-  <main id="main" class="stage-main" tabindex="-1">
-    <div class="stage-frame">
-      <div class="stage-index" aria-hidden="true"><span id="sceneNumber">01</span><span class="stage-index-rule"></span><span>05</span></div>
-      <div class="stage-window" id="stageWindow">
-        <section class="stage-scene stage-intro" id="intro" data-scene aria-labelledby="introTitle">
-          <div class="scene-inner intro-inner">
-            <p class="scene-kicker"><span class="scene-kicker-line" aria-hidden="true"></span> SOFTWARE DEVELOPMENT / PORTFOLIO</p>
-            <h1 id="introTitle" class="intro-title"><span class="name-reveal">Caio</span><span class="name-reveal name-reveal-delayed">Geraldi<span class="accent-period">.</span></span></h1>
-            <p class="intro-tagline">I build software around real problems, not just technology.</p>
-            <div class="intro-actions">
-              <a class="text-action primary-action" href="#fractaw" data-scene-link>Explore the work <span aria-hidden="true">↗</span></a>
-              <a class="text-action secondary-action" href="#about" data-scene-link>About me <span aria-hidden="true">↗</span></a>
-            </div>
-            <p class="scene-footnote">BACKEND · SYSTEMS · SOFTWARE ENGINEERING</p>
-          </div>
-        </section>
-
-        <section class="stage-scene stage-project" id="fractaw" data-scene aria-labelledby="fractawTitle">
-          <div class="scene-inner project-inner">
-            <div class="project-heading">
-              <div class="project-number">01 / CENTRAL IDEA</div>
-              <div class="project-logo-frame fractaw-logo-frame">
-                <img src="./assets/fractaw-logo-dark.svg" alt="Fractaw official logo" class="brand-logo fractaw-logo theme-dark-only" width="700" height="280">
-                <img src="./assets/fractaw-logo-light.svg" alt="" aria-hidden="true" class="brand-logo fractaw-logo theme-light-only" width="700" height="280">
-              </div>
-            </div>
-            <div class="project-description">
-              <p class="scene-kicker">FRACTAW / PRODUCT VISION</p>
-              <h2 id="fractawTitle">Software that fits your business, not the other way around.</h2>
-              <p class="project-lead">Companies often pay for software features they never use, while still relying on disconnected tools. Fractaw aims to change that with a modular management platform.</p>
-              <p class="project-detail">The approach is to let each business select the capabilities it needs and adapt workflows to its reality, keeping shared data and services connected instead of forcing a one-size-fits-all system.</p>
-              <div class="project-facts" aria-label="Fractaw concept highlights"><span>Only relevant capabilities</span><span>Adaptable workflows</span><span>Shared foundation</span></div>
-              <a class="text-action primary-action" href="./projects/fractaw.html" data-localized-link>Explore Fractaw's idea <span aria-hidden="true">↗</span></a>
-            </div>
-          </div>
-        </section>
-
-        <section class="stage-scene stage-project" id="retorna" data-scene aria-labelledby="retornaTitle">
-          <div class="scene-inner project-inner">
-            <div class="project-heading">
-              <div class="project-number">02 / ENGINEERING CASE</div>
-              <div class="project-logo-frame retorna-logo-frame">
-                <img src="./assets/retorna-logo-dark.svg" alt="Retorna official logo" class="brand-logo retorna-logo theme-dark-only" width="973" height="210">
-                <img src="./assets/retorna-logo-light.svg" alt="" aria-hidden="true" class="brand-logo retorna-logo theme-light-only" width="973" height="210">
-              </div>
-            </div>
-            <div class="project-description">
-              <p class="scene-kicker">RETORNA / COLLABORATIVE PROJECT</p>
-              <h2 id="retornaTitle">A loyalty program shaped around each business.</h2>
-              <p class="project-lead">Retorna lets businesses shape their own loyalty programs, with configurable points, rewards and campaigns instead of a fixed, one-size-fits-all model.</p>
-              <p class="project-detail">Companies can tailor loyalty rules across their stores, including local overrides and temporary campaigns, and integrate existing sales tools through an API. Reliable transactions support that flexibility.</p>
-              <div class="project-facts" aria-label="Retorna technologies"><span>Configurable rewards</span><span>Store-level rules</span><span>API integrations</span></div>
-              <a class="text-action primary-action" href="./projects/retorna.html" data-localized-link>Explore Retorna's case <span aria-hidden="true">↗</span></a>
-            </div>
-          </div>
-        </section>
-
-
-        <section class="stage-scene stage-project" id="centro-em-movimento" data-scene aria-labelledby="centro-em-movimentoTitle">
-          <div class="scene-inner project-inner">
-            <div class="project-heading">
-              <div class="project-number">04 / PUBLIC INNOVATION</div>
-              <div class="project-logo-frame centro-logo-frame">
-                <img src="https://raw.githubusercontent.com/CaioDGeraldi/inova-araras-19-11-2026/main/static/img/marca/centro-em-movimento.png" alt="Centro em Movimento official project mark" class="brand-logo centro-project-logo" width="900" height="260" loading="lazy">
-                <img src="https://raw.githubusercontent.com/CaioDGeraldi/inova-araras-19-11-2026/main/static/img/marca/vem-pro-centro-icone.png" alt="Vem pro Centro application icon" class="centro-app-icon" width="180" height="180" loading="lazy">
-              </div>
-            </div>
-            <div class="project-description">
-              <p class="scene-kicker">CENTRO EM MOVIMENTO / ARARAS, SP</p>
-              <h2 id="centro-em-movimentoTitle">Turn digital discovery into reasons to visit.</h2>
-              <p class="project-lead">A winning public-innovation proposal to strengthen the commercial centre of Araras.</p>
-              <p class="project-detail">Vem pro Centro connects local stores, products, discovery routes, shared loyalty and the city calendar. The goal is to turn online discovery into in-person visits and new reasons to return.</p>
-              <div class="project-facts"><span>1st Inova Araras 2026</span><span>Product design</span><span>Functional prototype</span></div>
-              <a class="text-action primary-action" href="./projects/centro-em-movimento.html" data-localized-link>Explore the project case <span aria-hidden="true">↗</span></a>
-            </div>
-          </div>
-        </section>
-        <section class="stage-scene stage-about" id="about" data-scene aria-labelledby="aboutTitle">
-          <div class="scene-inner about-inner">
-            <p class="scene-kicker"><span class="scene-kicker-line" aria-hidden="true"></span> ABOUT / EXPERIENCE</p>
-            <h2 id="aboutTitle" class="large-heading">Curiosity is useful.<br>Engineering discipline makes it last.</h2>
-            <p class="about-summary">I'm studying Systems Development at ETEC Alberto Feres (AMS). I worked with Delphi / Object Pascal and Oracle Database at Soma Soluções, and I focus my independent work on Python, Django, databases and maintainable system design.</p>
-            <div class="about-grid">
-              <div><span class="meta-label">EXPERIENCE</span><strong>Soma Soluções</strong><p>Systems development internship · Delphi / Oracle</p></div>
-              <div><span class="meta-label">EDUCATION</span><strong>ETEC Alberto Feres</strong><p>Systems Development · AMS</p></div>
-              <div><span class="meta-label">CURRENT FOCUS</span><strong>Backend & Architecture</strong><p>Python · Django · SQL · Testing</p></div>
-            </div>
-            <a class="text-action primary-action" href="./profile.html" data-localized-link>View engineering profile <span aria-hidden="true">↗</span></a>
-          </div>
-        </section>
-
-        <section class="stage-scene stage-contact" id="contact" data-scene aria-labelledby="contactTitle">
-          <div class="scene-inner contact-inner">
-            <p class="scene-kicker"><span class="scene-kicker-line" aria-hidden="true"></span> CONTACT / NEXT STEP</p>
-            <h2 id="contactTitle" class="large-heading">Have a problem worth solving?</h2>
-            <p class="contact-summary">I'm interested in software engineering opportunities, including international teams. The best introduction is a technical conversation.</p>
-            <div class="contact-links">
-              <a href="mailto:chdgeraldi@gmail.com">Email <span aria-hidden="true">↗</span></a>
-              <a href="https://github.com/CaioDGeraldi" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
-              <a href="https://www.linkedin.com/in/caio-geraldi/" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
-            </div>
-            <p class="scene-footnote">BASED IN BRAZIL · OPEN TO INTERNATIONAL COLLABORATION</p>
-          </div>
-        </section>
-      </div>
-      <button id="scrollCue" class="scroll-cue" type="button" hidden><span class="scroll-cue-label">Scroll to continue</span><span class="scroll-cue-arrow" aria-hidden="true">↓</span></button>
-    </div>
-  </main>
-
-  <footer class="scene-footer">
-    <p class="scene-status" id="sceneStatus" role="status" aria-live="polite">Scene 01 of 06</p>
-    <nav class="scene-navigation" aria-label="Portfolio scenes">
-      <a href="#intro" data-scene-link aria-current="step"><span>01</span>Intro</a>
-      <a href="#fractaw" data-scene-link><span>02</span>Fractaw</a>
-      <a href="#retorna" data-scene-link><span>03</span>Retorna</a>
-      <a href="#centro-em-movimento" data-scene-link><span>04</span>Centro</a>
-      <a href="#about" data-scene-link><span>05</span>About</a>
-      <a href="#contact" data-scene-link><span>06</span>Contact</a>
-    </nav>
-    <div class="scene-controls">
-      <button type="button" id="prevScene" aria-label="Previous scene" title="Previous scene"><span aria-hidden="true">←</span></button>
-      <button type="button" id="nextScene" aria-label="Next scene" title="Next scene"><span aria-hidden="true">→</span></button>
-    </div>
-  </footer>
-
-  <script src="./scripts/i18n.js"></script>
-  <script src="./scripts/stage.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f3f1eb" />
+    <meta name="description" content="Caio Darin Geraldi — backend-oriented software developer interested in real problems, business systems and maintainable software." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Caio Geraldi — Software Developer" />
+    <meta property="og:description" content="Backend engineering, systems thinking and products with purpose." />
+    <title>Caio Geraldi — Software Developer</title>
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700,800&f[]=satoshi@400,500,600,700&display=swap" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <main style="max-width:42rem;margin:4rem auto;padding:0 1.5rem;font:16px/1.6 system-ui,sans-serif">
+        <h1>Caio Geraldi</h1>
+        <p>This portfolio needs JavaScript to render. You can still visit the <a href="./profile.html">professional profile</a> and individual project case studies.</p>
+        <ul>
+          <li><a href="./projects/centro-em-movimento.html">Centro em Movimento</a></li>
+          <li><a href="./projects/fractaw.html">Fractaw</a></li>
+          <li><a href="./projects/retorna.html">Retorna</a></li>
+        </ul>
+      </main>
+    </noscript>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

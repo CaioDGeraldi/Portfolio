@@ -5,7 +5,11 @@ const path = require("node:path");
 const vm = require("node:vm");
 
 const script = fs.readFileSync(path.join(__dirname, "i18n.js"), "utf8");
-const html = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
+const profile = fs.readFileSync(path.join(__dirname, "..", "profile.html"), "utf8");
+const home = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
+const app = fs.readFileSync(path.join(__dirname, "..", "src", "App.jsx"), "utf8");
+const projectCard = fs.readFileSync(path.join(__dirname, "..", "src", "components", "ProjectCard.jsx"), "utf8");
+const header = fs.readFileSync(path.join(__dirname, "..", "src", "components", "Header.jsx"), "utf8");
 
 function createPage({ search = "", saved = null, languages = ["en-US"] } = {}) {
   const url = new URL("https://example.com/Portfolio/" + search);
@@ -76,13 +80,15 @@ function createPage({ search = "", saved = null, languages = ["en-US"] } = {}) {
   return { document, meta, nodes, en, pt, storage, win, events };
 }
 
-test("portfolio provides English and Portuguese controls and script", () => {
-  assert.match(html, /data-portfolio-lang="en"/);
-  assert.match(html, /data-portfolio-lang="pt-BR"/);
-  assert.match(html, /scripts\/i18n\.js/);
+test("the React homepage and static profile both expose language controls", () => {
+  assert.match(home, /src="\/src\/main\.jsx"/);
+  assert.match(header, /data-language-toggle/);
+  assert.match(profile, /data-portfolio-lang="en"/);
+  assert.match(profile, /data-portfolio-lang="pt-BR"/);
+  assert.match(profile, /scripts\/i18n\.js/);
 });
 
-test("explicit Portuguese URL overrides stored and browser languages", () => {
+test("explicit Portuguese URL overrides stored and browser languages on static pages", () => {
   const page = createPage({ search: "?lang=pt-BR&source=github", saved: "en", languages: ["en-US"] });
   assert.equal(page.document.documentElement.lang, "pt-BR");
   assert.equal(page.nodes[0].nodeValue, "Conheça os projetos");
@@ -105,7 +111,7 @@ test("browser language is used when URL and stored preference are absent", () =>
   assert.equal(page.nodes[0].nodeValue, "Conheça os projetos");
 });
 
-test("manual switch is reversible, saved and reflected in the URL", () => {
+test("manual language switch is reversible, saved and reflected in the URL", () => {
   const page = createPage({ search: "?source=github&lang=en", languages: ["en-US"] });
   let prevented = false;
   page.pt.handlers.click({ preventDefault() { prevented = true; } });
@@ -121,17 +127,10 @@ test("manual switch is reversible, saved and reflected in the URL", () => {
   assert.ok(page.events.some(event => event.type === "portfolio-language-change" && event.language === "pt-BR"));
 });
 
-test("English from the GitHub link overrides a Portuguese browser", () => {
-  const page = createPage({ search: "?lang=en&source=github", languages: ["pt-BR"] });
-  assert.equal(page.document.documentElement.lang, "en");
-  assert.equal(page.nodes[1].nodeValue, "Business software should fit the business.");
-});
-
-test("scenes link to both original project case studies", () => {
-  assert.match(html, /id="intro" data-scene/);
-  assert.match(html, /id="fractaw" data-scene/);
-  assert.match(html, /id="retorna" data-scene/);
-  assert.match(html, /data-localized-link>Explore Fractaw's idea/);
-  assert.match(html, /data-localized-link>Explore Retorna's case/);
-  assert.match(html, /scripts\/stage\.js/);
+test("React project cards link to the preserved static case-study pages", () => {
+  assert.match(projectCard, /\.\/projects\/\$\{project\.slug\}\.html\?lang=/);
+  const projectContent = fs.readFileSync(path.join(__dirname, "..", "src", "data", "content.js"), "utf8");
+  for (const id of ["centro-em-movimento", "fractaw", "retorna"]) {
+    assert.ok(projectContent.includes(`slug: "${id}"`));
+  }
 });

@@ -6,189 +6,75 @@ const path = require("node:path");
 const root = path.join(__dirname, "..");
 const read = relative => fs.readFileSync(path.join(root, relative), "utf8");
 const home = read("index.html");
+const app = read("src/App.jsx");
+const projectCard = read("src/components/ProjectCard.jsx");
+const copy = read("src/data/content.js");
+const styles = read("src/styles.css");
+const profile = read("profile.html");
 const fractaw = read("projects/fractaw.html");
 const retorna = read("projects/retorna.html");
 const centro = read("projects/centro-em-movimento.html");
-const dictionary = read("scripts/i18n.js");
-const stageScript = read("scripts/stage.js");
-const caseScript = read("scripts/case.js");
-const stageCSS = read("styles/stage.css");
 
-test("six in-place scenes have correct navigation targets", () => {
-  const ids = [...home.matchAll(/<section\b[^>]*id="([^"]+)"[^>]*data-scene/g)].map(m => m[1]);
-  assert.deepEqual(ids, ["intro", "fractaw", "retorna", "centro-em-movimento", "about", "contact"]);
-  for (const id of ids) {
-    assert.ok(home.includes('href="#' + id + '" data-scene-link'));
-    assert.ok(home.includes('aria-labelledby="' + id + 'Title"'));
+test("the homepage is a conventional document, not a slide or scene presentation", () => {
+  assert.match(home, /id="root"/);
+  assert.match(home, /src="\/src\/main\.jsx"/);
+  assert.match(app, /<main id="main">/);
+  for (const id of ["top", "projects", "about", "experience", "approach", "skills", "contact"]) {
+    assert.match(app, new RegExp(`id="${id}"`));
   }
-  assert.match(home, /id="stageWindow"/);
-  assert.match(home, /id="prevScene"/);
-  assert.match(home, /id="nextScene"/);
-  assert.match(stageCSS, /html\.stage-mode \.stage-scene\[hidden\]/);
-  assert.match(stageScript, /document\.startViewTransition/);
-  assert.match(stageScript, /history\.pushState/);
-  assert.match(stageScript, /focusHeading/);
-  assert.match(stageScript, /prefers-reduced-motion/);
+  assert.doesNotMatch(app, /data-scene|stage-mode|scene-navigation/);
+  assert.match(styles, /position: sticky/);
+  assert.match(styles, /scroll-behavior: smooth/);
 });
 
-test("Fractaw is a concept and Retorna is a source-backed collaborative project", () => {
-  assert.match(home, /href="\.\/projects\/fractaw\.html" data-localized-link/);
-  assert.match(home, /href="\.\/projects\/retorna\.html" data-localized-link/);
-  assert.doesNotMatch(home, /Kambio|Intelligent Markdown IDE/);
-  assert.match(home, /pay for software features they never use/);
-  assert.match(home, /A loyalty program shaped around each business/);
-  assert.match(home, /RETORNA \/ COLLABORATIVE PROJECT/);
-  assert.match(retorna, /team documents the use of AI tools/);
-  assert.match(retorna, /test_concorrencia_resgates\.py/);
-  assert.match(fractaw, /Not a commercial claim/);
+test("selected projects retain their real case-study destinations and factual boundaries", () => {
+  assert.match(projectCard, /id=\{project\.id\}/);
+  for (const id of ["centro-em-movimento", "fractaw", "retorna"]) {
+    assert.ok(copy.includes(`id: "${id}"`));
+    assert.ok(copy.includes(`slug: "${id}"`));
+  }
+  assert.match(copy, /1st Inova Araras 2026/);
+  assert.match(copy, /Soma Soluções/);
+  assert.match(copy, /ETEC Alberto Feres/);
   assert.match(fractaw, /No customer adoption, production deployment/);
-  assert.match(fractaw, /Conceptual model illustrating the product direction/);
+  assert.match(retorna, /collaborative loyalty platform/);
+  assert.match(centro, /not confirmed partnerships/);
 });
 
-test("original brand assets are included and used rather than placeholder icons", () => {
-  for (const asset of [
-    "assets/fractaw-logo-dark.svg", "assets/fractaw-logo-light.svg",
-    "assets/retorna-logo-dark.svg", "assets/retorna-logo-light.svg"
-  ]) {
-    const svg = read(asset);
-    assert.match(svg, /<svg\b/);
-    assert.match(svg, /<path\b/);
-    assert.doesNotMatch(svg, /<script|<image|<foreignObject/i);
-    assert.match(home, new RegExp(asset.replaceAll(".", "\\.")));
+test("portfolio copy is bilingual and avoids unsupported claims", () => {
+  for (const phrase of ["I build software", "Desenvolvo software", "Soma Soluções", "ETEC Alberto Feres", "Open to backend opportunities", "oportunidades em back-end"]) {
+    assert.ok(copy.includes(phrase), `Missing content: ${phrase}`);
   }
-  assert.match(fractaw, /Fractaw official logo/);
-  assert.match(retorna, /Retorna official logo/);
-  assert.match(stageCSS, /body\.light-mode \.theme-light-only/);
+  assert.doesNotMatch(copy, /10\+ years|senior developer|millions of users|revenue growth/i);
 });
 
-test("case studies provide problem, decisions and honest evidence limits", () => {
-  for (const [page, anchors] of [
-    [fractaw, ["problem", "approach", "thinking", "scope"]],
-    [retorna, ["problem", "architecture", "decisions", "evidence"]],
-    [centro, ["context", "proposal", "experience", "prototype", "boundaries", "recognition"]]
-  ]) {
+test("the visual system is editorial, responsive and reduced-motion aware", () => {
+  assert.match(styles, /General Sans/);
+  assert.match(styles, /Satoshi/);
+  assert.match(styles, /@media \(max-width: 820px\)/);
+  assert.match(styles, /@media \(max-width: 620px\)/);
+  assert.match(styles, /prefers-reduced-motion: reduce/);
+  assert.match(styles, /project-card-featured/);
+  assert.match(styles, /approach-grid/);
+});
+
+test("profile and source-backed case studies remain available", () => {
+  assert.match(app, /profile\.html/);
+  assert.match(profile, /Soma Soluções/);
+  assert.match(profile, /ETEC Alberto Feres/);
+  assert.match(profile, /not a formal employment record or certification/);
+  for (const page of [fractaw, retorna, centro]) {
     assert.match(page, /<main id="content"/);
     assert.match(page, /scripts\/i18n\.js/);
     assert.match(page, /scripts\/case\.js/);
-    for (const id of anchors) {
-      assert.ok(page.includes('id="' + id + '"'), id);
-      assert.ok(page.includes('href="#' + id + '"'), id);
-    }
-  }
-  assert.match(fractaw, /href="\.\/retorna\.html" data-localized-link/);
-  assert.match(retorna, /href="\.\/fractaw\.html" data-localized-link/);
-  assert.match(caseScript, /portfolio-theme/);
-});
-
-test("content has Portuguese translations for navigation and each project", () => {
-  for (const key of [
-    "Explore the work", "Software that fits your business, not the other way around.",
-    "Explore Fractaw's idea", "Explore Retorna's case",
-    "Have a problem worth solving?", "The approach",
-    "Not a commercial claim", "Fractaw product vision",
-    "A loyalty program shaped around each business.",
-    "Turn digital discovery into reasons to visit.",
-    "Explore the project case",
-    "Product thinking, engineering and public innovation",
-    "Project repository",
-    "Interface implementation",
-    "Institutional proposal",
-    "Product design",
-    "Functional prototype",
-    "From discovery to another visit",
-    "Centro em Movimento official logo"
-  ]) {
-    assert.ok(dictionary.includes(JSON.stringify(key) + ":"), "Missing translation: " + key);
-  }
-  assert.match(dictionary, /searchParams\.set\("lang", lang\)/);
-});
-
-test("intro handles short viewports and shows an operable scroll cue", () => {
-  assert.match(home, /id="scrollCue"/);
-  assert.match(home, /class="scroll-cue"/);
-  assert.match(stageScript, /cue\?\.addEventListener\("click"/);
-  assert.match(stageScript, /cue\.hidden = position === scenes\.length/);
-  assert.match(stageCSS, /@media \(max-height: 480px\)/);
-  assert.match(stageCSS, /font-size: clamp\(3\.15rem, min\(9\.8vw, 14vh\)/);
-  assert.match(stageCSS, /prefers-reduced-motion: no-preference/);
-});
-
-test("Retorna story remains about loyalty instead of request races", () => {
-  assert.match(home, /configurable points, rewards and campaigns instead of a fixed/);
-  assert.match(retorna, /configurable by company, with store-level overrides/);
-  assert.match(retorna, /Rules that match each business/);
-  assert.match(retorna, /Integrate, don't replace/);
-  assert.doesNotMatch(home, /What happens when a request arrives twice/);
-});
-
-test("Fractaw explains unused-feature costs without invented billing or savings", () => {
-  assert.match(home, /pay for software features they never use/);
-  assert.match(home, /select the capabilities it needs/);
-  assert.match(fractaw, /pay for functions they rarely or never use/);
-  assert.match(fractaw, /module-based billing is already available/);
-  assert.match(fractaw, /No customer adoption, production deployment, pricing model, proven cost savings/);
-});
-
-test("Retorna prioritizes configurable programs, not technical edge cases", () => {
-  assert.match(home, /A loyalty program shaped around each business/);
-  assert.match(retorna, /store-level overrides, reward and redemption policies/);
-  assert.match(retorna, /business's configured loyalty policies/);
-  assert.doesNotMatch(home, /What happens when a request arrives twice/);
-});
-
-test("viewport improvements preserve readable scenes and touch navigation", () => {
-  const quality = read("styles/stage-quality.css");
-  assert.match(home, /styles\/stage-quality\.css/);
-  assert.match(quality, /100dvh/);
-  assert.match(quality, /align-items: safe center/);
-  assert.match(quality, /overflow-y: auto/);
-  assert.match(stageScript, /touchstart/);
-  assert.match(stageScript, /touchend/);
-  assert.match(stageScript, /sceneCanScroll\(direction\)/);
-  assert.match(stageScript, /event\.repeat/);
-});
-
-test("Fractaw uses a real source screenshot with clear fictional fixture scope", () => {
-  assert.match(fractaw, /id="preview"/);
-  assert.match(fractaw, /docs\/evidencias\/ux143\/modularidade-1440\.png/);
-  assert.match(fractaw, /loading="lazy"/);
-  assert.match(fractaw, /fictional school fixture/);
-  assert.match(fractaw, /not a commercial deployment/);
-  assert.match(fractaw, /styles\/case-evidence\.css/);
-});
-
-test("Retorna illustrates its configurable loyalty journey without a fake UI", () => {
-  assert.match(retorna, /id="journey"/);
-  assert.match(retorna, /<ol class="loyalty-journey"/);
-  assert.match(retorna, /business's configured loyalty policies/);
-  assert.match(retorna, /Product README and scope/);
-  assert.match(retorna, /Conceptual product journey/);
-  assert.match(retorna, /styles\/case-evidence\.css/);
-  for (const phrase of ["Module selection in the prototype", "How a loyalty event becomes a reward"]) {
-    assert.ok(dictionary.includes(JSON.stringify(phrase) + ":"), "Missing translation " + phrase);
   }
 });
 
-test("recruiter profile gives evidence without inventing credentials or a resume", () => {
-  const profile = read("profile.html");
-  const script = read("scripts/profile.js");
-  const printCSS = read("styles/profile.css");
-  assert.match(home, /href="\.\/profile\.html" data-localized-link/);
-  assert.match(profile, /Soma Soluções/);
-  assert.match(profile, /ETEC Alberto Feres/);
-  assert.match(profile, /https:\/\/github\.com\/CaioDGeraldi/);
-  assert.match(profile, /projects\/retorna\.html/);
-  assert.match(profile, /projects\/fractaw\.html/);
-  assert.match(profile, /not a formal employment record or certification/);
-  assert.match(script, /portfolio-theme/);
-  assert.match(script, /window\.print\(\)/);
-  assert.match(printCSS, /@media print/);
-  assert.match(dictionary, /"Print or save this profile as PDF":/);
-});
-
-test("content remains accessible when JavaScript is disabled", () => {
-  assert.doesNotMatch(home, /<section[^>]*data-scene[^>]*hidden/);
-  assert.match(stageCSS, /without JavaScript, scenes are normal document sections/i);
-  assert.match(home, /class="skip-link"/);
-  assert.match(stageScript, /stage-mode/);
+test("motion is progressively enhanced and accessible", () => {
+  const motion = read("src/hooks/useSiteMotion.js");
+  assert.match(motion, /prefers-reduced-motion/);
+  assert.match(motion, /ScrollTrigger/);
+  assert.match(motion, /lenis\.destroy/);
+  assert.match(app, /data-reveal/);
+  assert.match(app, /Skip to content|copy\.skip/);
 });

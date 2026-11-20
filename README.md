@@ -1,84 +1,83 @@
 # Caio Geraldi | Portfolio
 
-A bilingual personal portfolio built as a small **scene-based presentation**. The position of the content is fixed. Navigation changes the scene instead of making visitors scroll past stacked sections.
+A bilingual personal portfolio built with **React 19 and Vite 8**. The homepage is a conventional, responsive page with natural document scrolling. Individual project studies and the recruiter profile remain direct, independently accessible HTML pages.
 
 **Published address:** https://caiodgeraldi.github.io/Portfolio/
 
-**Direct language links:** [English](https://caiodgeraldi.github.io/Portfolio/?lang=en&source=github) · [Português](https://caiodgeraldi.github.io/Portfolio/?lang=pt-BR&source=github)
+**Languages:** [English](https://caiodgeraldi.github.io/Portfolio/?lang=en) · [Português](https://caiodgeraldi.github.io/Portfolio/?lang=pt-BR)
 
-## Concept
+## Experience
 
-The visitor sees five concise scenes: introduction, **Fractaw**, **Retorna**, experience and contact. The name is revealed briefly on the opening scene. All other changes are crossfades in the same viewport; no full-page scrolling or elaborate dashboard animations.
+The homepage is organized around the information a visitor needs:
 
-Fractaw is the **central product idea**, presented through the business problem it aims to solve. The codebase is private and the prototype is not represented as a deployed commercial ERP.
+- An introduction that explains the focus and current direction.
+- Three selected projects with original visuals and direct case-study links.
+- About, professional experience and education.
+- Engineering approach and technical focus.
+- Contact links and a separate professional profile.
 
-Retorna is the **engineering evidence**, a collaborative Django/PostgreSQL challenge project with source links, idempotent redemption logic, tests, architecture decisions and AI-use disclosure.
+Project descriptions distinguish product concepts, collaborative work, prototypes and award recognition. The page does not claim commercial deployment, customer traction or measured business outcomes that are not supported by the project sources.
 
-Each project has a separate, direct-linkable case-study page:
-- [Fractaw: product vision](projects/fractaw.html)
-- [Retorna: engineering case study](projects/retorna.html)
+## Stack
 
-## Identity and sources
+- **React 19** for reusable page components and bilingual content.
+- **Vite 8** for development and optimized static builds.
+- **GSAP 3 / ScrollTrigger** for restrained entrance and scroll-triggered motion.
+- **Lenis** for smooth wheel scrolling while retaining native document scroll.
+- **Fontshare** — General Sans and Satoshi, with system fallbacks.
+- **Playwright** and **axe-core** for responsive browser checks and automated accessibility checks.
 
-The project logos are **the actual SVG files from the project repositories**. No invented marks, AI-generated mock-ups, stock photos, fake testimonials, fabricated metrics or generic technology illustrations.
+Motion is disabled when `prefers-reduced-motion: reduce` is enabled. Lenis is connected to GSAP's ticker and ScrollTrigger; it does not replace the document with a custom scrolling container.
 
-| Portfolio asset | Original repository file |
-| --- | --- |
-| `assets/fractaw-logo-dark.svg` | `CaioDGeraldi/FractawModules/frontend/src/brand/fractaw-logo-lockup-dark.svg` |
-| `assets/fractaw-logo-light.svg` | `CaioDGeraldi/FractawModules/frontend/src/brand/fractaw-logo-lockup.svg` |
-| `assets/retorna-logo-dark.svg` | `CaioDGeraldi/DataSystemChallenge/frontend/public/retorna/brand/retorna-logo-dark.svg` |
-| `assets/retorna-logo-light.svg` | `CaioDGeraldi/DataSystemChallenge/frontend/public/retorna/brand/retorna-logo-light.svg` |
-| `assets/retorna-symbol.svg` | `CaioDGeraldi/DataSystemChallenge/frontend/public/retorna/brand/retorna-symbol.svg` |
-| Centro em Movimento mark (referenced from source) | `CaioDGeraldi/inova-araras-19-11-2026/static/img/marca/centro-em-movimento.png` |
-| Vem pro Centro app icon (referenced from source) | `CaioDGeraldi/inova-araras-19-11-2026/static/img/marca/vem-pro-centro-icone.png` |
+## Inspiration and implementation notes
 
-The Fractaw asset's appearance is shared here to present the product concept; private implementation details are not copied.
+The visual research used:
 
-## Implementation
+- [Supahero](https://supahero.io/) for hero composition.
+- [21st.dev](https://21st.dev/) for React component patterns and card composition.
+- [OriginKit](https://www.originkit.dev/) and [React Bits](https://reactbits.dev/) for kinetic typography and scroll-reveal ideas.
+- [MotionSites](https://motionsites.org/) for full-page and portfolio direction.
+- [Fontshare](https://fontshare.com/) for typefaces.
+- [GSAP](https://gsap.com/docs/v3/) and [Lenis](https://lenis.dev/) for motion and scrolling behavior.
 
-- Semantic HTML, vanilla CSS and JavaScript, with no build step.
-- Enhanced navigation in `scripts/stage.js` uses the View Transitions API when supported. Otherwise, scene changes are immediate.
-- Five native `<section>` elements remain readable with **JavaScript disabled**. In enhanced mode, only the active scene is visible to keyboard/screen-reader navigation.
-- Direct hashes (`#fractaw`, `#retorna`, etc.), browser back/forward, keyboard navigation, next/previous controls and restrained mouse-wheel scene changes are supported.
-- The active scene remains in the same position. When a panel is too tall on a small screen, **that panel alone** can scroll to prevent content clipping.
-- Respects `prefers-reduced-motion`. No forced 3D, autoplay video or infinite motion.
-- The EN/PT selector updates visible strings, metadata and `html[lang]`; links to case studies carry the explicit language preference.
-- A saved theme preference is shared with the project detail pages.
+These references informed the design direction. The page uses custom components and original project assets rather than importing a prebuilt template or copying another site's identity.
 
-## Run and validate
+## Local development
 
-Start a local static server from the repository root:
+Requirements: Node.js 22 or newer.
 
 ```sh
-python -m http.server 8000
+npm install
+npm run dev
 ```
 
-Open http://localhost:8000/ and test both languages and themes.
+The local development server prints the address to open. Production build:
 
 ```sh
-node --check scripts/i18n.js
-node --check scripts/stage.js
-node --check scripts/case.js
-node --test scripts/*.test.cjs
+npm run build
+npm run preview
 ```
 
-A GitHub Actions workflow runs the checks for every PR to `main`. The browser suite also runs Chromium at small viewport sizes and audits active scenes and the two case studies with `@axe-core/playwright` against WCAG 2.0, 2.1 and 2.2 A/AA rules that can be automated.
+The production output is written to `dist/`. Vite builds the homepage, the professional profile and all three project case studies as separate HTML entry points.
+
+## Validation
 
 ```sh
-npm install --no-package-lock
+npm run test:unit
+npm run build
 npm run test:e2e
 ```
 
-**Automated accessibility checks are not full WCAG 2.2 AA certification.** Manual reviews are still required for keyboard behavior, screen readers, motion, zoom, contrast judgment and visual quality.
+The browser suite checks the conventional layout at mobile, tablet and desktop widths, navigation, bilingual content, theme preference and the profile and case-study pages. The axe suite covers automated WCAG 2.0, 2.1 and 2.2 A/AA rules.
 
-## Design principles
+Automated checks are not a WCAG 2.2 AA certification. Manual checks are still needed for screen readers, keyboard interaction, zoom, visual contrast and motion behavior.
 
-- Content explains a *real problem, decision or constraint*.
-- No made-up business traction or individual authorship claims for team work.
-- Project identities take priority over decorative badges.
-- Accessible scene navigation and clear direct links take priority over visual spectacle.
-- Contrast, small viewport behavior and focus management must be verified manually before publication.
+## GitHub Pages
 
-## Publication
+The deployment workflow builds `dist/` and publishes it with GitHub Pages. The repository's Pages source must be set to **GitHub Actions**:
 
-GitHub Pages publishes from `main` after review and squash merge. Visual QA on desktop/mobile remains required in addition to structural tests.
+1. Open repository **Settings → Pages**.
+2. Under **Build and deployment → Source**, select **GitHub Actions**.
+3. Pushes to `main` can then publish through `.github/workflows/deploy-pages.yml`.
+
+The workflow does not publish pull-request branches. PRs run build and browser validation only.
