@@ -364,6 +364,7 @@ export default function AssemblyScene() {
     sectionIndex: 0,
     sectionProgress: 0,
     reducedMotion: false,
+    relocating: false,
     placement: { visible: false, name: "hidden", sectionId: "top", x: 0, y: 0, size: 0, overlap: 1 }
   }));
 
@@ -430,10 +431,14 @@ export default function AssemblyScene() {
           return previous;
         }
 
+        const sectionChanged = previous.sectionIndex !== sectionIndex;
+        const relocating = placement.visible && (sectionChanged || positionChanged);
+
         return {
           sectionIndex,
           sectionProgress: reducedMotion ? 1 : sectionProgress,
           reducedMotion,
+          relocating,
           placement
         };
       });
@@ -463,6 +468,18 @@ export default function AssemblyScene() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!scene.relocating) return undefined;
+
+    const frame = window.requestAnimationFrame(() => {
+      setScene(previous => (
+        previous.relocating ? { ...previous, relocating: false } : previous
+      ));
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [scene.relocating, scene.sectionIndex, scene.placement.name, scene.placement.x, scene.placement.y, scene.placement.visible]);
+
   const sectionId = SECTION_IDS[scene.sectionIndex] || "top";
   const pullProgress = scene.reducedMotion
     ? 100
@@ -476,6 +493,7 @@ export default function AssemblyScene() {
       data-section={sectionId}
       data-module-index={scene.sectionIndex}
       data-assembled-count={Math.min(scene.sectionIndex + (pullProgress >= 95 ? 1 : 0), MODULES.length)}
+      data-relocating={scene.relocating}
       data-placement={scene.placement.name}
       data-hidden={!scene.placement.visible}
       data-overlap={scene.placement.overlap}
@@ -486,8 +504,8 @@ export default function AssemblyScene() {
         top: scene.placement.y + "px",
         width: scene.placement.size + "px",
         height: scene.placement.size + "px",
-        visibility: scene.placement.visible ? "visible" : "hidden",
-        opacity: scene.placement.visible ? 1 : 0
+        visibility: scene.placement.visible && !scene.relocating ? "visible" : "hidden",
+        opacity: scene.placement.visible && !scene.relocating ? 1 : 0
       }}
     >
       {scene.reducedMotion ? (
