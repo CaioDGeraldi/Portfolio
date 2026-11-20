@@ -16,13 +16,13 @@ const PLACEMENT_OPTIONS = {
 };
 
 const MODULES = [
-  { id: "north-west", target: [-0.69, 0.94, 0.055], source: [-1.72, 1.46, 0.96], size: [1.32, 0.82, 0.22], accent: "#c99537", rotation: [0, 0, 0] },
-  { id: "north-east", target: [0.69, 0.94, 0.055], source: [1.72, 1.46, 0.96], size: [1.32, 0.82, 0.22], accent: "#6caaa5", rotation: [0, 0, 0] },
-  { id: "middle-west", target: [-0.94, 0, 0.055], source: [-1.78, 0.08, 0.96], size: [0.82, 0.82, 0.22], accent: "#6caaa5", rotation: [0, 0, 0] },
-  { id: "middle-centre", target: [0, 0, 0.055], source: [0, -1.72, 0.96], size: [0.82, 0.82, 0.22], accent: "#c99537", rotation: [0, 0, 0] },
-  { id: "middle-east", target: [0.94, 0, 0.055], source: [1.78, 0.08, 0.96], size: [0.82, 0.82, 0.22], accent: "#aab4b8", rotation: [0, 0, 0] },
-  { id: "south-west", target: [-0.69, -0.94, 0.055], source: [-1.72, -1.46, 0.96], size: [1.32, 0.82, 0.22], accent: "#6caaa5", rotation: [0, 0, 0] },
-  { id: "south-east", target: [0.69, -0.94, 0.055], source: [1.72, -1.46, 0.96], size: [1.32, 0.82, 0.22], accent: "#c99537", rotation: [0, 0, 0] }
+  { id: "north-west", target: [-0.69, 0.94, 0.055], source: [-1.72, 1.46, 0.96], size: [1.32, 0.82, 0.42], accent: "#c99537", rotation: [0, 0, 0] },
+  { id: "north-east", target: [0.69, 0.94, 0.055], source: [1.72, 1.46, 0.96], size: [1.32, 0.82, 0.42], accent: "#6caaa5", rotation: [0, 0, 0] },
+  { id: "middle-west", target: [-0.94, 0, 0.055], source: [-1.78, 0.08, 0.96], size: [0.82, 0.82, 0.42], accent: "#6caaa5", rotation: [0, 0, 0] },
+  { id: "middle-centre", target: [0, 0, 0.055], source: [0, -1.72, 0.96], size: [0.82, 0.82, 0.42], accent: "#c99537", rotation: [0, 0, 0] },
+  { id: "middle-east", target: [0.94, 0, 0.055], source: [1.78, 0.08, 0.96], size: [0.82, 0.82, 0.42], accent: "#aab4b8", rotation: [0, 0, 0] },
+  { id: "south-west", target: [-0.69, -0.94, 0.055], source: [-1.72, -1.46, 0.96], size: [1.32, 0.82, 0.42], accent: "#6caaa5", rotation: [0, 0, 0] },
+  { id: "south-east", target: [0.69, -0.94, 0.055], source: [1.72, -1.46, 0.96], size: [1.32, 0.82, 0.42], accent: "#c99537", rotation: [0, 0, 0] }
 ];
 
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -182,7 +182,7 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
   const pieces = useRef([]);
   const flightCurves = useMemo(() => MODULES.map(createFlightCurve), []);
   const bodyGeometries = useMemo(() => MODULES.map(part => (
-    new RoundedBoxGeometry(part.size[0], part.size[1], part.size[2], 8, 0.11)
+    new RoundedBoxGeometry(part.size[0], part.size[1], part.size[2], 8, 0.135)
   )), []);
   const faceGeometries = useMemo(() => MODULES.map(part => (
     new RoundedBoxGeometry(part.size[0] - 0.14, part.size[1] - 0.14, 0.04, 7, 0.05)
@@ -197,39 +197,33 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
     new RoundedBoxGeometry(part.size[0] * 0.43, 0.012, 0.01, 3, 0.005)
   )), []);
   const socketRimGeometries = useMemo(() => MODULES.map(part => (
-    new RoundedBoxGeometry(part.size[0] + 0.12, part.size[1] + 0.12, 0.16, 7, 0.075)
+    new RoundedBoxGeometry(part.size[0] + 0.17, part.size[1] + 0.17, 0.18, 7, 0.085)
   )), []);
   const socketWellGeometries = useMemo(() => MODULES.map(part => (
-    new RoundedBoxGeometry(part.size[0] + 0.025, part.size[1] + 0.025, 0.08, 7, 0.06)
+    new RoundedBoxGeometry(part.size[0] + 0.055, part.size[1] + 0.055, 0.1, 7, 0.065)
   )), []);
-  const railGeometry = useMemo(() => new RoundedBoxGeometry(3.08, 0.075, 0.16, 6, 0.035), []);
-  const sideRailGeometry = useMemo(() => new RoundedBoxGeometry(0.075, 3.08, 0.16, 6, 0.035), []);
-  const dividerGeometry = useMemo(() => new RoundedBoxGeometry(2.76, 0.055, 0.1, 5, 0.025), []);
-  const shortDividerGeometry = useMemo(() => new RoundedBoxGeometry(0.055, 0.88, 0.1, 5, 0.025), []);
-  const middleDividerGeometry = useMemo(() => new RoundedBoxGeometry(0.055, 0.82, 0.1, 5, 0.025), []);
-
   const bodyMaterials = useMemo(() => [
-    "#89969c", "#7d8b91", "#8b989e", "#9aa6ab", "#829097", "#85949a", "#909ca2"
+    "#58656c", "#647178", "#6b787f", "#5d6b72", "#6a777e", "#5f6d74", "#68757c"
   ].map(color => new THREE.MeshPhysicalMaterial({
     color,
-    metalness: 0.5,
-    roughness: 0.35,
-    clearcoat: 0.54,
-    clearcoatRoughness: 0.24
-  })), []);
-  const faceMaterials = useMemo(() => MODULES.map(() => new THREE.MeshPhysicalMaterial({
-    color: "#a1adb2",
-    metalness: 0.56,
+    metalness: 0.68,
     roughness: 0.31,
-    clearcoat: 0.54,
+    clearcoat: 0.52,
     clearcoatRoughness: 0.22
   })), []);
+  const faceMaterials = useMemo(() => MODULES.map(() => new THREE.MeshPhysicalMaterial({
+    color: "#c0c9cd",
+    metalness: 0.56,
+    roughness: 0.29,
+    clearcoat: 0.62,
+    clearcoatRoughness: 0.2
+  })), []);
   const insetMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
-    color: "#39474d",
-    metalness: 0.55,
-    roughness: 0.35,
-    clearcoat: 0.42,
-    clearcoatRoughness: 0.26
+    color: "#65747a",
+    metalness: 0.52,
+    roughness: 0.34,
+    clearcoat: 0.45,
+    clearcoatRoughness: 0.25
   }), []);
   const accentMaterials = useMemo(() => MODULES.map(part => new THREE.MeshStandardMaterial({
     color: part.accent,
@@ -247,47 +241,18 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
     opacity: 0.42
   }), []);
   const rimMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
-    color: "#6f7c83",
-    metalness: 0.58,
-    roughness: 0.34,
-    clearcoat: 0.42
+    color: "#88969c",
+    metalness: 0.64,
+    roughness: 0.31,
+    clearcoat: 0.5
   }), []);
   const socketMaterial = useMemo(() => new THREE.MeshStandardMaterial({
-    color: "#253238",
-    metalness: 0.48,
-    roughness: 0.38
+    color: "#2e3a40",
+    metalness: 0.5,
+    roughness: 0.36
   }), []);
-  const railMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
-    color: "#3f4d53",
-    metalness: 0.56,
-    roughness: 0.36,
-    clearcoat: 0.42
-  }), []);
-  const railEdgeMaterial = useMemo(() => new THREE.LineBasicMaterial({
-    color: "#d4dddf",
-    transparent: true,
-    opacity: 0.52
-  }), []);
-
   const bodyEdgeGeometries = useMemo(() => bodyGeometries.map(geometry => new THREE.EdgesGeometry(geometry, 22)), [bodyGeometries]);
 
-  const frame = useMemo(() => {
-    const rails = [
-      { geometry: railGeometry, position: [0, 1.52, -0.13] },
-      { geometry: railGeometry, position: [0, -1.52, -0.13] },
-      { geometry: sideRailGeometry, position: [-1.52, 0, -0.13] },
-      { geometry: sideRailGeometry, position: [1.52, 0, -0.13] },
-      { geometry: dividerGeometry, position: [0, 0.47, -0.13] },
-      { geometry: dividerGeometry, position: [0, -0.47, -0.13] },
-      { geometry: shortDividerGeometry, position: [0, 0.94, -0.13] },
-      { geometry: shortDividerGeometry, position: [0, -0.94, -0.13] },
-      { geometry: middleDividerGeometry, position: [-0.47, 0, -0.13] },
-      { geometry: middleDividerGeometry, position: [0.47, 0, -0.13] }
-    ];
-    return rails;
-  }, [railGeometry, sideRailGeometry, dividerGeometry, shortDividerGeometry, middleDividerGeometry]);
-
-  const frameEdgeGeometries = useMemo(() => frame.map(rail => new THREE.EdgesGeometry(rail.geometry, 24)), [frame]);
   const curves = flightCurves;
 
   useFrame(() => {
@@ -327,18 +292,11 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
 
   return (
     <>
-      <group rotation={[-0.29, -0.32, 0.014]}>
+      <group rotation={[-0.38, -0.42, 0.018]}>
         {MODULES.map((part, index) => (
           <group key={part.id + "-socket"} position={part.target}>
-            <mesh geometry={socketRimGeometries[index]} material={rimMaterial} position={[0, 0, -0.105]} />
-            <mesh geometry={socketWellGeometries[index]} material={socketMaterial} position={[0, 0, -0.06]} />
-          </group>
-        ))}
-
-        {frame.map((rail, index) => (
-          <group key={"frame-" + index} position={rail.position}>
-            <mesh geometry={rail.geometry} material={railMaterial} castShadow receiveShadow />
-            <lineSegments geometry={frameEdgeGeometries[index]} material={railEdgeMaterial} />
+            <mesh geometry={socketRimGeometries[index]} material={rimMaterial} position={[0, 0, -0.125]} receiveShadow />
+            <mesh geometry={socketWellGeometries[index]} material={socketMaterial} position={[0, 0, -0.075]} receiveShadow />
           </group>
         ))}
 
@@ -373,23 +331,27 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
 }
 
 function StaticFallback() {
+  const modules = [
+    { x: 18, y: 22, w: 132, h: 82, accent: "#c99537" },
+    { x: 170, y: 22, w: 132, h: 82, accent: "#6caaa5" },
+    { x: 18, y: 116, w: 82, h: 82, accent: "#6caaa5" },
+    { x: 118, y: 116, w: 82, h: 82, accent: "#c99537" },
+    { x: 218, y: 116, w: 82, h: 82, accent: "#aab4b8" },
+    { x: 18, y: 210, w: 132, h: 82, accent: "#6caaa5" },
+    { x: 170, y: 210, w: 132, h: 82, accent: "#c99537" }
+  ];
+
   return (
-    <svg className="assembly-fallback" viewBox="0 0 320 320" role="img" aria-label="Modular industrial sculpture">
+    <svg className="assembly-fallback" viewBox="0 0 320 320" role="img" aria-label="Seven-piece modular industrial sculpture">
       <g strokeLinejoin="round">
-        <rect x="12" y="12" width="296" height="296" rx="5" fill="none" stroke="#536168" strokeWidth="7" />
-        <rect x="20" y="20" width="134" height="84" rx="5" fill="#58656c" stroke="#9aa6ab" strokeWidth="2" />
-        <rect x="166" y="20" width="134" height="84" rx="5" fill="#58656c" stroke="#9aa6ab" strokeWidth="2" />
-        <rect x="20" y="112" width="84" height="84" rx="5" fill="#58656c" stroke="#9aa6ab" strokeWidth="2" />
-        <rect x="112" y="112" width="84" height="84" rx="5" fill="#66737a" stroke="#9aa6ab" strokeWidth="2" />
-        <rect x="204" y="112" width="84" height="84" rx="5" fill="#58656c" stroke="#9aa6ab" strokeWidth="2" />
-        <rect x="20" y="204" width="134" height="84" rx="5" fill="#58656c" stroke="#9aa6ab" strokeWidth="2" />
-        <rect x="166" y="204" width="134" height="84" rx="5" fill="#58656c" stroke="#9aa6ab" strokeWidth="2" />
-        <g stroke="#c99537" strokeWidth="4">
-          <path d="M38 39h30M184 39h30M38 223h30" />
-        </g>
-        <g stroke="#6caaa5" strokeWidth="4">
-          <path d="M38 131h24M222 131h24M184 223h30" />
-        </g>
+        {modules.map((part, index) => (
+          <g key={index}>
+            <rect x={part.x - 4} y={part.y - 4} width={part.w + 8} height={part.h + 8} rx="8" fill="#2e3a40" stroke="#88969c" strokeWidth="4" />
+            <rect x={part.x} y={part.y} width={part.w} height={part.h} rx="5" fill="#65747a" stroke="#c0c9cd" strokeWidth="3" />
+            <path d={`M ${part.x + 14} ${part.y + 15} h ${Math.max(18, part.w * 0.22)}`} stroke={part.accent} strokeWidth="4" />
+            <path d={`M ${part.x + part.w * 0.38} ${part.y + part.h - 15} h ${part.w * 0.4}`} stroke="#d4dddf" strokeWidth="2" opacity=".7" />
+          </g>
+        ))}
       </g>
     </svg>
   );
@@ -531,7 +493,7 @@ export default function AssemblyScene() {
         <Canvas
           shadows
           dpr={[1, 1.6]}
-          camera={{ position: [0, 0, 7.8], fov: 34 }}
+          camera={{ position: [0, 0, 8], fov: 34 }}
           gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
           onCreated={({ gl }) => {
             gl.toneMapping = THREE.ACESFilmicToneMapping;
