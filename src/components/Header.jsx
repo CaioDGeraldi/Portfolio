@@ -23,6 +23,7 @@ export default function Header({ copy, language, onLanguageToggle, theme, onThem
     ["#about", copy.nav.about],
     ["#experience", copy.nav.experience],
     ["#skills", copy.nav.stack],
+    ["#ai", copy.nav.ai],
     ["#contact", copy.nav.contact]
   ];
 
@@ -45,7 +46,7 @@ export default function Header({ copy, language, onLanguageToggle, theme, onThem
     <header className="site-header">
       <div className="header-inner">
         <a className="brand" href="#top" onClick={closeMenu}>
-          <span className="brand-mark" aria-hidden="true">C<span>.</span></span>
+          <img className="brand-avatar" src="https://avatars.githubusercontent.com/u/161092309?v=4" alt="" width="34" height="34" loading="eager" decoding="async" />
           <span className="brand-name">Caio Geraldi</span>
         </a>
 

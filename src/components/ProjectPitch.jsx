@@ -1,3 +1,6 @@
+import retornaSymbol from "../../assets/retorna-symbol.svg";
+import fractawLogo from "../../assets/fractaw-logo-dark.svg";
+
 function RetornaFlow({ language }) {
   const pt = language === "pt-BR";
   return (
@@ -45,15 +48,23 @@ export default function ProjectPitch({ project, labels, language }) {
         <div className={`pitch-visual pitch-visual-${project.visual}`}>
           {project.visual === "image" ? (
             <figure>
-              <img src={project.image} alt={project.imageAlt} loading="lazy" decoding="async" />
+              <img src={project.image} alt={project.imageAlt} loading={project.id === "fractaw" ? "eager" : "lazy"} decoding="async" onError={project.id === "fractaw" ? event => { event.currentTarget.onerror = null; event.currentTarget.src = fractawLogo; event.currentTarget.classList.add("pitch-image-fallback"); } : undefined} />
               <figcaption>{labels.visualNote}</figcaption>
             </figure>
+          ) : project.visual === "retorna" ? (
+            <div className="pitch-retorna-panel">
+              <div className="pitch-retorna-brand">
+                <img src={retornaSymbol} alt="Símbolo oficial do Retorna" width="42" height="42" />
+                <div><strong>Retorna</strong><span>{language === "pt-BR" ? "FIDELIDADE CONFIGURÁVEL" : "CONFIGURABLE LOYALTY"}</span></div>
+              </div>
+              <div className="pitch-retorna-flow">
+                <div className="pitch-visual-kicker">RETORNA / API</div>
+                <RetornaFlow language={language} />
+                <p className="pitch-visual-note">{language === "pt-BR" ? "Fluxo conceitual da integração, não uma captura de produção." : "Conceptual integration flow, not a production capture."}</p>
+              </div>
+            </div>
           ) : (
-            <>
-              <div className="pitch-visual-kicker">RETORNA / API</div>
-              <RetornaFlow language={language} />
-              <p className="pitch-visual-note">{language === "pt-BR" ? "Modelo conceitual da integração, não uma captura de produção." : "Conceptual integration model, not a production capture."}</p>
-            </>
+            <div className="pitch-visual-kicker">PROJECT / OVERVIEW</div>
           )}
         </div>
       </div>

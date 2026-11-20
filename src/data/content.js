@@ -8,6 +8,7 @@ export const content = {
       about: "About",
       experience: "Experience",
       stack: "Technologies",
+      ai: "AI practice",
       contact: "Contact",
       menu: "Open navigation",
       closeMenu: "Close navigation"
@@ -105,6 +106,16 @@ export const content = {
         { title: "Practices", items: ["Relational modeling", "Domain modeling", "Git / GitHub", "Automated testing"] }
       ]
     },
+    ai: {
+      title: "How I work with AI.",
+      intro: "I use AI throughout the software development lifecycle: as a reasoning and research partner, a collaborator during implementation, and a way to structure bounded workflows with tools and agents. I remain responsible for technical decisions, reviewing changes and validating the result.",
+      groups: [
+        { title: "Where I use it", items: ["Understanding legacy code and investigating bugs", "Exploring architecture and technical decisions", "Requirements analysis and documentation", "Implementation, tests and code review", "Research, learning and task automation", "Coordinating agents and tool-based workflows"] },
+        { title: "Tools and interfaces", items: ["ChatGPT", "Claude Code", "Codex", "Google / Gemini API", "MCP"] },
+        { title: "Concepts explored", items: ["LLMs and model APIs", "Prompting and context management", "Tool calling and agent workflows", "Orchestration, memory and reliability", "MCP and integrations"] }
+      ],
+      note: "My familiarity with AI engineering concepts is intermediate and still developing. I do not claim fine-tuning or model-training experience."
+    },
     contact: {
       greeting: "Hi.",
       title: "Have a project in mind?",
@@ -129,6 +140,7 @@ export const content = {
       about: "Sobre",
       experience: "Experiência",
       stack: "Tecnologias",
+      ai: "IA",
       contact: "Contato",
       menu: "Abrir navegação",
       closeMenu: "Fechar navegação"
@@ -225,6 +237,16 @@ export const content = {
         { title: "Experiência profissional", items: ["Delphi", "Object Pascal", "Oracle Database", "SQL"] },
         { title: "Práticas", items: ["Modelagem relacional", "Modelagem de domínio", "Git / GitHub", "Testes automatizados"] }
       ]
+    },
+    ai: {
+      title: "Como trabalho com IA.",
+      intro: "Utilizo IA ao longo do ciclo de desenvolvimento: como apoio ao raciocínio e à pesquisa, colaboradora durante a implementação e recurso para estruturar workflows delimitados com ferramentas e agentes. As decisões técnicas, a revisão das alterações e a validação do resultado continuam sob minha responsabilidade.",
+      groups: [
+        { title: "Onde utilizo", items: ["Compreensão de código legado e investigação de bugs", "Exploração de arquitetura e decisões técnicas", "Levantamento de requisitos e documentação", "Implementação, testes e revisão de código", "Pesquisa, aprendizado e automação de tarefas", "Coordenação de agentes e workflows com ferramentas"] },
+        { title: "Ferramentas e interfaces", items: ["ChatGPT", "Claude Code", "Codex", "API do Google / Gemini", "MCP"] },
+        { title: "Conceitos explorados", items: ["LLMs e APIs de modelos", "Prompting e gerenciamento de contexto", "Tool calling e workflows com agentes", "Orquestração, memória e confiabilidade", "MCP e integrações"] }
+      ],
+      note: "Minha familiaridade com conceitos de engenharia de IA é intermediária e continua em desenvolvimento. Não apresento fine-tuning ou treinamento de modelos como experiência."
     },
     contact: {
       greeting: "Oi.",
