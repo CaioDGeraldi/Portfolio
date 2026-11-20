@@ -23,6 +23,7 @@ export default function Header({ copy, language, onLanguageToggle, theme, onThem
     ["#about", copy.nav.about],
     ["#experience", copy.nav.experience],
     ["#skills", copy.nav.stack],
+    ["#ai", copy.nav.ai],
     ["#contact", copy.nav.contact]
   ];
 
