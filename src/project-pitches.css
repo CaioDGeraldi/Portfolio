@@ -52,3 +52,21 @@
   .pitch-flow-arrow { transform: rotate(90deg); }
   .pitch-flow-step { padding: 12px 14px; }
 }
+
+
+/* AI-assisted engineering section */
+.ai-section { border-top: 1px solid var(--line-strong); }
+.ai-layout { display: grid; grid-template-columns: minmax(240px, .78fr) minmax(0, 1.22fr); gap: clamp(42px, 7vw, 100px); }
+.ai-intro h2 { max-width: 480px; margin: 0 0 20px; font-family: var(--display); font-size: clamp(2.5rem, 4.5vw, 4.4rem); font-weight: 500; line-height: 1; letter-spacing: -.05em; }
+.ai-intro > p:not(.section-eyebrow) { max-width: 490px; color: var(--muted); font-size: .91rem; line-height: 1.8; }
+.ai-intro .ai-note { margin-top: 24px; padding-left: 15px; border-left: 2px solid var(--accent); font-size: .78rem !important; }
+.ai-groups { display: grid; gap: 26px; }
+.ai-group { padding-top: 17px; border-top: 1px solid var(--line); }
+.ai-group h3 { margin: 0 0 13px; font-family: var(--mono); font-size: .68rem; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; color: var(--teal); }
+.site-root[data-theme="dark"] .ai-group h3 { color: var(--teal-bright); }
+.ai-group ul { display: flex; flex-wrap: wrap; gap: 9px; margin: 0; padding: 0; list-style: none; }
+.ai-group li { padding: 7px 10px; border: 1px solid var(--line); color: var(--ink); font-size: .76rem; line-height: 1.4; }
+@media (max-width: 800px) {
+  .ai-layout { grid-template-columns: 1fr; gap: 34px; }
+  .ai-intro h2 { max-width: 620px; }
+}
