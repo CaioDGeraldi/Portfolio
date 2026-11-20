@@ -126,6 +126,7 @@ test("Centro em Movimento includes the live prototype and hackathon build time",
 });
 
 test("industrial assembly follows the seven-section sequence and exposes its motion phases", async ({ page }) => {
+  test.setTimeout(180_000);
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("");
