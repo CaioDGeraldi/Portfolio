@@ -160,13 +160,13 @@ function createFlightCurve(part) {
   );
 }
 
-function ModulePiece({ part, groupRef, bodyGeometry, faceGeometry, accentGeometry, hairlineGeometry, bodyMaterial, faceMaterial, accentMaterial, hairlineMaterial, edgeMaterial }) {
+function ModulePiece({ part, groupRef, bodyGeometry, faceGeometry, accentGeometry, hairlineGeometry, bodyMaterial, faceMaterial, accentMaterial, hairlineMaterial, edgeMaterial, bodyEdgeGeometry }) {
   const faceZ = part.size[2] / 2 + 0.018;
 
   return (
     <group ref={groupRef}>
       <mesh geometry={bodyGeometry} material={bodyMaterial} castShadow receiveShadow />
-      <lineSegments geometry={new THREE.EdgesGeometry(bodyGeometry, 22)} material={edgeMaterial} />
+      <lineSegments geometry={bodyEdgeGeometry} material={edgeMaterial} />
       <mesh geometry={faceGeometry} material={faceMaterial} position={[0, 0, faceZ]} />
       <mesh geometry={accentGeometry} material={accentMaterial} position={[-part.size[0] * 0.24, part.size[1] * 0.22, faceZ + 0.025]} />
       <mesh geometry={hairlineGeometry} material={hairlineMaterial} position={[part.size[0] * 0.06, -part.size[1] * 0.22, faceZ + 0.025]} />
@@ -255,6 +255,8 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
     opacity: 0.34
   }), []);
 
+  const bodyEdgeGeometries = useMemo(() => bodyGeometries.map(geometry => new THREE.EdgesGeometry(geometry, 22)), [bodyGeometries]);
+
   const frame = useMemo(() => {
     const rails = [
       { geometry: railGeometry, position: [0, 1.52, -0.105] },
@@ -271,6 +273,7 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
     return rails;
   }, [railGeometry, sideRailGeometry, dividerGeometry, shortDividerGeometry, middleDividerGeometry]);
 
+  const frameEdgeGeometries = useMemo(() => frame.map(rail => new THREE.EdgesGeometry(rail.geometry, 24)), [frame]);
   const curves = flightCurves;
 
   useFrame(() => {
@@ -321,7 +324,7 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
         {frame.map((rail, index) => (
           <group key={"frame-" + index} position={rail.position}>
             <mesh geometry={rail.geometry} material={railMaterial} castShadow receiveShadow />
-            <lineSegments geometry={new THREE.EdgesGeometry(rail.geometry, 24)} material={railEdgeMaterial} />
+            <lineSegments geometry={frameEdgeGeometries[index]} material={railEdgeMaterial} />
           </group>
         ))}
 
@@ -339,6 +342,7 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
             accentMaterial={accentMaterials[index]}
             hairlineMaterial={hairlineMaterial}
             edgeMaterial={edgeMaterial}
+            bodyEdgeGeometry={bodyEdgeGeometries[index]}
           />
         ))}
       </group>
