@@ -29,6 +29,8 @@ The project logos are **the actual SVG files from the project repositories**. No
 | `assets/retorna-logo-dark.svg` | `CaioDGeraldi/DataSystemChallenge/frontend/public/retorna/brand/retorna-logo-dark.svg` |
 | `assets/retorna-logo-light.svg` | `CaioDGeraldi/DataSystemChallenge/frontend/public/retorna/brand/retorna-logo-light.svg` |
 | `assets/retorna-symbol.svg` | `CaioDGeraldi/DataSystemChallenge/frontend/public/retorna/brand/retorna-symbol.svg` |
+| Centro em Movimento mark (referenced from source) | `CaioDGeraldi/inova-araras-19-11-2026/static/img/marca/centro-em-movimento.png` |
+| Vem pro Centro app icon (referenced from source) | `CaioDGeraldi/inova-araras-19-11-2026/static/img/marca/vem-pro-centro-icone.png` |
 
 The Fractaw asset's appearance is shared here to present the product concept; private implementation details are not copied.
 

@@ -10,10 +10,11 @@ test("recruiter can open a bilingual, evidence-linked profile from About", async
   await expect(page.locator("html")).toHaveAttribute("lang", "pt-BR");
   await expect(page.locator("h1")).toContainText("Caio Darin");
   await expect(page.locator("#experienceTitle")).toContainText("Experiência");
-  await expect(page.locator("#workTitle")).toContainText("Duas formas");
+  await expect(page.locator("#workTitle")).toContainText("Produto, engenharia e inovação pública");
   const work = page.locator(".profile-work");
   await expect(work.locator('a[href*="fractaw.html"]')).toHaveAttribute("href", /lang=pt-BR/);
   await expect(work.locator('a[href*="retorna.html"]')).toHaveAttribute("href", /lang=pt-BR/);
+  await expect(work.locator('a[href*="centro-em-movimento.html"]')).toHaveAttribute("href", /lang=pt-BR/);
   const viewport = await page.evaluate(() => ({
     document: document.documentElement.scrollWidth,
     viewport: window.innerWidth
