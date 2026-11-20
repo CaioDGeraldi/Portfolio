@@ -14,15 +14,17 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.56.1-noble
-    timeout-minutes: 12
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
-      - name: Install pinned browser test dependency (browsers provided by image)
+          node-version: "22"
+      - name: Install pinned project dependencies
         run: npm install --no-package-lock --ignore-scripts --no-audit --no-fund
-      - name: Test responsive layout, navigation, language and theme
+      - name: Build production bundle
+        run: npm run build
+      - name: Test responsive layout, navigation, language, theme and accessibility
         run: npm run test:e2e
       - name: Upload failure screenshots and traces
         if: failure()
