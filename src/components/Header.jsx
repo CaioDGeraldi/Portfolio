@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function ThemeIcon({ theme }) {
   return theme === "dark" ? (
@@ -19,12 +19,21 @@ function MenuIcon({ open }) {
 export default function Header({ copy, language, onLanguageToggle, theme, onThemeToggle }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const links = [
-    ["#projects", copy.nav.work],
+    ["#projects", copy.nav.projects],
     ["#about", copy.nav.about],
     ["#experience", copy.nav.experience],
-    ["#approach", copy.nav.approach],
+    ["#skills", copy.nav.stack],
     ["#contact", copy.nav.contact]
   ];
+
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    function closeOnEscape(event) {
+      if (event.key === "Escape") setMenuOpen(false);
+    }
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [menuOpen]);
 
   function closeMenu() {
     setMenuOpen(false);
@@ -40,14 +49,14 @@ export default function Header({ copy, language, onLanguageToggle, theme, onThem
           <span className="brand-name">Caio Geraldi</span>
         </a>
 
-        <nav id="primary-navigation" className={`primary-nav ${menuOpen ? "is-open" : ""}`} aria-label={copy.navLabel}>
+        <nav id="primary-navigation" className={\`primary-nav \${menuOpen ? "is-open" : ""}\`} aria-label={copy.navLabel}>
           {links.map(([href, label]) => (
             <a key={href} href={href} onClick={closeMenu}>{label}</a>
           ))}
         </nav>
 
         <div className="header-tools">
-          <button className="language-toggle" type="button" onClick={onLanguageToggle} data-language-toggle aria-label={`${languageAction}, ${copy.languageLabel}`}>
+          <button className="language-toggle" type="button" onClick={onLanguageToggle} data-language-toggle aria-label={\`\${languageAction}, \${copy.languageLabel}\`}>
             {languageAction}
           </button>
           <button className="icon-button" type="button" onClick={onThemeToggle} data-theme-toggle aria-label={theme === "dark" ? copy.themeToLight : copy.themeToDark} title={theme === "dark" ? copy.themeToLight : copy.themeToDark}>

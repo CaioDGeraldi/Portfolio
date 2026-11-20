@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import Header from "./components/Header.jsx";
 import ProjectCard from "./components/ProjectCard.jsx";
-import { content, technologies } from "./data/content.js";
+import { content } from "./data/content.js";
 import { useSiteMotion } from "./hooks/useSiteMotion.js";
-import fractawDark from "../assets/fractaw-logo-dark.svg";
-import retornaLight from "../assets/retorna-logo-light.svg";
 import "./styles.css";
 
 function initialLanguage() {
@@ -33,18 +31,14 @@ function initialTheme() {
   return "light";
 }
 
-function ArrowDown() {
-  return <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13m-5-5 5 5 5-5" /></svg>;
-}
-
 function ArrowUpRight() {
   return <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 15.5 15 5m-8.5 0H15v8.5" /></svg>;
 }
 
-function SectionHeading({ eyebrow, title, description, number }) {
+function SectionHeading({ eyebrow, title, description }) {
   return (
     <div className="section-heading" data-reveal>
-      <p className="eyebrow"><span>{number}</span>{eyebrow}</p>
+      {eyebrow && <p className="section-eyebrow">{eyebrow}</p>}
       <div className="section-heading-main">
         <h2>{title}</h2>
         {description && <p>{description}</p>}
@@ -56,9 +50,9 @@ function SectionHeading({ eyebrow, title, description, number }) {
 function ExperienceTimeline({ items }) {
   return (
     <div className="experience-list">
-      {items.map((item, index) => (
+      {items.map(item => (
         <article className="experience-item" key={item.title} data-reveal>
-          <div className="experience-period"><span>{String(index + 1).padStart(2, "0")}</span>{item.period}</div>
+          <div className="experience-period">{item.period}</div>
           <div className="experience-copy">
             <h3>{item.title}</h3>
             <p className="experience-role">{item.role}</p>
@@ -70,16 +64,49 @@ function ExperienceTimeline({ items }) {
   );
 }
 
-function languageSafeBackToTop(copy) {
-  return copy.footer.location === "No Brasil" ? "Voltar ao topo" : "Back to top";
+function ProjectWorkbench({ copy, projects }) {
+  return (
+    <aside className="workbench" data-hero-panel aria-label={copy.hero.panelLabel}>
+      <div className="workbench-heading">
+        <span className="workbench-indicator" aria-hidden="true" />
+        <span>{copy.hero.panelLabel}</span>
+        <span className="workbench-year">{copy.hero.panelYear}</span>
+      </div>
+      <div className="workbench-projects">
+        {projects.map((project, index) => (
+          <a className="workbench-project" href={\`#\${project.id}\`} key={project.id}>
+            <span className="workbench-node" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+            <span className="workbench-project-copy">
+              <strong>{project.title}</strong>
+              <small>{project.status}</small>
+            </span>
+            <span className="workbench-project-type">{project.shortLabel}</span>
+          </a>
+        ))}
+      </div>
+      <div className="workbench-footer">
+        <span>{copy.hero.panelFooter}</span>
+        <span className="workbench-footer-mark" aria-hidden="true">C.</span>
+      </div>
+      <svg className="workbench-trace" viewBox="0 0 120 80" aria-hidden="true">
+        <path d="M8 68V44H42V18H78V44H112" />
+        <circle cx="8" cy="68" r="3" />
+        <circle cx="42" cy="18" r="3" />
+        <circle cx="112" cy="44" r="3" />
+      </svg>
+    </aside>
+  );
 }
 
 function Footer({ copy }) {
   return (
     <footer className="site-footer">
-      <a className="footer-brand" href="#top">C<span>.</span> Caio Geraldi</a>
-      <p>{copy.footer.location} <span aria-hidden="true">·</span> {copy.footer.note}</p>
-      <a href="#top" className="back-to-top">{languageSafeBackToTop(copy)} <ArrowUpRight /></a>
+      <a className="footer-brand" href="#top" aria-label="Caio Geraldi, back to top">
+        <span className="brand-mark" aria-hidden="true">C<span>.</span></span>
+        <span>Caio Geraldi</span>
+      </a>
+      <p>{copy.footer.location} <span aria-hidden="true">/</span> {copy.footer.note}</p>
+      <a href="#top" className="back-to-top">{copy.footer.backToTop}<ArrowUpRight /></a>
     </footer>
   );
 }
@@ -89,9 +116,6 @@ export default function App() {
   const [theme, setTheme] = useState(initialTheme);
   const rootRef = useSiteMotion();
   const copy = content[language];
-  const marqueeItems = language === "pt-BR"
-    ? ["Python", "Django", "PostgreSQL", "Delphi", "Oracle Database", "SQL", "Modelagem de domínio", "Testes automatizados"]
-    : technologies;
 
   useEffect(() => {
     try {
@@ -105,7 +129,7 @@ export default function App() {
     document.documentElement.lang = language;
     document.title = copy.documentTitle;
     document.querySelector('meta[name="description"]')?.setAttribute("content", copy.description);
-    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#151b20" : "#f3f1eb");
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#1E2327" : "#E7ECEF");
   }, [language, theme, copy]);
 
   function toggleLanguage() {
@@ -123,13 +147,7 @@ export default function App() {
   }
 
   function toggleTheme() {
-    const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
-    try {
-      localStorage.setItem("portfolio-theme", next);
-    } catch {
-      // Theme persistence is optional.
-    }
+    setTheme(current => current === "dark" ? "light" : "dark");
   }
 
   return (
@@ -145,63 +163,40 @@ export default function App() {
 
       <main id="main">
         <section className="hero-section" id="top">
-          <div className="hero-shell">
+          <div className="content-shell hero-shell">
             <div className="hero-copy">
-              <p className="hero-eyebrow"><span className="status-dot" />{copy.hero.eyebrow}</p>
+              <p className="hero-eyebrow"><span className="hero-marker" aria-hidden="true" />{copy.hero.eyebrow}</p>
               <p className="availability-line">{copy.hero.availability}</p>
               <h1 className="hero-title">
                 <span className="title-line"><span data-hero-line>{copy.hero.lineOne}</span></span>
                 <span className="title-line"><span data-hero-line>{copy.hero.lineTwo}</span></span>
-                <span className="title-line title-line-accent"><span data-hero-line>{copy.hero.lineThree}<i className="hero-spark" aria-hidden="true">✳</i></span></span>
               </h1>
               <p className="hero-description">{copy.hero.description}</p>
               <div className="hero-actions">
-                <a className="button button-primary" href="#projects">{copy.hero.primary}<ArrowDown /></a>
-                <a className="button button-text" href="#contact">{copy.hero.secondary}<ArrowUpRight /></a>
+                <a className="button button-primary" href="#projects">{copy.hero.primary}<span aria-hidden="true">↓</span></a>
+                <a className="button button-text" href="#contact">{copy.hero.secondary}</a>
               </div>
-              <div className="hero-footer-note">
-                <span className="note-rule" />
-                <span>{copy.hero.asideNote}</span>
+              <div className="hero-facts" aria-label={language === "pt-BR" ? "Resumo profissional" : "Professional summary"}>
+                {copy.hero.facts.map(fact => (
+                  <div className="hero-fact" key={fact.label}>
+                    <span>{fact.label}</span>
+                    <strong>{fact.value}</strong>
+                  </div>
+                ))}
               </div>
             </div>
 
-            <div className="hero-art" data-hero-aside role="group" aria-label={copy.hero.asideLabel}>
-              <div className="hero-art-grid" />
-              <div className="art-orbit art-orbit-one" />
-              <div className="art-orbit art-orbit-two" />
-              <div className="art-artifact artifact-fractaw">
-                <span className="artifact-index">{language === "pt-BR" ? "PRODUTO / 01" : "PRODUCT / 01"}</span>
-                <img src={fractawDark} alt="Fractaw" />
-                <span className="artifact-caption">{language === "pt-BR" ? "Gestão empresarial modular" : "Modular business software"}</span>
-              </div>
-              <div className="art-artifact artifact-retorna">
-                <span className="artifact-index">{language === "pt-BR" ? "ENGENHARIA / 02" : "ENGINEERING / 02"}</span>
-                <img src={retornaLight} alt="Retorna" />
-                <span className="artifact-caption">{language === "pt-BR" ? "Fidelidade configurável" : "Configurable loyalty"}</span>
-              </div>
-              <div className="art-award">
-                <span className="award-star" aria-hidden="true">✳</span>
-                <div><strong>{copy.hero.award}</strong><span>{copy.hero.awardLabel}</span></div>
-              </div>
-              <div className="hero-art-caption">{copy.hero.asideCaption}</div>
-            </div>
+            <ProjectWorkbench copy={copy} projects={copy.projects.items} />
           </div>
-          <div className="hero-bottom-rule"><span>{language === "pt-BR" ? "ROLE PARA EXPLORAR" : "SCROLL TO EXPLORE"}</span><ArrowDown /></div>
+          <div className="hero-bottom-rule" aria-hidden="true">
+            <span>{language === "pt-BR" ? "PORTFÓLIO / PROJETOS E EXPERIÊNCIA" : "PORTFOLIO / PROJECTS AND EXPERIENCE"}</span>
+            <span>2026</span>
+          </div>
         </section>
-
-        <div className="marquee-band" role="region" aria-label={copy.marqueeLabel}>
-          <div className="marquee-track">
-            {[0, 1].map(group => (
-              <div className="marquee-group" key={group} aria-hidden={group === 1}>
-                {marqueeItems.map(item => <span key={item}>{item}<i aria-hidden="true">✳</i></span>)}
-              </div>
-            ))}
-          </div>
-        </div>
 
         <section className="content-section projects-section" id="projects">
           <div className="content-shell">
-            <SectionHeading number="01" eyebrow={copy.projects.eyebrow} title={copy.projects.title} description={copy.projects.description} />
+            <SectionHeading eyebrow={copy.projects.eyebrow} title={copy.projects.title} description={copy.projects.description} />
             <div className="project-grid">
               {copy.projects.items.map(project => (
                 <ProjectCard
@@ -209,7 +204,6 @@ export default function App() {
                   project={project}
                   language={language}
                   viewCase={copy.projects.viewCase}
-                  featuredLabel={copy.projects.featured}
                 />
               ))}
             </div>
@@ -218,34 +212,35 @@ export default function App() {
 
         <section className="about-section" id="about">
           <div className="content-shell about-layout">
-            <div className="about-main" data-reveal>
-              <p className="eyebrow"><span>02</span>{copy.about.eyebrow}</p>
+            <div className="about-heading" data-reveal>
+              <p className="section-eyebrow">{copy.about.eyebrow}</p>
               <h2>{copy.about.title}</h2>
-              <p className="about-body">{copy.about.body}</p>
             </div>
-            <aside className="about-aside" data-reveal>
-              <span className="aside-index">{language === "pt-BR" ? "UM NORTE PROFISSIONAL" : "A NOTE ON DIRECTION"}</span>
-              <h3>{copy.about.detailTitle}</h3>
-              <p>{copy.about.detail}</p>
-              <a href={`./profile.html?lang=${language}`} className="inline-link">{copy.about.link}<ArrowUpRight /></a>
-            </aside>
+            <div className="about-reading" data-reveal>
+              {copy.about.paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
+              <aside className="about-aside">
+                <span>{copy.about.detailTitle}</span>
+                <p>{copy.about.detail}</p>
+                <a href={\`./profile.html?lang=\${language}\`} className="inline-link">{copy.about.link}<ArrowUpRight /></a>
+              </aside>
+            </div>
           </div>
         </section>
 
         <section className="content-section experience-section" id="experience">
           <div className="content-shell">
-            <SectionHeading number="03" eyebrow={copy.experience.eyebrow} title={copy.experience.title} />
+            <SectionHeading eyebrow={copy.experience.eyebrow} title={copy.experience.title} />
             <ExperienceTimeline items={copy.experience.items} />
           </div>
         </section>
 
         <section className="approach-section" id="approach">
           <div className="content-shell">
-            <SectionHeading number="04" eyebrow={copy.approach.eyebrow} title={copy.approach.title} />
-            <div className="approach-grid">
+            <SectionHeading eyebrow={copy.approach.eyebrow} title={copy.approach.title} />
+            <div className="project-notes">
               {copy.approach.items.map(item => (
-                <article className="approach-card" key={item.number} data-reveal>
-                  <span className="approach-number">{item.number}</span>
+                <article className="project-note" key={item.label} data-reveal>
+                  <p className="project-note-label">{item.label}</p>
                   <h3>{item.title}</h3>
                   <p>{item.body}</p>
                 </article>
@@ -257,7 +252,7 @@ export default function App() {
         <section className="content-section skills-section" id="skills">
           <div className="content-shell skills-layout">
             <div className="skills-intro" data-reveal>
-              <p className="eyebrow"><span>05</span>{copy.skills.eyebrow}</p>
+              <p className="section-eyebrow">{copy.skills.eyebrow}</p>
               <h2>{copy.skills.title}</h2>
               <p>{copy.skills.learning}</p>
             </div>
@@ -265,7 +260,9 @@ export default function App() {
               {copy.skills.groups.map(group => (
                 <div className="skill-group" key={group.title} data-reveal>
                   <h3>{group.title}</h3>
-                  <div className="skill-chips">{group.items.map(item => <span key={item}>{item}</span>)}</div>
+                  <ul className="skill-list">
+                    {group.items.map(item => <li key={item}>{item}</li>)}
+                  </ul>
                 </div>
               ))}
             </div>
@@ -275,7 +272,12 @@ export default function App() {
         <section className="contact-section" id="contact">
           <div className="content-shell contact-shell">
             <div className="contact-copy" data-reveal>
-              <p className="eyebrow"><span>06</span>{copy.contact.eyebrow}</p>
+              <p className="section-eyebrow">{copy.contact.eyebrow}</p>
+              <span className="contact-greeting" aria-label={copy.contact.greeting}>
+                {Array.from(copy.contact.greeting).map((character, index) => (
+                  <span key={index} aria-hidden="true">{character}</span>
+                ))}
+              </span>
               <h2>{copy.contact.title}</h2>
               <p>{copy.contact.body}</p>
               <a className="button button-contact" href="mailto:chdgeraldi@gmail.com">{copy.contact.email}<ArrowUpRight /></a>
@@ -283,7 +285,7 @@ export default function App() {
             <div className="contact-links" data-reveal>
               <a href="https://github.com/CaioDGeraldi" target="_blank" rel="noopener noreferrer"><span>{copy.contact.github}</span><ArrowUpRight /></a>
               <a href="https://www.linkedin.com/in/caio-geraldi/" target="_blank" rel="noopener noreferrer"><span>{copy.contact.linkedin}</span><ArrowUpRight /></a>
-              <a href={`./profile.html?lang=${language}`}><span>{copy.contact.profile}</span><ArrowUpRight /></a>
+              <a href={\`./profile.html?lang=\${language}\`}><span>{copy.contact.profile}</span><ArrowUpRight /></a>
             </div>
           </div>
         </section>

@@ -15,64 +15,71 @@ export function useSiteMotion() {
 
     const lenis = new Lenis({
       autoRaf: false,
-      lerp: 0.085,
+      anchors: true,
+      lerp: 0.09,
       smoothWheel: true,
       wheelMultiplier: 0.9
     });
 
-    lenis.on("scroll", ScrollTrigger.update);
     const ticker = time => lenis.raf(time * 1000);
+    lenis.on("scroll", ScrollTrigger.update);
     gsap.ticker.add(ticker);
-    gsap.ticker.lagSmoothing(0);
 
     const context = gsap.context(() => {
       const heroLines = root.querySelectorAll("[data-hero-line]");
       if (heroLines.length) {
         gsap.from(heroLines, {
-          yPercent: 115,
-          rotate: 1.5,
-          duration: 0.95,
-          stagger: 0.12,
+          yPercent: 108,
+          rotateX: -42,
+          transformOrigin: "50% 100%",
+          duration: 1.05,
+          stagger: 0.14,
           ease: "power3.out",
           delay: 0.12
         });
       }
 
-      gsap.fromTo("[data-hero-aside]",
-        { y: 28, rotate: 1.2 },
-        { y: 0, rotate: 0, duration: 1.05, ease: "power3.out", delay: 0.42 }
-      );
-
-      gsap.fromTo(".hero-spark",
-        { scale: 0.35, rotate: -24 },
-        { scale: 1, rotate: 0, duration: 0.8, ease: "elastic.out(1, 0.55)", delay: 0.78 }
-      );
+      const workbench = root.querySelector("[data-hero-panel]");
+      if (workbench) {
+        gsap.from(workbench, {
+          y: 24,
+          rotate: 1.2,
+          duration: 0.9,
+          ease: "power2.out",
+          delay: 0.32
+        });
+      }
 
       root.querySelectorAll("[data-reveal]").forEach(element => {
-        gsap.fromTo(element,
-          { y: 30 },
+        gsap.from(element, {
+          y: 18,
+          duration: 0.65,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: element,
+            start: "top 88%",
+            once: true
+          }
+        });
+      });
+
+      root.querySelectorAll("[data-image-reveal]").forEach(element => {
+        const image = element.querySelector("img, .integration-visual");
+        if (!image) return;
+        gsap.fromTo(image,
+          { clipPath: "inset(0 0 12% 0)" },
           {
-            y: 0,
-            duration: 0.8,
+            clipPath: "inset(0 0 0% 0)",
+            duration: 0.85,
             ease: "power2.out",
             scrollTrigger: {
               trigger: element,
-              start: "top 88%",
+              start: "top 84%",
               once: true
             }
           }
         );
       });
-
-      const marquee = root.querySelector(".marquee-track");
-      if (marquee) {
-        gsap.to(marquee, {
-          xPercent: -50,
-          duration: 30,
-          repeat: -1,
-          ease: "none"
-        });
-      }
     }, root);
 
     const refresh = () => ScrollTrigger.refresh();
