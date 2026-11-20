@@ -74,7 +74,7 @@ function ProjectWorkbench({ copy, projects }) {
       </div>
       <div className="workbench-projects">
         {projects.map((project, index) => (
-          <a className="workbench-project" href={\`#\${project.id}\`} key={project.id}>
+          <a className="workbench-project" href={`#${project.id}`} key={project.id}>
             <span className="workbench-node" aria-hidden="true" />
             <span className="workbench-project-copy">
               <strong>{project.title}</strong>
@@ -220,7 +220,7 @@ export default function App() {
               <aside className="about-aside">
                 <span>{copy.about.detailTitle}</span>
                 <p>{copy.about.detail}</p>
-                <a href={\`./profile.html?lang=\${language}\`} className="inline-link">{copy.about.link}<ArrowUpRight /></a>
+                <a href={`./profile.html?lang=${language}`} className="inline-link">{copy.about.link}<ArrowUpRight /></a>
               </aside>
             </div>
           </div>
@@ -282,7 +282,7 @@ export default function App() {
             <div className="contact-links" data-reveal>
               <a href="https://github.com/CaioDGeraldi" target="_blank" rel="noopener noreferrer"><span>{copy.contact.github}</span><ArrowUpRight /></a>
               <a href="https://www.linkedin.com/in/caio-geraldi/" target="_blank" rel="noopener noreferrer"><span>{copy.contact.linkedin}</span><ArrowUpRight /></a>
-              <a href={\`./profile.html?lang=\${language}\`}><span>{copy.contact.profile}</span><ArrowUpRight /></a>
+              <a href={`./profile.html?lang=${language}`}><span>{copy.contact.profile}</span><ArrowUpRight /></a>
             </div>
           </div>
         </section>

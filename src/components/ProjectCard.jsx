@@ -37,11 +37,11 @@ function IntegrationVisual({ language }) {
 
 export default function ProjectCard({ project, language, viewCase }) {
   const [imageFailed, setImageFailed] = useState(false);
-  const href = \`./projects/\${project.slug}.html?lang=\${language === "en" ? "en" : "pt-BR"}\`;
+  const href = `./projects/${project.slug}.html?lang=${language === "en" ? "en" : "pt-BR"}`;
 
   return (
-    <article id={project.id} className={\`project-card \${project.featured ? "project-card-featured" : ""}\`} data-reveal>
-      <div className={\`project-visual \${project.visual === "flow" ? "project-visual-flow" : ""}\`} data-image-reveal>
+    <article id={project.id} className={`project-card ${project.featured ? "project-card-featured" : ""}`} data-reveal>
+      <div className={`project-visual ${project.visual === "flow" ? "project-visual-flow" : ""}`} data-image-reveal>
         {project.visual === "image" && !imageFailed ? (
           <img
             src={project.image}
@@ -52,7 +52,7 @@ export default function ProjectCard({ project, language, viewCase }) {
             onError={() => setImageFailed(true)}
           />
         ) : project.visual === "image" ? (
-          <div className="project-image-fallback" role="img" aria-label={language === "pt-BR" ? \`Imagem indisponível: \${project.title}\` : \`Image unavailable: \${project.title}\`}>
+          <div className="project-image-fallback" role="img" aria-label={language === "pt-BR" ? `Imagem indisponível: ${project.title}` : `Image unavailable: ${project.title}`}>
             <span>{project.title}</span>
             <small>{language === "pt-BR" ? "Prévia indisponível" : "Preview unavailable"}</small>
           </div>
