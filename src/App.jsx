@@ -4,7 +4,7 @@ import ProjectCard from "./components/ProjectCard.jsx";
 import { content, technologies } from "./data/content.js";
 import { useSiteMotion } from "./hooks/useSiteMotion.js";
 import fractawDark from "../assets/fractaw-logo-dark.svg";
-import retornaDark from "../assets/retorna-logo-dark.svg";
+import retornaLight from "../assets/retorna-logo-light.svg";
 import "./styles.css";
 
 function initialLanguage() {
@@ -176,7 +176,7 @@ export default function App() {
               </div>
               <div className="art-artifact artifact-retorna">
                 <span className="artifact-index">{language === "pt-BR" ? "ENGENHARIA / 02" : "ENGINEERING / 02"}</span>
-                <img src={retornaDark} alt="Retorna" />
+                <img src={retornaLight} alt="Retorna" />
                 <span className="artifact-caption">{language === "pt-BR" ? "Fidelidade configurável" : "Configurable loyalty"}</span>
               </div>
               <div className="art-award">
