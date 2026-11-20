@@ -178,7 +178,7 @@ test("industrial assembly follows the seven-section sequence and exposes its mot
         await expect(scene.locator("canvas")).toHaveCount(1);
         await expect(scene.locator("canvas")).toBeVisible();
         expect(Number(await scene.getAttribute("data-overlap"))).toBe(0);
-        const overlapsContent = await page.evaluate(() => {
+        const overlapDetails = await page.evaluate(() => {
           const sceneElement = document.querySelector(".assembly-scene");
           const bounds = sceneElement.getBoundingClientRect();
           const root = document.querySelector("main");
@@ -188,6 +188,12 @@ test("industrial assembly follows the seven-section sequence and exposes its mot
             && bounds.top < rect.bottom
             && bounds.bottom > rect.top
           );
+          const describe = (type, label, rect) => ({
+            type,
+            label,
+            scene: { left: bounds.left, top: bounds.top, right: bounds.right, bottom: bounds.bottom },
+            content: { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom }
+          });
           const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
           while (walker.nextNode()) {
             const node = walker.currentNode;
@@ -195,22 +201,26 @@ test("industrial assembly follows the seven-section sequence and exposes its mot
             const parent = node.parentElement;
             if (!parent || parent.closest("script, style, noscript, svg, [aria-hidden='true']")) continue;
             const style = getComputedStyle(parent);
-            if (style.display === "none" || style.visibility === "hidden" || Number(style.opacity) < 0.08) continue;
+            if (style.display === "none" || style.visibility === "hidden") continue;
             const range = document.createRange();
             range.selectNodeContents(node);
             for (const rect of range.getClientRects()) {
-              if (rect.width > 0 && rect.height > 0 && overlaps(rect)) return true;
+              if (rect.width > 0 && rect.height > 0 && overlaps(rect)) {
+                return describe("text", node.nodeValue.trim().replace(/\\s+/g, " ").slice(0, 90), rect);
+              }
             }
           }
           for (const element of root.querySelectorAll("img, video, figure, a, button, li, .project-visual, .pitch-visual, .workbench, .contact-links")) {
             const style = getComputedStyle(element);
-            if (style.display === "none" || style.visibility === "hidden" || Number(style.opacity) < 0.08) continue;
+            if (style.display === "none" || style.visibility === "hidden") continue;
             const rect = element.getBoundingClientRect();
-            if (rect.width > 0 && rect.height > 0 && overlaps(rect)) return true;
+            if (rect.width > 0 && rect.height > 0 && overlaps(rect)) {
+              return describe("element", element.tagName.toLowerCase() + (element.className?.baseVal || element.className || ""), rect);
+            }
           }
-          return false;
+          return null;
         });
-        expect(overlapsContent).toBe(false);
+        expect(overlapDetails, overlapDetails ? JSON.stringify(overlapDetails) : "No page-content collision").toBeNull();
       } else {
         await expect(scene.locator("canvas")).toHaveCount(0);
       }
