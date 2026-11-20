@@ -18,7 +18,7 @@ export default function ProjectCard({ project, language, viewCase, featuredLabel
   const href = `./projects/${project.slug}.html?lang=${language === "en" ? "en" : "pt-BR"}`;
   return (
     <article id={project.id} className={`project-card ${project.featured ? "project-card-featured" : ""}`} data-reveal>
-      <a className={`project-visual ${project.visual === "flow" ? "project-visual-flow" : ""}`} href={href} tabIndex={-1} aria-hidden="true">
+      <div className={`project-visual ${project.visual === "flow" ? "project-visual-flow" : ""}`}>
         {project.visual === "image" ? (
           <img src={project.image} alt="" loading="lazy" decoding="async" />
         ) : (
@@ -26,7 +26,7 @@ export default function ProjectCard({ project, language, viewCase, featuredLabel
         )}
         <span className="project-index">{project.number} / 03</span>
         {project.featured && <span className="project-award">{project.fact}</span>}
-      </a>
+      </div>
       <div className="project-card-content">
         <div className="project-card-topline">
           <p className="eyebrow">{project.category}</p>

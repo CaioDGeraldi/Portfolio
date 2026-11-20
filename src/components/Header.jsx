@@ -38,7 +38,7 @@ export default function Header({ copy, language, onLanguageToggle, theme, onThem
           <span className="brand-name">Caio Geraldi</span>
         </a>
 
-        <nav className={`primary-nav ${menuOpen ? "is-open" : ""}`} aria-label={copy.navLabel}>
+        <nav id="primary-navigation" className={`primary-nav ${menuOpen ? "is-open" : ""}`} aria-label={copy.navLabel}>
           {links.map(([href, label]) => (
             <a key={href} href={href} onClick={closeMenu}>{label}</a>
           ))}

@@ -70,12 +70,16 @@ function ExperienceTimeline({ items }) {
   );
 }
 
+function languageSafeBackToTop(copy) {
+  return copy.footer.location === "No Brasil" ? "Voltar ao topo" : "Back to top";
+}
+
 function Footer({ copy }) {
   return (
     <footer className="site-footer">
       <a className="footer-brand" href="#top">C<span>.</span> Caio Geraldi</a>
       <p>{copy.footer.location} <span aria-hidden="true">·</span> {copy.footer.note}</p>
-      <a href="#top" className="back-to-top">Back to top <ArrowUpRight /></a>
+      <a href="#top" className="back-to-top">{languageSafeBackToTop(copy)} <ArrowUpRight /></a>
     </footer>
   );
 }
@@ -85,6 +89,17 @@ export default function App() {
   const [theme, setTheme] = useState(initialTheme);
   const rootRef = useSiteMotion();
   const copy = content[language];
+  const marqueeItems = language === "pt-BR"
+    ? ["Python", "Django", "PostgreSQL", "Delphi", "Oracle Database", "SQL", "Modelagem de domínio", "Testes automatizados"]
+    : technologies;
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("portfolio-theme", theme);
+    } catch {
+      // Theme persistence is optional.
+    }
+  }, [theme]);
 
   useEffect(() => {
     document.documentElement.lang = language;
@@ -150,7 +165,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="hero-art" data-hero-aside aria-label={copy.hero.asideLabel}>
+            <div className="hero-art" data-hero-aside role="group" aria-label={copy.hero.asideLabel}>
               <div className="hero-art-grid" />
               <div className="art-orbit art-orbit-one" />
               <div className="art-orbit art-orbit-two" />
@@ -171,14 +186,14 @@ export default function App() {
               <div className="hero-art-caption">{copy.hero.asideCaption}</div>
             </div>
           </div>
-          <div className="hero-bottom-rule"><span>SCROLL TO EXPLORE</span><ArrowDown /></div>
+          <div className="hero-bottom-rule"><span>{language === "pt-BR" ? "ROLE PARA EXPLORAR" : "SCROLL TO EXPLORE"}</span><ArrowDown /></div>
         </section>
 
         <div className="marquee-band" aria-label={copy.marqueeLabel}>
           <div className="marquee-track">
             {[0, 1].map(group => (
               <div className="marquee-group" key={group} aria-hidden={group === 1}>
-                {technologies.map(item => <span key={item}>{item}<i aria-hidden="true">✳</i></span>)}
+                {marqueeItems.map(item => <span key={item}>{item}<i aria-hidden="true">✳</i></span>)}
               </div>
             ))}
           </div>
