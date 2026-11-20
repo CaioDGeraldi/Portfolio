@@ -116,3 +116,10 @@ test("professional profile reflects verified CV experience and Inova recognition
   await expect(page.locator(".profile-intro")).toContainText("Desenvolvedor em formação");
   await expect(page.locator(".profile-work")).toContainText("projeto vencedor na 1ª edição do Inova Araras 2026");
 });
+
+test("Centro em Movimento includes the live prototype and hackathon build time", async ({ page }) => {
+  await page.goto("");
+  const project = page.locator("#centro-em-movimento");
+  await expect(project.getByRole("link", { name: /live prototype|ver protótipo ao vivo/i })).toHaveAttribute("href", "https://vem-pro-centro-b1127bee3afd.herokuapp.com/");
+  await expect(project).toContainText(/2 hours and 30 minutes|2 horas e 30 minutos|2h30/i);
+});
