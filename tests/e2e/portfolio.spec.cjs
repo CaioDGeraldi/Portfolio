@@ -124,7 +124,43 @@ test("Centro em Movimento includes the live prototype and hackathon build time",
   await expect(project).toContainText(/2 hours and 30 minutes|2 horas e 30 minutos|2h30/i);
 });
 
-test("modular assembly visual respects reduced-motion fallback", async ({ page }) => {
+test("3D assembly relocates and pulls one visible module in each section", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("");
+
+  const scene = page.locator(".assembly-scene");
+  await expect(scene).toHaveAttribute("data-section", "top");
+  await expect(scene).toHaveAttribute("data-step", "1");
+  const heroPlacement = await scene.getAttribute("data-placement");
+
+  await page.evaluate(() => {
+    const section = document.querySelector("#projects");
+    const target = section.getBoundingClientRect().top + window.scrollY + section.offsetHeight * 0.08 - window.innerHeight * 0.48;
+    window.scrollTo(0, target);
+  });
+  await expect(scene).toHaveAttribute("data-section", "projects");
+  await expect(scene).toHaveAttribute("data-step", "2");
+  await expect(scene).toHaveAttribute("data-pull-progress", "0");
+  const projectPlacement = await scene.getAttribute("data-placement");
+  expect(projectPlacement).not.toBe(heroPlacement);
+
+  await page.evaluate(() => {
+    const section = document.querySelector("#projects");
+    const target = section.getBoundingClientRect().top + window.scrollY + section.offsetHeight * 0.55 - window.innerHeight * 0.48;
+    window.scrollTo(0, target);
+  });
+  await expect(scene).toHaveAttribute("data-pull-progress", /[1-9][0-9]?/);
+
+  await page.evaluate(() => {
+    const section = document.querySelector("#about");
+    const target = section.getBoundingClientRect().top + window.scrollY + section.offsetHeight * 0.48 - window.innerHeight * 0.48;
+    window.scrollTo(0, target);
+  });
+  await expect(scene).toHaveAttribute("data-section", "about");
+  await expect(scene).toHaveAttribute("data-step", "3");
+});
+
+test("3D assembly respects reduced-motion fallback", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("");
   await expect(page.locator(".assembly-scene")).toBeAttached();
