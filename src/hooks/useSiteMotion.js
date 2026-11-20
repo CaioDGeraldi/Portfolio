@@ -30,7 +30,6 @@ export function useSiteMotion() {
       if (heroLines.length) {
         gsap.from(heroLines, {
           yPercent: 115,
-          opacity: 0,
           rotate: 1.5,
           duration: 0.95,
           stagger: 0.12,
@@ -40,21 +39,20 @@ export function useSiteMotion() {
       }
 
       gsap.fromTo("[data-hero-aside]",
-        { y: 28, opacity: 0, rotate: 1.2 },
-        { y: 0, opacity: 1, rotate: 0, duration: 1.05, ease: "power3.out", delay: 0.42 }
+        { y: 28, rotate: 1.2 },
+        { y: 0, rotate: 0, duration: 1.05, ease: "power3.out", delay: 0.42 }
       );
 
       gsap.fromTo(".hero-spark",
-        { scale: 0.35, rotate: -24, opacity: 0 },
-        { scale: 1, rotate: 0, opacity: 1, duration: 0.8, ease: "elastic.out(1, 0.55)", delay: 0.78 }
+        { scale: 0.35, rotate: -24 },
+        { scale: 1, rotate: 0, duration: 0.8, ease: "elastic.out(1, 0.55)", delay: 0.78 }
       );
 
       root.querySelectorAll("[data-reveal]").forEach(element => {
         gsap.fromTo(element,
-          { y: 30, opacity: 0 },
+          { y: 30 },
           {
             y: 0,
-            opacity: 1,
             duration: 0.8,
             ease: "power2.out",
             scrollTrigger: {
