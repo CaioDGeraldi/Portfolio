@@ -123,3 +123,9 @@ test("Centro em Movimento includes the live prototype and hackathon build time",
   await expect(project.getByRole("link", { name: /live prototype|ver protótipo ao vivo/i })).toHaveAttribute("href", "https://vem-pro-centro-b1127bee3afd.herokuapp.com/");
   await expect(project).toContainText(/2 hours and 30 minutes|2 horas e 30 minutos|2h30/i);
 });
+
+test("modular assembly visual respects reduced-motion fallback", async ({ page }) => {
+  await page.goto("");
+  await expect(page.locator(".assembly-scene")).toBeAttached();
+  await expect(page.locator(".assembly-fallback")).toBeVisible();
+});
