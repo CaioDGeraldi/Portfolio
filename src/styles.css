@@ -24,8 +24,8 @@ img { max-width: 100%; }
   --surface-strong: #e2ddd1;
   --ink: #1c252b;
   --muted: #536068;
-  --soft: #69747a;
-  --accent: #a96c12;
+  --soft: #59666d;
+  --accent: #87540b;
   --accent-bright: #dca438;
   --accent-soft: #f5e8c9;
   --line: rgba(28, 37, 43, .14);
@@ -349,9 +349,9 @@ img { max-width: 100%; }
 }
 .artifact-retorna img { display: block; width: 80%; max-height: 57px; object-fit: contain; object-position: left center; margin: 3px 0; }
 .artifact-index { color: #aeb8b6; font-size: .61rem; }
-.artifact-retorna .artifact-index { color: #66736f; }
+.artifact-retorna .artifact-index { color: #46534e; }
 .artifact-caption { color: #aeb8b6; font-size: .69rem; letter-spacing: .04em; }
-.artifact-retorna .artifact-caption { color: #56625f; }
+.artifact-retorna .artifact-caption { color: #46534e; }
 .art-award {
   position: absolute;
   z-index: 4;
@@ -536,9 +536,9 @@ img { max-width: 100%; }
 .skill-chips span { background: var(--surface); font-size: .74rem; }
 
 /* Contact */
-.contact-section { padding: clamp(75px, 9vw, 118px) 0; color: #f1f0e9; background: #b87817; }
+.contact-section { padding: clamp(75px, 9vw, 118px) 0; color: #f1f0e9; background: #d59b36; }
 .contact-shell { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(240px, .8fr); align-items: end; gap: clamp(40px, 8vw, 120px); }
-.contact-section .eyebrow { color: #362813; }
+.contact-section .eyebrow { color: #2c261d; }
 .contact-section .eyebrow span { color: rgba(54,40,19,.7); }
 .contact-copy h2 { max-width: 720px; margin: 0 0 21px; color: #172127; font-size: clamp(3rem, 6.2vw, 6.2rem); line-height: .98; letter-spacing: -.08em; }
 .contact-copy > p:not(.eyebrow) { max-width: 600px; margin: 0; color: #3d3428; font-size: 1rem; line-height: 1.75; }
