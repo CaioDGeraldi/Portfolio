@@ -1,9 +1,5 @@
 import { useState } from "react";
 
-function ArrowUpRight() {
-  return <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 15.5 15 5m-8.5 0H15v8.5" /></svg>;
-}
-
 function IntegrationVisual({ language }) {
   const pt = language === "pt-BR";
   return (
@@ -76,7 +72,7 @@ export default function ProjectCard({ project, language, viewCase }) {
           <ul className="tag-list" aria-label={language === "pt-BR" ? "Tecnologias e áreas" : "Technologies and areas"}>
             {project.tags.map(tag => <li key={tag}>{tag}</li>)}
           </ul>
-          <a className="project-link" href={href}>{viewCase}<ArrowUpRight /></a>
+          <a className="project-link" href={href}>{viewCase}</a>
         </div>
       </div>
     </article>

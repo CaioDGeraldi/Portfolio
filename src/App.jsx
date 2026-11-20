@@ -101,12 +101,12 @@ function ProjectWorkbench({ copy, projects }) {
 function Footer({ copy }) {
   return (
     <footer className="site-footer">
-      <a className="footer-brand" href="#top" aria-label="Caio Geraldi, back to top">
+      <a className="footer-brand" href="#top" aria-label={copy.footer.backToTop}>
         <span className="brand-mark" aria-hidden="true">C<span>.</span></span>
         <span>Caio Geraldi</span>
       </a>
       <p>{copy.footer.location} <span aria-hidden="true">/</span> {copy.footer.note}</p>
-      <a href="#top" className="back-to-top">{copy.footer.backToTop}<ArrowUpRight /></a>
+      <a href="#top" className="back-to-top">{copy.footer.backToTop}</a>
     </footer>
   );
 }

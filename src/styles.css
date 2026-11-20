@@ -102,7 +102,7 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.6; strok
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 28px;
+  gap: 12px;
 }
 
 .brand {
@@ -758,14 +758,9 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.6; strok
   font-size: .71rem;
 }
 
-.tag-list li + li::before {
-  display: inline-block;
-  width: 4px;
-  height: 4px;
-  margin: 0 11px 2px 0;
-  border-radius: 50%;
-  background: var(--teal);
-  content: "";
+.tag-list li + li {
+  padding-left: 14px;
+  border-left: 1px solid var(--line);
 }
 
 .project-link,
@@ -1132,7 +1127,7 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.6; strok
 .contact-greeting {
   display: inline-flex;
   margin-bottom: 9px;
-  color: #f4b942;
+  color: #e7ecef;
   font-family: var(--display);
   font-size: 1.25rem;
   font-weight: 600;
@@ -1269,13 +1264,13 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.6; strok
   .project-card-featured { grid-template-columns: minmax(0, 1fr) minmax(320px, .9fr); gap: 34px; }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 820px) {\n  .hero-shell { grid-template-columns: 1fr; gap: 42px; }\n  .hero-copy { max-width: 760px; }\n  .workbench { max-width: 700px; }\n}\n\n@media (max-width: 760px) {
   .content-shell,
   .header-inner,
   .site-footer,
   .hero-bottom-rule { width: calc(100% - 40px); }
 
-  .header-inner { min-height: 70px; }
+  .header-inner { min-height: 70px; gap: 12px; }\n  .header-tools { gap: 5px; }
   .menu-toggle { display: inline-grid; }
 
   .primary-nav {
@@ -1353,7 +1348,7 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.6; strok
   .workbench { min-height: 370px; padding: 20px 16px 17px; }
   .workbench-heading { font-size: .58rem; }
   .workbench-project { min-height: 82px; gap: 10px; grid-template-columns: 32px minmax(0, 1fr); }
-  .workbench-node { width: 29px; height: 29px; font-size: .57rem; }
+  .workbench-node { width: 10px; height: 10px; }
   .workbench-project-copy strong { font-size: 1.28rem; }
   .workbench-project-copy small { max-width: 220px; font-size: .66rem; }
   .workbench-footer { font-size: .55rem; }
