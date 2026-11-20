@@ -1,0 +1,54 @@
+/* Project pitch presentations */
+.projects-section .section-heading { margin-bottom: 56px; }
+.project-pitches { border-top: 1px solid var(--line-strong); }
+.project-pitch { padding: clamp(38px, 5.2vw, 72px) 0 clamp(48px, 6.2vw, 84px); border-bottom: 1px solid var(--line-strong); scroll-margin-top: 90px; }
+.pitch-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+.pitch-category, .pitch-status, .pitch-chapter h4, .pitch-visual-kicker { font-family: var(--mono); font-size: .65rem; letter-spacing: .045em; text-transform: uppercase; }
+.pitch-category { margin: 0 0 12px; color: var(--teal); }
+.site-root[data-theme="dark"] .pitch-category { color: var(--teal-bright); }
+.pitch-heading h3 { margin: 0; font-family: var(--display); font-size: clamp(2.8rem, 5.4vw, 5.2rem); font-weight: 500; letter-spacing: -.055em; line-height: .98; }
+.pitch-status { flex: 0 0 auto; margin: 0 0 9px; color: var(--muted); text-align: right; }
+.pitch-headline { max-width: 880px; margin: 27px 0 37px; color: var(--ink); font-family: var(--display); font-size: clamp(1.45rem, 2.4vw, 2.15rem); line-height: 1.18; letter-spacing: -.035em; }
+.pitch-body { display: grid; grid-template-columns: minmax(0, 1.03fr) minmax(340px, .97fr); gap: clamp(38px, 6vw, 82px); align-items: start; }
+.pitch-story { display: grid; gap: 25px; }
+.pitch-chapter { padding-left: 17px; border-left: 2px solid var(--line-strong); }
+.pitch-proposal { border-left-color: var(--accent); }
+.pitch-chapter h4 { margin: 0 0 9px; color: var(--muted); }
+.pitch-proposal h4 { color: var(--accent); }
+.pitch-chapter p { max-width: 680px; margin: 0; color: var(--muted); font-size: .91rem; line-height: 1.78; }
+.pitch-proposal p { color: var(--ink); }
+.pitch-tags { display: flex; flex-wrap: wrap; gap: 8px 17px; margin: 4px 0 0; padding: 0; list-style: none; }
+.pitch-tags li { color: var(--muted); font-size: .72rem; }
+.pitch-link { width: fit-content; margin-top: 1px; }
+.pitch-visual { position: sticky; top: 100px; min-width: 0; }
+.pitch-visual figure { margin: 0; }
+.pitch-visual img { display: block; width: 100%; aspect-ratio: 1.35 / 1; object-fit: cover; border: 1px solid var(--line); border-radius: 5px; background: var(--surface); }
+.pitch-visual figcaption, .pitch-visual-note { margin: 11px 0 0; color: var(--muted); font-size: .68rem; line-height: 1.55; }
+.pitch-visual-flow { min-height: 300px; display: flex; flex-direction: column; justify-content: center; padding: clamp(24px, 3vw, 42px); color: #e7ecef; background: #1e2327; border-radius: 5px; }
+.pitch-visual-kicker { margin-bottom: 35px; color: #4fa7a3; }
+.pitch-flow { display: grid; grid-template-columns: minmax(0, 1fr) 18px minmax(0, 1fr) 18px minmax(0, 1fr); align-items: center; gap: 8px; }
+.pitch-flow-step { min-width: 0; display: flex; flex-direction: column; gap: 9px; padding: 15px 11px; border: 1px solid rgba(231,236,239,.2); }
+.pitch-flow-step-active { border-color: #f4b942; }
+.pitch-flow-step span { color: #f4b942; font-family: var(--mono); font-size: .62rem; }
+.pitch-flow-step strong { color: #e7ecef; font-family: var(--display); font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 500; }
+.pitch-flow-step small { color: #b8c0c5; font-size: .62rem; line-height: 1.35; }
+.pitch-flow-arrow { color: #4fa7a3; text-align: center; }
+.pitch-visual-note { color: #b8c0c5; }
+@media (max-width: 900px) {
+  .pitch-body { grid-template-columns: 1fr; }
+  .pitch-visual { position: static; max-width: 760px; width: 100%; }
+}
+@media (max-width: 600px) {
+  .projects-section .section-heading { margin-bottom: 38px; }
+  .project-pitch { padding-block: 37px 45px; }
+  .pitch-heading { align-items: flex-start; flex-direction: column; gap: 10px; }
+  .pitch-heading h3 { font-size: clamp(2.7rem, 12vw, 4rem); }
+  .pitch-status { margin: 0; text-align: left; }
+  .pitch-headline { margin: 22px 0 29px; font-size: 1.5rem; }
+  .pitch-body { gap: 32px; }
+  .pitch-story { gap: 21px; }
+  .pitch-visual-flow { min-height: 0; padding: 22px 15px; }
+  .pitch-flow { grid-template-columns: 1fr; gap: 8px; }
+  .pitch-flow-arrow { transform: rotate(90deg); }
+  .pitch-flow-step { padding: 12px 14px; }
+}

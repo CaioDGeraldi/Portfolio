@@ -22,9 +22,9 @@ Grid: 4px base, 8px rhythm, 1280px max content width, 20px mobile gutters and 48
 ## Layout
 - Keep a conventional, naturally scrolling document.
 - Lead with a restrained, single-column introduction based on the résumé. Avoid status dashboards, résumé statistics and decorative project indexes.
-- Put the project collection immediately after the introduction. Give Fractaw Modules, Retorna and Centro em Movimento equal visual weight; order Fractaw and Retorna first because they are the selected projects in the résumé.
-- Describe what each project is, the problem or business rules it addresses, the user's role and its actual stage. Keep awards and outcomes secondary to the work itself.
-- Keep experience, education and skills as supporting context after the projects. Do not repeat project summaries in a separate generic "approach" section.
+- Put the project collection immediately after the introduction. Present Fractaw Modules, Retorna and Centro em Movimento as three individual editorial pitches, not summary cards.
+- Give every project a clear narrative: scenario/problem, proposal and how the solution works. Pair the story with one relevant interface capture or a clearly labelled conceptual flow. Keep the project stage visible and factual.
+- Give the three projects equal visual weight. Keep experience, education and skills as supporting context after the project presentations.
 - Keep bilingual copy, theme switching, semantic navigation, keyboard focus and reduced-motion support.
 
 ## Copy direction

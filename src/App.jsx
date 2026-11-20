@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import Header from "./components/Header.jsx";
-import ProjectCard from "./components/ProjectCard.jsx";
+import ProjectPitch from "./components/ProjectPitch.jsx";
+import { projectPitches } from "./data/projectPitches.js";
 import { content } from "./data/content.js";
 import { useSiteMotion } from "./hooks/useSiteMotion.js";
 import "./styles.css";
+import "./project-pitches.css";
 
 function initialLanguage() {
   const params = new URLSearchParams(window.location.search);
@@ -147,14 +149,18 @@ export default function App() {
 
         <section className="content-section projects-section" id="projects">
           <div className="content-shell">
-            <SectionHeading eyebrow={copy.projects.eyebrow} title={copy.projects.title} description={copy.projects.description} />
-            <div className="project-grid">
-              {copy.projects.items.map(project => (
-                <ProjectCard
+            <SectionHeading
+              eyebrow={projectPitches[language].intro.eyebrow}
+              title={projectPitches[language].intro.title}
+              description={projectPitches[language].intro.description}
+            />
+            <div className="project-pitches">
+              {projectPitches[language].items.map(project => (
+                <ProjectPitch
                   key={project.id}
                   project={project}
+                  labels={projectPitches[language].labels}
                   language={language}
-                  viewCase={copy.projects.viewCase}
                 />
               ))}
             </div>
