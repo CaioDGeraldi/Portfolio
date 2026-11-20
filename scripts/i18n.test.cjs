@@ -127,11 +127,10 @@ test("manual language switch is reversible, saved and reflected in the URL", () 
   assert.ok(page.events.some(event => event.type === "portfolio-language-change" && event.language === "pt-BR"));
 });
 
-test("case-study pages link back to real project sections", () => {
+test("React project cards link to the preserved static case-study pages", () => {
+  assert.match(projectCard, /\.\/projects\/\$\{project\.slug\}\.html\?lang=/);
+  const projectContent = fs.readFileSync(path.join(__dirname, "..", "src", "data", "content.js"), "utf8");
   for (const id of ["centro-em-movimento", "fractaw", "retorna"]) {
-    assert.ok(app.includes(`id: "${id}"`));
+    assert.ok(projectContent.includes(`slug: "${id}"`));
   }
-  assert.match(app, /projects\/fractaw\.html/);
-  assert.match(app, /projects\/retorna\.html/);
-  assert.match(app, /projects\/centro-em-movimento\.html/);
 });
