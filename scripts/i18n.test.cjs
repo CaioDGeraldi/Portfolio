@@ -8,6 +8,7 @@ const script = fs.readFileSync(path.join(__dirname, "i18n.js"), "utf8");
 const profile = fs.readFileSync(path.join(__dirname, "..", "profile.html"), "utf8");
 const home = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
 const app = fs.readFileSync(path.join(__dirname, "..", "src", "App.jsx"), "utf8");
+const projectCard = fs.readFileSync(path.join(__dirname, "..", "src", "components", "ProjectCard.jsx"), "utf8");
 const header = fs.readFileSync(path.join(__dirname, "..", "src", "components", "Header.jsx"), "utf8");
 
 function createPage({ search = "", saved = null, languages = ["en-US"] } = {}) {
