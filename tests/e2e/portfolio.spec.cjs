@@ -66,3 +66,16 @@ test("mobile navigation opens, follows a link and closes", async ({ page }) => {
   await expect(page).toHaveURL(/#contact$/);
   await expect(toggle).toHaveAttribute("aria-expanded", "false");
 });
+
+test("projects are presented as individual problem-solution pitches", async ({ page }) => {
+  await page.goto("");
+  for (const id of ["fractaw", "retorna", "centro-em-movimento"]) {
+    const project = page.locator(`#${id}`);
+    await expect(project).toBeVisible();
+    await expect(project.locator(".pitch-chapter")).toHaveCount(3);
+    await expect(project.locator(".pitch-link")).toBeVisible();
+  }
+  await expect(page.locator("#fractaw")).toContainText("O cenário");
+  await expect(page.locator("#fractaw")).toContainText("A proposta");
+  await expect(page.locator("#fractaw")).toContainText("Como funciona");
+});
