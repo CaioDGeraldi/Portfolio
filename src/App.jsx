@@ -101,7 +101,7 @@ function ProjectWorkbench({ copy, projects }) {
 function Footer({ copy }) {
   return (
     <footer className="site-footer">
-      <a className="footer-brand" href="#top" aria-label={copy.footer.backToTop}>
+      <a className="footer-brand" href="#top">
         <span className="brand-mark" aria-hidden="true">C<span>.</span></span>
         <span>Caio Geraldi</span>
       </a>
@@ -270,11 +270,12 @@ export default function App() {
         <section className="contact-section" id="contact">
           <div className="content-shell contact-shell">
             <div className="contact-copy" data-reveal>
-              <span className="contact-greeting" aria-label={copy.contact.greeting}>
+              <span className="contact-greeting" aria-hidden="true">
                 {Array.from(copy.contact.greeting).map((character, index) => (
-                  <span key={index} aria-hidden="true">{character}</span>
+                  <span key={index}>{character}</span>
                 ))}
               </span>
+              <span className="sr-only">{copy.contact.greeting}</span>
               <h2>{copy.contact.title}</h2>
               <p>{copy.contact.body}</p>
               <a className="button button-contact" href="mailto:chdgeraldi@gmail.com">{copy.contact.email}<ArrowUpRight /></a>
