@@ -6,8 +6,6 @@ import { content } from "./data/content.js";
 import { useSiteMotion } from "./hooks/useSiteMotion.js";
 import "./styles.css";
 import "./project-pitches.css";
-import "./assembly-scene.css";
-import AssemblyScene from "./components/AssemblyScene.jsx";
 
 function initialLanguage() {
   const params = new URLSearchParams(window.location.search);
@@ -131,7 +129,6 @@ export default function App() {
         onThemeToggle={toggleTheme}
       />
 
-      <AssemblyScene />
       <main id="main">
         <section className="hero-section" id="top">
           <div className="content-shell hero-shell">
