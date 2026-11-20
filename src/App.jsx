@@ -170,14 +170,14 @@ export default function App() {
               <div className="art-orbit art-orbit-one" />
               <div className="art-orbit art-orbit-two" />
               <div className="art-artifact artifact-fractaw">
-                <span className="artifact-index">PRODUCT / 01</span>
+                <span className="artifact-index">{language === "pt-BR" ? "PRODUTO / 01" : "PRODUCT / 01"}</span>
                 <img src={fractawDark} alt="Fractaw" />
-                <span className="artifact-caption">Modular business software</span>
+                <span className="artifact-caption">{language === "pt-BR" ? "Gestão empresarial modular" : "Modular business software"}</span>
               </div>
               <div className="art-artifact artifact-retorna">
-                <span className="artifact-index">ENGINEERING / 02</span>
+                <span className="artifact-index">{language === "pt-BR" ? "ENGENHARIA / 02" : "ENGINEERING / 02"}</span>
                 <img src={retornaDark} alt="Retorna" />
-                <span className="artifact-caption">Configurable loyalty</span>
+                <span className="artifact-caption">{language === "pt-BR" ? "Fidelidade configurável" : "Configurable loyalty"}</span>
               </div>
               <div className="art-award">
                 <span className="award-star" aria-hidden="true">✳</span>
@@ -189,7 +189,7 @@ export default function App() {
           <div className="hero-bottom-rule"><span>{language === "pt-BR" ? "ROLE PARA EXPLORAR" : "SCROLL TO EXPLORE"}</span><ArrowDown /></div>
         </section>
 
-        <div className="marquee-band" aria-label={copy.marqueeLabel}>
+        <div className="marquee-band" role="region" aria-label={copy.marqueeLabel}>
           <div className="marquee-track">
             {[0, 1].map(group => (
               <div className="marquee-group" key={group} aria-hidden={group === 1}>
@@ -224,7 +224,7 @@ export default function App() {
               <p className="about-body">{copy.about.body}</p>
             </div>
             <aside className="about-aside" data-reveal>
-              <span className="aside-index">A NOTE ON DIRECTION</span>
+              <span className="aside-index">{language === "pt-BR" ? "UM NORTE PROFISSIONAL" : "A NOTE ON DIRECTION"}</span>
               <h3>{copy.about.detailTitle}</h3>
               <p>{copy.about.detail}</p>
               <a href={`./profile.html?lang=${language}`} className="inline-link">{copy.about.link}<ArrowUpRight /></a>

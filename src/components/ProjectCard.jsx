@@ -2,14 +2,15 @@ function ArrowUpRight() {
   return <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 15.5 15 5m-8.5 0H15v8.5" /></svg>;
 }
 
-function IntegrationVisual() {
+function IntegrationVisual({ language }) {
+  const pt = language === "pt-BR";
   return (
-    <div className="integration-visual" role="img" aria-label="Conceptual flow: existing sales tools connect to an API, which applies loyalty rules and stores the result in PostgreSQL.">
-      <span className="integration-label">CONCEPTUAL INTEGRATION FLOW</span>
+    <div className="integration-visual" role="img" aria-label={pt ? "Fluxo conceitual: ferramentas de venda se conectam a uma API, que aplica regras de fidelidade e registra o resultado no PostgreSQL." : "Conceptual flow: existing sales tools connect to an API, which applies loyalty rules and stores the result in PostgreSQL."}>
+      <span className="integration-label">{pt ? "FLUXO CONCEITUAL DE INTEGRAÇÃO" : "CONCEPTUAL INTEGRATION FLOW"}</span>
       <div className="integration-flow">
-        <span>Sales tools</span><i aria-hidden="true">→</i><span>API</span><i aria-hidden="true">→</i><span>Rules</span>
+        <span>{pt ? "Vendas" : "Sales tools"}</span><i aria-hidden="true">→</i><span>API</span><i aria-hidden="true">→</i><span>{pt ? "Regras" : "Rules"}</span>
       </div>
-      <div className="integration-base"><span>PostgreSQL</span><span>Points · History · Rewards</span></div>
+      <div className="integration-base"><span>PostgreSQL</span><span>{pt ? "Pontos · Histórico · Recompensas" : "Points · History · Rewards"}</span></div>
     </div>
   );
 }
@@ -22,7 +23,7 @@ export default function ProjectCard({ project, language, viewCase, featuredLabel
         {project.visual === "image" ? (
           <img src={project.image} alt="" loading="lazy" decoding="async" />
         ) : (
-          <IntegrationVisual />
+          <IntegrationVisual language={language} />
         )}
         <span className="project-index">{project.number} / 03</span>
         {project.featured && <span className="project-award">{project.fact}</span>}
@@ -34,7 +35,7 @@ export default function ProjectCard({ project, language, viewCase, featuredLabel
         </div>
         <h3><a href={href}>{project.title}</a></h3>
         <p className="project-summary">{project.summary}</p>
-        <div className="tag-list" aria-label="Project areas">
+        <div className="tag-list" aria-label={language === "pt-BR" ? "Áreas do projeto" : "Project areas"}>
           {project.tags.map(tag => <span key={tag}>{tag}</span>)}
         </div>
         <a className="project-link" href={href}>

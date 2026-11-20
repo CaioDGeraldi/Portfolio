@@ -539,7 +539,7 @@ img { max-width: 100%; }
 .contact-section { padding: clamp(75px, 9vw, 118px) 0; color: #f1f0e9; background: #d59b36; }
 .contact-shell { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(240px, .8fr); align-items: end; gap: clamp(40px, 8vw, 120px); }
 .contact-section .eyebrow { color: #2c261d; }
-.contact-section .eyebrow span { color: rgba(54,40,19,.7); }
+.contact-section .eyebrow span { color: #5a411a; }
 .contact-copy h2 { max-width: 720px; margin: 0 0 21px; color: #172127; font-size: clamp(3rem, 6.2vw, 6.2rem); line-height: .98; letter-spacing: -.08em; }
 .contact-copy > p:not(.eyebrow) { max-width: 600px; margin: 0; color: #3d3428; font-size: 1rem; line-height: 1.75; }
 .button-contact { margin-top: 26px; color: #f1f0e9; background: #1b252b; }
