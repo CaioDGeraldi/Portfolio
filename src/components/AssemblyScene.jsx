@@ -107,16 +107,16 @@ function measureContentRects() {
     for (const rect of range.getClientRects()) {
       if (!visibleRect(rect)) continue;
       obstacles.push({
-        left: rect.left - 5,
-        right: rect.right + 5,
-        top: rect.top - 5,
-        bottom: rect.bottom + 5
+        left: rect.left - 10,
+        right: rect.right + 10,
+        top: rect.top - 9,
+        bottom: rect.bottom + 9
       });
     }
   }
 
   const media = root.querySelectorAll(
-    "img, video, canvas, figure, .project-visual, .pitch-visual, .integration-visual, .workbench"
+    "img, video, canvas, svg, figure, a, button, li, .project-visual, .pitch-visual, .integration-visual, .workbench"
   );
 
   for (const element of media) {
@@ -126,10 +126,10 @@ function measureContentRects() {
     const rect = element.getBoundingClientRect();
     if (!visibleRect(rect)) continue;
     obstacles.push({
-      left: rect.left - 7,
-      right: rect.right + 7,
-      top: rect.top - 7,
-      bottom: rect.bottom + 7
+      left: rect.left - 10,
+      right: rect.right + 10,
+      top: rect.top - 10,
+      bottom: rect.bottom + 10
     });
   }
 
@@ -137,27 +137,31 @@ function measureContentRects() {
 }
 
 function overlapScore(rect, obstacles) {
-  const columns = 11;
-  const rows = 11;
-  let covered = 0;
+  const rectArea = Math.max(1, rect.width * rect.height);
+  let intersectedArea = 0;
+  let intersections = 0;
 
-  for (let row = 0; row < rows; row += 1) {
-    for (let column = 0; column < columns; column += 1) {
-      const x = rect.left + ((column + 0.5) / columns) * rect.width;
-      const y = rect.top + ((row + 0.5) / rows) * rect.height;
+  for (const obstacle of obstacles) {
+    const width = Math.max(
+      0,
+      Math.min(rect.right, obstacle.right) - Math.max(rect.left, obstacle.left)
+    );
+    const height = Math.max(
+      0,
+      Math.min(rect.bottom, obstacle.bottom) - Math.max(rect.top, obstacle.top)
+    );
 
-      if (obstacles.some(obstacle => (
-        x >= obstacle.left
-        && x <= obstacle.right
-        && y >= obstacle.top
-        && y <= obstacle.bottom
-      ))) {
-        covered += 1;
-      }
-    }
+    if (width <= 0 || height <= 0) continue;
+
+    intersections += 1;
+    intersectedArea += width * height;
   }
 
-  return covered / (columns * rows);
+  if (intersections === 0) return 0;
+
+  // Treat any actual intersection as unsafe. A coarse point grid can miss
+  // narrow labels, icons and link affordances at the edge of the scene.
+  return clamp(intersectedArea / rectArea + 0.08, 0, 1);
 }
 
 function choosePlacement(section, previousPlacement) {
@@ -233,7 +237,11 @@ function choosePlacement(section, previousPlacement) {
       ? candidates.find(candidate => candidate.name === previousPlacement.name)
       : null;
 
-    if (previous && previous.score <= best.score + 0.02) {
+    if (
+      previous
+      && previous.score <= 0.06
+      && previous.score <= best.score + 0.02
+    ) {
       return { ...previous, sectionId: section.id, visible: true };
     }
 
