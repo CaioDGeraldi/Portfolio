@@ -125,7 +125,9 @@ test("Centro em Movimento includes the live prototype and hackathon build time",
 });
 
 test("modular assembly visual respects reduced-motion fallback", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("");
   await expect(page.locator(".assembly-scene")).toBeAttached();
   await expect(page.locator(".assembly-fallback")).toBeVisible();
+  await expect(page.locator(".assembly-scene canvas")).toHaveCount(0);
 });
