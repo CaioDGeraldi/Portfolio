@@ -69,6 +69,7 @@ test("mobile navigation opens, follows a link and closes", async ({ page }) => {
 
 test("projects are presented as individual problem-solution pitches", async ({ page }) => {
   await page.goto("");
+  await page.locator("[data-language-toggle]").click();
   for (const id of ["fractaw", "retorna", "centro-em-movimento"]) {
     const project = page.locator(`#${id}`);
     await expect(project).toBeVisible();
