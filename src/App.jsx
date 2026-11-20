@@ -75,7 +75,7 @@ function ProjectWorkbench({ copy, projects }) {
       <div className="workbench-projects">
         {projects.map((project, index) => (
           <a className="workbench-project" href={\`#\${project.id}\`} key={project.id}>
-            <span className="workbench-node" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+            <span className="workbench-node" aria-hidden="true" />
             <span className="workbench-project-copy">
               <strong>{project.title}</strong>
               <small>{project.status}</small>
@@ -213,7 +213,6 @@ export default function App() {
         <section className="about-section" id="about">
           <div className="content-shell about-layout">
             <div className="about-heading" data-reveal>
-              <p className="section-eyebrow">{copy.about.eyebrow}</p>
               <h2>{copy.about.title}</h2>
             </div>
             <div className="about-reading" data-reveal>
@@ -229,14 +228,14 @@ export default function App() {
 
         <section className="content-section experience-section" id="experience">
           <div className="content-shell">
-            <SectionHeading eyebrow={copy.experience.eyebrow} title={copy.experience.title} />
+            <SectionHeading title={copy.experience.title} />
             <ExperienceTimeline items={copy.experience.items} />
           </div>
         </section>
 
         <section className="approach-section" id="approach">
           <div className="content-shell">
-            <SectionHeading eyebrow={copy.approach.eyebrow} title={copy.approach.title} />
+            <SectionHeading title={copy.approach.title} />
             <div className="project-notes">
               {copy.approach.items.map(item => (
                 <article className="project-note" key={item.label} data-reveal>
@@ -252,7 +251,6 @@ export default function App() {
         <section className="content-section skills-section" id="skills">
           <div className="content-shell skills-layout">
             <div className="skills-intro" data-reveal>
-              <p className="section-eyebrow">{copy.skills.eyebrow}</p>
               <h2>{copy.skills.title}</h2>
               <p>{copy.skills.learning}</p>
             </div>
@@ -272,7 +270,6 @@ export default function App() {
         <section className="contact-section" id="contact">
           <div className="content-shell contact-shell">
             <div className="contact-copy" data-reveal>
-              <p className="section-eyebrow">{copy.contact.eyebrow}</p>
               <span className="contact-greeting" aria-label={copy.contact.greeting}>
                 {Array.from(copy.contact.greeting).map((character, index) => (
                   <span key={index} aria-hidden="true">{character}</span>

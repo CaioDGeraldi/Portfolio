@@ -1,5 +1,3 @@
-@import url("https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&f[]=satoshi@400,500,600,700&display=swap");
-
 :root {
   font-family: "Satoshi", sans-serif;
   color: #1e2327;
@@ -32,10 +30,10 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.6; strok
   --surface-muted: #dbe3e5;
   --ink: #1e2327;
   --muted: #566168;
-  --soft: #748087;
+  --soft: #566168;
   --line: rgba(30, 35, 39, .17);
   --line-strong: rgba(30, 35, 39, .32);
-  --accent: #98690d;
+  --accent: #81570a;
   --accent-solid: #f4b942;
   --teal: #2f6f6d;
   --teal-bright: #4fa7a3;
@@ -57,7 +55,7 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.6; strok
   --surface-muted: #303b40;
   --ink: #e7ecef;
   --muted: #b8c0c5;
-  --soft: #89969c;
+  --soft: #9aa6ab;
   --line: rgba(231, 236, 239, .15);
   --line-strong: rgba(231, 236, 239, .29);
   --accent: #f4b942;
@@ -467,19 +465,16 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.6; strok
 }
 
 .workbench-node {
-  display: grid;
-  width: 34px;
-  height: 34px;
-  place-items: center;
-  border: 1px solid rgba(244,185,66,.55);
+  display: block;
+  width: 12px;
+  height: 12px;
+  border: 0;
   border-radius: 50%;
-  color: #f4b942;
-  font-family: var(--mono);
-  font-size: .65rem;
+  background: #f4b942;
 }
 
-.workbench-project:nth-child(2) .workbench-node { color: #69bbb6; border-color: rgba(79,167,163,.65); }
-.workbench-project:nth-child(3) .workbench-node { color: #c4ccd0; border-color: rgba(196,204,208,.5); }
+.workbench-project:nth-child(2) .workbench-node { background: #69bbb6; }
+.workbench-project:nth-child(3) .workbench-node { background: #c4ccd0; }
 
 .workbench-project-copy {
   display: flex;
