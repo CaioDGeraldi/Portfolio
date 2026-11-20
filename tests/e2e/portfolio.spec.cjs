@@ -100,3 +100,26 @@ test("favicon, GitHub avatar and project visual assets are present", async ({ pa
   });
   await expect(page.locator("#ai")).toBeAttached();
 });
+
+
+test("professional profile reflects verified CV experience and Inova recognition in both languages", async ({ page }) => {
+  await page.goto("profile.html?lang=en");
+  await expect(page.locator(".profile-intro")).toContainText("Backend developer in training");
+  await expect(page.locator(".profile-intro")).toContainText("Delphi/Object Pascal");
+  await expect(page.locator(".profile-item").first()).toContainText("2 months");
+  await expect(page.locator(".profile-item").first()).toContainText("Excel exports");
+  await expect(page.locator(".profile-work")).toContainText("Fractaw");
+  await expect(page.locator(".profile-work")).toContainText("Retorna");
+  await expect(page.locator(".profile-work")).toContainText("winning project at the 1st Inova Araras 2026");
+  await page.locator('[data-portfolio-lang="pt-BR"]').click();
+  await expect(page.locator("html")).toHaveAttribute("lang", "pt-BR");
+  await expect(page.locator(".profile-intro")).toContainText("Desenvolvedor em formação");
+  await expect(page.locator(".profile-work")).toContainText("projeto vencedor na 1ª edição do Inova Araras 2026");
+});
+
+test("Centro em Movimento includes the live prototype and hackathon build time", async ({ page }) => {
+  await page.goto("");
+  const project = page.locator("#centro-em-movimento");
+  await expect(project.getByRole("link", { name: /live prototype|ver protótipo ao vivo/i })).toHaveAttribute("href", "https://vem-pro-centro-b1127bee3afd.herokuapp.com/");
+  await expect(project).toContainText(/2 hours and 30 minutes|2 horas e 30 minutos|2h30/i);
+});

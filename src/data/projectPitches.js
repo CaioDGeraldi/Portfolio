@@ -46,16 +46,17 @@ export const projectPitches = {
         id: "centro-em-movimento",
         title: "Centro em Movimento",
         category: "Public innovation proposal",
-        status: "Functional prototype · in development",
+        status: "Functional prototype · built in 2h30",
         headline: "Digital discovery should create more reasons to visit, explore and return to the city centre.",
         scenario: "The city centre's loss of vitality is connected to several challenges: local businesses struggle to compete for attention in digital channels, consumers have fewer reasons to discover stores beyond the ones they already know, and information about shops and activities is scattered. The issue is not simply online shopping; it is the weakening connection between discovery, physical circulation and local commerce.",
         proposal: "A local development initiative supported by a digital platform that connects consumers and businesses, turns online discovery into in-person visits and encourages people to explore more of the centre. Technology is the instrument, not the end goal.",
-        solution: "Vem pro Centro brings together business and product catalogues, search, discovery routes, local events and activities, and shared loyalty campaigns. The intended journey is to discover a place, explore nearby options, visit a business, make a purchase and have a reason to return. Reservations start through an external contact channel, primarily WhatsApp, with a prepared message; the merchant confirms directly with the customer. Purchases happen in person and are confirmed by the establishment for eligible loyalty activity, so the platform is not a marketplace with an online checkout. Aggregated information can also help public decision-makers understand local trends and gaps without exposing individual consumers.",
+        solution: "Vem pro Centro brings together business and product catalogues, search, discovery routes, local events and activities, and shared loyalty campaigns. The intended journey is to discover a place, explore nearby options, visit a business, make a purchase and have a reason to return. Reservations start through an external contact channel, primarily WhatsApp, with a prepared message; the merchant confirms directly with the customer. Purchases happen in person and are confirmed by the establishment for eligible loyalty activity, so the platform is not a marketplace with an online checkout. Aggregated information can also help public decision-makers understand local trends and gaps without exposing individual consumers. The functional Vem pro Centro prototype was built in 2 hours and 30 minutes during the hackathon.",
         image: "https://github.com/user-attachments/assets/73cc398e-904c-4e6d-b097-83b7c9f824bd",
         imageAlt: "Vem pro Centro prototype home screen with local store discovery and routes",
         visual: "image",
         tags: ["Product design", "Local commerce", "Web prototype"],
-        slug: "centro-em-movimento"
+        slug: "centro-em-movimento",
+        demoUrl: "https://vem-pro-centro-b1127bee3afd.herokuapp.com/"
       }
     ]
   },
@@ -106,7 +107,7 @@ export const projectPitches = {
         id: "centro-em-movimento",
         title: "Centro em Movimento",
         category: "Proposta de inovação pública",
-        status: "Protótipo funcional · em desenvolvimento",
+        status: "Protótipo funcional · desenvolvido em 2h30",
         headline: "A descoberta digital deve criar mais motivos para visitar, explorar e voltar ao Centro.",
         scenario: "A perda de vitalidade do Centro está ligada a desafios diferentes: comerciantes têm dificuldade para disputar atenção nos canais digitais, consumidores encontram menos motivos para descobrir lojas além daquelas que já conhecem e as informações sobre estabelecimentos e atividades ficam dispersas. O problema não é simplesmente comprar pela internet, mas o enfraquecimento da conexão entre descoberta, circulação presencial e comércio local.",
         proposal: "Uma iniciativa de desenvolvimento local apoiada por uma plataforma digital que conecta consumidores e estabelecimentos, transforma a descoberta on-line em visitas presenciais e incentiva as pessoas a explorar mais o Centro. A tecnologia é um instrumento, não o objetivo final.",

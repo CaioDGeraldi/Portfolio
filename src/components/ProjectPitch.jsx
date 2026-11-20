@@ -43,7 +43,7 @@ export default function ProjectPitch({ project, labels, language }) {
           <ul className="pitch-tags" aria-label={language === "pt-BR" ? "Tecnologias e áreas" : "Technologies and areas"}>
             {project.tags.map(tag => <li key={tag}>{tag}</li>)}
           </ul>
-          <a className="project-link pitch-link" href={href}>{labels.explore}<span aria-hidden="true"> ↗</span></a>
+          <a className="project-link pitch-link" href={href}>{labels.explore}<span aria-hidden="true"> ↗</span></a>{project.demoUrl && <a className="project-link pitch-link" href={project.demoUrl} target="_blank" rel="noopener noreferrer">{language === "pt-BR" ? "Ver protótipo ao vivo" : "Live prototype"}<span aria-hidden="true"> ↗</span></a>}
         </div>
         <div className={`pitch-visual pitch-visual-${project.visual}`}>
           {project.visual === "image" ? (
