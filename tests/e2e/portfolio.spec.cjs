@@ -83,7 +83,7 @@ test("projects are presented as individual problem-solution pitches", async ({ p
 
 test("favicon, GitHub avatar and project visual assets are present", async ({ page }) => {
   await page.goto("");
-  await expect(page.locator('link[rel="icon"]')).toHaveAttribute("href", "./favicon.svg");
+  await expect(page.locator('link[rel="icon"]')).toHaveAttribute("href", /\/favicon\.svg$/);
   await expect(page.locator(".brand-avatar")).toHaveAttribute("src", "https://avatars.githubusercontent.com/u/161092309?v=4");
   const fractawImage = page.locator("#fractaw .pitch-visual img");
   await expect(fractawImage).toHaveAttribute("src", /FractawModules\/main\/docs\/evidencias\/ux143\/modularidade-1440\.png/);
