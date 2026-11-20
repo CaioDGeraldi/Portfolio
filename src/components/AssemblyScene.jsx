@@ -54,7 +54,7 @@ function measureProtectedRects(section) {
     if (!parent || parent.closest("script, style, noscript, svg, [aria-hidden='true']")) continue;
 
     const style = window.getComputedStyle(parent);
-    if (style.display === "none" || style.visibility === "hidden" || Number(style.opacity) < 0.08) continue;
+    if (style.display === "none" || style.visibility === "hidden") continue;
 
     const range = document.createRange();
     range.selectNodeContents(node);
@@ -76,7 +76,7 @@ function measureProtectedRects(section) {
 
   for (const element of protectedElements) {
     const style = window.getComputedStyle(element);
-    if (style.display === "none" || style.visibility === "hidden" || Number(style.opacity) < 0.08) continue;
+    if (style.display === "none" || style.visibility === "hidden") continue;
 
     const rect = element.getBoundingClientRect();
     if (!isVisible(rect)) continue;
