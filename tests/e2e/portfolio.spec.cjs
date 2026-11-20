@@ -125,121 +125,66 @@ test("Centro em Movimento includes the live prototype and hackathon build time",
   await expect(project).toContainText(/2 hours and 30 minutes|2 horas e 30 minutos|2h30/i);
 });
 
-test("3D square assembly relocates without covering visible page content", async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto("");
-
-  const scene = page.locator(".assembly-scene");
-  await expect(scene).toHaveAttribute("data-section", "top");
-  await expect(scene).toHaveAttribute("data-hidden", "false");
-  await expect(scene.locator(".assembly-caption")).toHaveCount(0);
-  const heroPlacement = await scene.getAttribute("data-placement");
-
-  await page.evaluate(() => {
-    const section = document.querySelector("#top");
-    window.scrollTo(0, section.offsetHeight * 0.42);
-  });
-  await expect(scene).toHaveAttribute("data-pull-progress", /[1-9][0-9]?/);
-
-  const visited = new Set([heroPlacement]);
-  for (const sectionId of ["projects", "about", "experience", "skills", "ai", "contact"]) {
-    await page.evaluate(id => {
-      const section = document.getElementById(id);
-      const target = section.getBoundingClientRect().top + window.scrollY + section.offsetHeight * 0.42 - window.innerHeight * 0.48;
-      window.scrollTo(0, target);
-    }, sectionId);
-
-    await expect(scene).toHaveAttribute("data-section", sectionId);
-    await expect(scene.locator(".assembly-caption")).toHaveCount(0);
-
-    const hidden = await scene.getAttribute("data-hidden");
-    if (hidden === "false") {
-      const overlap = Number(await scene.getAttribute("data-overlap"));
-      expect(overlap).toBeLessThanOrEqual(0.06);
-      visited.add(await scene.getAttribute("data-placement"));
-    }
-  }
-
-  expect(visited.size).toBeGreaterThan(1);
-});
-
-test("3D square assembly uses a static fallback for reduced motion", async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("");
-  await expect(page.locator(".assembly-scene")).toBeAttached();
-  await expect(page.locator(".assembly-fallback")).toBeVisible();
-  await expect(page.locator(".assembly-scene canvas")).toHaveCount(0);
-  await expect(page.locator(".assembly-caption")).toHaveCount(0);
-});
-
-
-test("3D square assembly renders WebGL and captures the real page across sections", async ({ page }) => {
-  // The shared Playwright config defaults to reduced motion. This test must
-  // exercise the actual Three.js canvas rather than its static SVG fallback.
+test("industrial assembly follows the seven-section sequence and exposes its motion phases", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("");
 
   const scene = page.locator(".assembly-scene");
-  await expect(scene).toHaveAttribute("data-section", "top");
-  await expect(scene).toHaveAttribute("data-hidden", "false");
-  await expect(scene.locator("canvas")).toHaveCount(1);
-  await expect(scene.locator("canvas")).toBeVisible();
-  await expect(scene.locator(".assembly-caption")).toHaveCount(0);
-
-  const output = "test-results/assembly-visual-review";
+  const output = "test-results/industrial-assembly-review";
   fs.mkdirSync(output, { recursive: true });
-  await page.waitForTimeout(500);
-  await page.screenshot({ path: `${output}/desktop-top.png` });
 
-  for (const sectionId of ["projects", "about", "experience", "skills", "ai", "contact"]) {
-    await page.evaluate(id => {
-      const section = document.getElementById(id);
-      const target = section.getBoundingClientRect().top
-        + window.scrollY
-        + section.offsetHeight * 0.42
-        - window.innerHeight * 0.48;
-      window.scrollTo(0, target);
-    }, sectionId);
+  const phases = [
+    { name: "source", progress: 0.1, state: "source" },
+    { name: "travel", progress: 0.5, state: "moving" },
+    { name: "seated", progress: 0.96, state: "seated" }
+  ];
+  const sections = ["top", "projects", "about", "experience", "skills", "ai", "contact"];
 
-    await expect(scene).toHaveAttribute("data-section", sectionId);
-    await page.waitForTimeout(760);
-    await expect(scene.locator(".assembly-caption")).toHaveCount(0);
+  for (const [index, sectionId] of sections.entries()) {
+    for (const phase of phases) {
+      await page.evaluate(({ id, progress }) => {
+        const section = document.getElementById(id);
+        const anchor = window.innerHeight * 0.48;
+        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+        const destination = id === "top"
+          ? progress * Math.max(section.offsetHeight - anchor, 1)
+          : sectionTop + section.offsetHeight * progress - anchor;
+        window.scrollTo(0, destination);
+      }, { id: sectionId, progress: phase.progress });
 
-    if (await scene.getAttribute("data-hidden") === "false") {
-      await expect(scene.locator("canvas")).toHaveCount(1);
-      const overlap = Number(await scene.getAttribute("data-overlap"));
-      expect(overlap).toBeLessThanOrEqual(0.06);
+      await expect(scene).toHaveAttribute("data-section", sectionId);
+      await expect(scene).toHaveAttribute("data-module-index", String(index));
+      await expect(scene).toHaveAttribute("data-piece-state", phase.state);
+
+      if (await scene.getAttribute("data-hidden") === "false") {
+        await expect(scene.locator("canvas")).toHaveCount(1);
+        await expect(scene.locator("canvas")).toBeVisible();
+        expect(Number(await scene.getAttribute("data-overlap"))).toBe(0);
+      } else {
+        await expect(scene.locator("canvas")).toHaveCount(0);
+      }
+
+      await page.waitForTimeout(180);
+      await page.screenshot({ path: output + "/desktop-" + sectionId + "-" + phase.name + ".png" });
     }
-
-    await page.screenshot({ path: `${output}/desktop-${sectionId}.png` });
   }
 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.evaluate(() => window.scrollTo(0, 0));
-  await expect(scene).toHaveAttribute("data-section", "top");
-  await page.waitForTimeout(500);
-  await page.screenshot({ path: `${output}/mobile-top.png` });
+  await expect(scene).toHaveAttribute("data-hidden", "true");
+  await expect(scene.locator("canvas")).toHaveCount(0);
+  await page.screenshot({ path: output + "/mobile-hidden.png" });
+});
 
-  for (const sectionId of ["projects", "about", "experience", "skills", "ai", "contact"]) {
-    await page.evaluate(id => {
-      const section = document.getElementById(id);
-      const target = section.getBoundingClientRect().top
-        + window.scrollY
-        + section.offsetHeight * 0.42
-        - window.innerHeight * 0.48;
-      window.scrollTo(0, target);
-    }, sectionId);
+test("industrial assembly falls back to a static sculpture for reduced motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("");
 
-    await expect(scene).toHaveAttribute("data-section", sectionId);
-    await page.waitForTimeout(760);
-    await expect(scene.locator(".assembly-caption")).toHaveCount(0);
-
-    if (await scene.getAttribute("data-hidden") === "false") {
-      const overlap = Number(await scene.getAttribute("data-overlap"));
-      expect(overlap).toBeLessThanOrEqual(0.06);
-    }
-
-    await page.screenshot({ path: `${output}/mobile-${sectionId}.png` });
-  }
+  const scene = page.locator(".assembly-scene");
+  await expect(scene).toBeAttached();
+  await expect(scene).toHaveAttribute("data-piece-state", "seated");
+  await expect(scene.locator(".assembly-fallback")).toBeVisible();
+  await expect(scene.locator("canvas")).toHaveCount(0);
 });
