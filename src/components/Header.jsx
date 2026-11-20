@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function ThemeIcon({ theme }) {
   return theme === "dark" ? (
@@ -19,12 +19,21 @@ function MenuIcon({ open }) {
 export default function Header({ copy, language, onLanguageToggle, theme, onThemeToggle }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const links = [
-    ["#projects", copy.nav.work],
+    ["#projects", copy.nav.projects],
     ["#about", copy.nav.about],
     ["#experience", copy.nav.experience],
-    ["#approach", copy.nav.approach],
+    ["#skills", copy.nav.stack],
     ["#contact", copy.nav.contact]
   ];
+
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    function closeOnEscape(event) {
+      if (event.key === "Escape") setMenuOpen(false);
+    }
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [menuOpen]);
 
   function closeMenu() {
     setMenuOpen(false);
