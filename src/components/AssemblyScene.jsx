@@ -16,13 +16,13 @@ const PLACEMENT_OPTIONS = {
 };
 
 const MODULES = [
-  { id: "north-west", target: [-0.69, 0.94, 0.055], source: [-1.35, 1.28, 0.62], size: [1.32, 0.82, 0.22], accent: "#c99537", rotation: [0, 0, 0] },
-  { id: "north-east", target: [0.69, 0.94, 0.055], source: [1.35, 1.28, 0.62], size: [1.32, 0.82, 0.22], accent: "#6caaa5", rotation: [0, 0, 0] },
-  { id: "middle-west", target: [-0.94, 0, 0.055], source: [-1.35, 0.08, 0.62], size: [0.82, 0.82, 0.22], accent: "#6caaa5", rotation: [0, 0, 0] },
-  { id: "middle-centre", target: [0, 0, 0.055], source: [0, -1.35, 0.62], size: [0.82, 0.82, 0.22], accent: "#c99537", rotation: [0, 0, 0] },
-  { id: "middle-east", target: [0.94, 0, 0.055], source: [1.35, 0.08, 0.62], size: [0.82, 0.82, 0.22], accent: "#aab4b8", rotation: [0, 0, 0] },
-  { id: "south-west", target: [-0.69, -0.94, 0.055], source: [-1.35, -1.28, 0.62], size: [1.32, 0.82, 0.22], accent: "#6caaa5", rotation: [0, 0, 0] },
-  { id: "south-east", target: [0.69, -0.94, 0.055], source: [1.35, -1.28, 0.62], size: [1.32, 0.82, 0.22], accent: "#c99537", rotation: [0, 0, 0] }
+  { id: "north-west", target: [-0.69, 0.94, 0.055], source: [-1.72, 1.46, 0.96], size: [1.32, 0.82, 0.22], accent: "#c99537", rotation: [0, 0, 0] },
+  { id: "north-east", target: [0.69, 0.94, 0.055], source: [1.72, 1.46, 0.96], size: [1.32, 0.82, 0.22], accent: "#6caaa5", rotation: [0, 0, 0] },
+  { id: "middle-west", target: [-0.94, 0, 0.055], source: [-1.78, 0.08, 0.96], size: [0.82, 0.82, 0.22], accent: "#6caaa5", rotation: [0, 0, 0] },
+  { id: "middle-centre", target: [0, 0, 0.055], source: [0, -1.72, 0.96], size: [0.82, 0.82, 0.22], accent: "#c99537", rotation: [0, 0, 0] },
+  { id: "middle-east", target: [0.94, 0, 0.055], source: [1.78, 0.08, 0.96], size: [0.82, 0.82, 0.22], accent: "#aab4b8", rotation: [0, 0, 0] },
+  { id: "south-west", target: [-0.69, -0.94, 0.055], source: [-1.72, -1.46, 0.96], size: [1.32, 0.82, 0.22], accent: "#6caaa5", rotation: [0, 0, 0] },
+  { id: "south-east", target: [0.69, -0.94, 0.055], source: [1.72, -1.46, 0.96], size: [1.32, 0.82, 0.22], accent: "#c99537", rotation: [0, 0, 0] }
 ];
 
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -42,8 +42,9 @@ function isVisible(rect) {
 }
 
 function measureProtectedRects(section) {
+  const root = document.querySelector("main") || section;
   const rects = [];
-  const walker = document.createTreeWalker(section, NodeFilter.SHOW_TEXT);
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
 
   while (walker.nextNode()) {
     const node = walker.currentNode;
@@ -69,7 +70,7 @@ function measureProtectedRects(section) {
     }
   }
 
-  const protectedElements = section.querySelectorAll(
+  const protectedElements = root.querySelectorAll(
     "img, video, canvas, figure, a, button, li, .project-visual, .pitch-visual, .workbench, .contact-links"
   );
 
@@ -160,16 +161,19 @@ function createFlightCurve(part) {
   );
 }
 
-function ModulePiece({ part, groupRef, bodyGeometry, faceGeometry, accentGeometry, hairlineGeometry, bodyMaterial, faceMaterial, accentMaterial, hairlineMaterial, edgeMaterial, bodyEdgeGeometry }) {
-  const faceZ = part.size[2] / 2 + 0.018;
+function ModulePiece({ part, groupRef, bodyGeometry, faceGeometry, insetGeometry, accentGeometry, hairlineGeometry, bodyMaterial, faceMaterial, insetMaterial, accentMaterial, hairlineMaterial, edgeMaterial, bodyEdgeGeometry }) {
+  const faceZ = part.size[2] / 2 + 0.02;
+  const insetZ = faceZ + 0.043;
+  const detailZ = insetZ + 0.024;
 
   return (
     <group ref={groupRef}>
       <mesh geometry={bodyGeometry} material={bodyMaterial} castShadow receiveShadow />
       <lineSegments geometry={bodyEdgeGeometry} material={edgeMaterial} />
       <mesh geometry={faceGeometry} material={faceMaterial} position={[0, 0, faceZ]} />
-      <mesh geometry={accentGeometry} material={accentMaterial} position={[-part.size[0] * 0.24, part.size[1] * 0.22, faceZ + 0.025]} />
-      <mesh geometry={hairlineGeometry} material={hairlineMaterial} position={[part.size[0] * 0.06, -part.size[1] * 0.22, faceZ + 0.025]} />
+      <mesh geometry={insetGeometry} material={insetMaterial} position={[0, 0, insetZ]} />
+      <mesh geometry={accentGeometry} material={accentMaterial} position={[-part.size[0] * 0.24, part.size[1] * 0.22, detailZ]} />
+      <mesh geometry={hairlineGeometry} material={hairlineMaterial} position={[part.size[0] * 0.06, -part.size[1] * 0.22, detailZ]} />
     </group>
   );
 }
@@ -178,10 +182,13 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
   const pieces = useRef([]);
   const flightCurves = useMemo(() => MODULES.map(createFlightCurve), []);
   const bodyGeometries = useMemo(() => MODULES.map(part => (
-    new RoundedBoxGeometry(part.size[0], part.size[1], part.size[2], 8, 0.085)
+    new RoundedBoxGeometry(part.size[0], part.size[1], part.size[2], 8, 0.11)
   )), []);
   const faceGeometries = useMemo(() => MODULES.map(part => (
-    new RoundedBoxGeometry(part.size[0] - 0.18, part.size[1] - 0.18, 0.04, 7, 0.05)
+    new RoundedBoxGeometry(part.size[0] - 0.14, part.size[1] - 0.14, 0.04, 7, 0.05)
+  )), []);
+  const insetGeometries = useMemo(() => MODULES.map(part => (
+    new RoundedBoxGeometry(part.size[0] - 0.3, part.size[1] - 0.3, 0.03, 7, 0.045)
   )), []);
   const accentGeometries = useMemo(() => MODULES.map(part => (
     new RoundedBoxGeometry(Math.max(0.24, part.size[0] * 0.27), 0.028, 0.014, 4, 0.012)
@@ -190,13 +197,13 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
     new RoundedBoxGeometry(part.size[0] * 0.43, 0.012, 0.01, 3, 0.005)
   )), []);
   const socketRimGeometries = useMemo(() => MODULES.map(part => (
-    new RoundedBoxGeometry(part.size[0] + 0.07, part.size[1] + 0.07, 0.12, 7, 0.065)
+    new RoundedBoxGeometry(part.size[0] + 0.12, part.size[1] + 0.12, 0.16, 7, 0.075)
   )), []);
   const socketWellGeometries = useMemo(() => MODULES.map(part => (
-    new RoundedBoxGeometry(part.size[0] - 0.025, part.size[1] - 0.025, 0.075, 7, 0.06)
+    new RoundedBoxGeometry(part.size[0] + 0.025, part.size[1] + 0.025, 0.08, 7, 0.06)
   )), []);
-  const railGeometry = useMemo(() => new RoundedBoxGeometry(3.08, 0.085, 0.13, 6, 0.035), []);
-  const sideRailGeometry = useMemo(() => new RoundedBoxGeometry(0.085, 3.08, 0.13, 6, 0.035), []);
+  const railGeometry = useMemo(() => new RoundedBoxGeometry(3.08, 0.075, 0.16, 6, 0.035), []);
+  const sideRailGeometry = useMemo(() => new RoundedBoxGeometry(0.075, 3.08, 0.16, 6, 0.035), []);
   const dividerGeometry = useMemo(() => new RoundedBoxGeometry(2.76, 0.055, 0.1, 5, 0.025), []);
   const shortDividerGeometry = useMemo(() => new RoundedBoxGeometry(0.055, 0.88, 0.1, 5, 0.025), []);
   const middleDividerGeometry = useMemo(() => new RoundedBoxGeometry(0.055, 0.82, 0.1, 5, 0.025), []);
@@ -211,12 +218,19 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
     clearcoatRoughness: 0.24
   })), []);
   const faceMaterials = useMemo(() => MODULES.map(() => new THREE.MeshPhysicalMaterial({
-    color: "#46545a",
-    metalness: 0.42,
-    roughness: 0.38,
-    clearcoat: 0.38,
-    clearcoatRoughness: 0.3
+    color: "#a1adb2",
+    metalness: 0.56,
+    roughness: 0.31,
+    clearcoat: 0.54,
+    clearcoatRoughness: 0.22
   })), []);
+  const insetMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
+    color: "#39474d",
+    metalness: 0.55,
+    roughness: 0.35,
+    clearcoat: 0.42,
+    clearcoatRoughness: 0.26
+  }), []);
   const accentMaterials = useMemo(() => MODULES.map(part => new THREE.MeshStandardMaterial({
     color: part.accent,
     metalness: 0.48,
@@ -259,16 +273,16 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
 
   const frame = useMemo(() => {
     const rails = [
-      { geometry: railGeometry, position: [0, 1.52, -0.105] },
-      { geometry: railGeometry, position: [0, -1.52, -0.105] },
-      { geometry: sideRailGeometry, position: [-1.52, 0, -0.105] },
-      { geometry: sideRailGeometry, position: [1.52, 0, -0.105] },
-      { geometry: dividerGeometry, position: [0, 0.47, -0.105] },
-      { geometry: dividerGeometry, position: [0, -0.47, -0.105] },
-      { geometry: shortDividerGeometry, position: [0, 0.94, -0.105] },
-      { geometry: shortDividerGeometry, position: [0, -0.94, -0.105] },
-      { geometry: middleDividerGeometry, position: [-0.47, 0, -0.105] },
-      { geometry: middleDividerGeometry, position: [0.47, 0, -0.105] }
+      { geometry: railGeometry, position: [0, 1.52, -0.13] },
+      { geometry: railGeometry, position: [0, -1.52, -0.13] },
+      { geometry: sideRailGeometry, position: [-1.52, 0, -0.13] },
+      { geometry: sideRailGeometry, position: [1.52, 0, -0.13] },
+      { geometry: dividerGeometry, position: [0, 0.47, -0.13] },
+      { geometry: dividerGeometry, position: [0, -0.47, -0.13] },
+      { geometry: shortDividerGeometry, position: [0, 0.94, -0.13] },
+      { geometry: shortDividerGeometry, position: [0, -0.94, -0.13] },
+      { geometry: middleDividerGeometry, position: [-0.47, 0, -0.13] },
+      { geometry: middleDividerGeometry, position: [0.47, 0, -0.13] }
     ];
     return rails;
   }, [railGeometry, sideRailGeometry, dividerGeometry, shortDividerGeometry, middleDividerGeometry]);
@@ -313,11 +327,11 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
 
   return (
     <>
-      <group rotation={[-0.17, -0.2, 0.012]}>
+      <group rotation={[-0.29, -0.32, 0.014]}>
         {MODULES.map((part, index) => (
           <group key={part.id + "-socket"} position={part.target}>
-            <mesh geometry={socketRimGeometries[index]} material={rimMaterial} position={[0, 0, -0.08]} />
-            <mesh geometry={socketWellGeometries[index]} material={socketMaterial} position={[0, 0, -0.03]} />
+            <mesh geometry={socketRimGeometries[index]} material={rimMaterial} position={[0, 0, -0.105]} />
+            <mesh geometry={socketWellGeometries[index]} material={socketMaterial} position={[0, 0, -0.06]} />
           </group>
         ))}
 
@@ -335,10 +349,12 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
             groupRef={node => { pieces.current[index] = node; }}
             bodyGeometry={bodyGeometries[index]}
             faceGeometry={faceGeometries[index]}
+            insetGeometry={insetGeometries[index]}
             accentGeometry={accentGeometries[index]}
             hairlineGeometry={hairlineGeometries[index]}
             bodyMaterial={bodyMaterials[index]}
             faceMaterial={faceMaterials[index]}
+            insetMaterial={insetMaterial}
             accentMaterial={accentMaterials[index]}
             hairlineMaterial={hairlineMaterial}
             edgeMaterial={edgeMaterial}
@@ -417,7 +433,17 @@ export default function AssemblyScene() {
           0,
           1
         )
-        : clamp((anchorY - active.rect.top) / Math.max(active.rect.height, 1), 0, 1);
+        : sectionIndex === sections.length - 1
+          ? (() => {
+            const sectionStart = Math.max(0, active.rect.top + window.scrollY - anchorY);
+            const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+            return clamp(
+              (window.scrollY - sectionStart) / Math.max(maxScroll - sectionStart, 1),
+              0,
+              1
+            );
+          })()
+          : clamp((anchorY - active.rect.top) / Math.max(active.rect.height, 1), 0, 1);
 
       const sectionId = active.section.id;
       const placement = choosePlacement(active.section, sectionId, previousPlacement);
@@ -505,7 +531,7 @@ export default function AssemblyScene() {
         <Canvas
           shadows
           dpr={[1, 1.6]}
-          camera={{ position: [0, 0, 6.7], fov: 34 }}
+          camera={{ position: [0, 0, 7.8], fov: 34 }}
           gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
           onCreated={({ gl }) => {
             gl.toneMapping = THREE.ACESFilmicToneMapping;
