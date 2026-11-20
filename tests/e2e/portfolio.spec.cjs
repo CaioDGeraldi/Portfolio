@@ -206,8 +206,12 @@ test("industrial assembly follows the seven-section sequence and exposes its mot
         await expect(scene.locator("canvas")).toHaveCount(0);
       }
 
-      await page.waitForTimeout(180);
-      await page.screenshot({ path: output + "/desktop-" + sectionId + "-" + phase.name + ".png" });
+      await page.waitForTimeout(110);
+      if (phase.name === "seated" || await scene.getAttribute("data-hidden") === "true") {
+        await page.screenshot({ path: output + "/desktop-" + sectionId + "-" + phase.name + ".png" });
+      } else {
+        await scene.screenshot({ path: output + "/model-" + sectionId + "-" + phase.name + ".png" });
+      }
     }
   }
 
