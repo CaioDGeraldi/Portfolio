@@ -164,6 +164,15 @@ test("industrial assembly follows the seven-section sequence and exposes its mot
       await expect(scene).toHaveAttribute("data-section", sectionId);
       await expect(scene).toHaveAttribute("data-module-index", String(index));
       await expect(scene).toHaveAttribute("data-piece-state", phase.state);
+      await expect(scene).toHaveAttribute(
+        "data-assembled-count",
+        String(index + (phase.state === "seated" ? 1 : 0))
+      );
+
+      if (sectionId === "contact" && phase.name === "seated") {
+        await expect(scene).toHaveAttribute("data-hidden", "false");
+        await expect(scene).toHaveAttribute("data-assembled-count", "7");
+      }
 
       if (await scene.getAttribute("data-hidden") === "false") {
         await expect(scene.locator("canvas")).toHaveCount(1);
