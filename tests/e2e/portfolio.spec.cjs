@@ -1,4 +1,5 @@
 const { test, expect } = require("@playwright/test");
+const fs = require("node:fs");
 
 const sizes = [
   { width: 320, height: 640 },
@@ -169,4 +170,76 @@ test("3D square assembly uses a static fallback for reduced motion", async ({ pa
   await expect(page.locator(".assembly-fallback")).toBeVisible();
   await expect(page.locator(".assembly-scene canvas")).toHaveCount(0);
   await expect(page.locator(".assembly-caption")).toHaveCount(0);
+});
+
+
+test("3D square assembly renders WebGL and captures the real page across sections", async ({ page }) => {
+  // The shared Playwright config defaults to reduced motion. This test must
+  // exercise the actual Three.js canvas rather than its static SVG fallback.
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("");
+
+  const scene = page.locator(".assembly-scene");
+  await expect(scene).toHaveAttribute("data-section", "top");
+  await expect(scene).toHaveAttribute("data-hidden", "false");
+  await expect(scene.locator("canvas")).toHaveCount(1);
+  await expect(scene.locator("canvas")).toBeVisible();
+  await expect(scene.locator(".assembly-caption")).toHaveCount(0);
+
+  const output = "test-results/assembly-visual-review";
+  fs.mkdirSync(output, { recursive: true });
+  await page.waitForTimeout(500);
+  await page.screenshot({ path: `${output}/desktop-top.png` });
+
+  for (const sectionId of ["projects", "about", "experience", "skills", "ai", "contact"]) {
+    await page.evaluate(id => {
+      const section = document.getElementById(id);
+      const target = section.getBoundingClientRect().top
+        + window.scrollY
+        + section.offsetHeight * 0.42
+        - window.innerHeight * 0.48;
+      window.scrollTo(0, target);
+    }, sectionId);
+
+    await expect(scene).toHaveAttribute("data-section", sectionId);
+    await page.waitForTimeout(760);
+    await expect(scene.locator(".assembly-caption")).toHaveCount(0);
+
+    if (await scene.getAttribute("data-hidden") === "false") {
+      await expect(scene.locator("canvas")).toHaveCount(1);
+      const overlap = Number(await scene.getAttribute("data-overlap"));
+      expect(overlap).toBeLessThanOrEqual(0.06);
+    }
+
+    await page.screenshot({ path: `${output}/desktop-${sectionId}.png` });
+  }
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await expect(scene).toHaveAttribute("data-section", "top");
+  await page.waitForTimeout(500);
+  await page.screenshot({ path: `${output}/mobile-top.png` });
+
+  for (const sectionId of ["projects", "about", "experience", "skills", "ai", "contact"]) {
+    await page.evaluate(id => {
+      const section = document.getElementById(id);
+      const target = section.getBoundingClientRect().top
+        + window.scrollY
+        + section.offsetHeight * 0.42
+        - window.innerHeight * 0.48;
+      window.scrollTo(0, target);
+    }, sectionId);
+
+    await expect(scene).toHaveAttribute("data-section", sectionId);
+    await page.waitForTimeout(760);
+    await expect(scene.locator(".assembly-caption")).toHaveCount(0);
+
+    if (await scene.getAttribute("data-hidden") === "false") {
+      const overlap = Number(await scene.getAttribute("data-overlap"));
+      expect(overlap).toBeLessThanOrEqual(0.06);
+    }
+
+    await page.screenshot({ path: `${output}/mobile-${sectionId}.png` });
+  }
 });
