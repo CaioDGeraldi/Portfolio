@@ -80,3 +80,23 @@ test("projects are presented as individual problem-solution pitches", async ({ p
   await expect(page.locator("#fractaw")).toContainText("A proposta");
   await expect(page.locator("#fractaw")).toContainText("Como funciona");
 });
+
+test("favicon, GitHub avatar and project visual assets are present", async ({ page }) => {
+  await page.goto("");
+  await expect(page.locator('link[rel="icon"]')).toHaveAttribute("href", "./favicon.svg");
+  await expect(page.locator(".brand-avatar")).toHaveAttribute("src", "https://avatars.githubusercontent.com/u/161092309?v=4");
+  const fractawImage = page.locator("#fractaw .pitch-visual img");
+  await expect(fractawImage).toHaveAttribute("src", /FractawModules\/main\/docs\/evidencias\/ux143\/modularidade-1440\.png/);
+  await page.waitForFunction(() => {
+    const image = document.querySelector("#fractaw .pitch-visual img");
+    return image && image.complete && image.naturalWidth > 0;
+  }, { timeout: 12000 });
+  const retornaImage = page.locator("#retorna .pitch-retorna-brand img");
+  await expect(retornaImage).toBeVisible();
+  await expect(retornaImage).toHaveAttribute("src", /retorna-symbol/);
+  await page.waitForFunction(() => {
+    const image = document.querySelector("#retorna .pitch-retorna-brand img");
+    return image && image.complete && image.naturalWidth > 0;
+  });
+  await expect(page.locator("#ai")).toBeAttached();
+});
