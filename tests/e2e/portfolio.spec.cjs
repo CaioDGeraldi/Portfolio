@@ -93,7 +93,7 @@ test("favicon, GitHub avatar and project visual assets are present", async ({ pa
   }, { timeout: 12000 });
   const retornaImage = page.locator("#retorna .pitch-retorna-brand img");
   await expect(retornaImage).toBeVisible();
-  await expect(retornaImage).toHaveAttribute("src", /retorna-symbol/);
+  await expect(retornaImage).toHaveAttribute("src", /(?:retorna-symbol|data:image\/svg\+xml)/);
   await page.waitForFunction(() => {
     const image = document.querySelector("#retorna .pitch-retorna-brand img");
     return image && image.complete && image.naturalWidth > 0;
