@@ -105,7 +105,9 @@ function choosePlacement(section, sectionId, previousPlacement) {
     return { visible: false, name: "hidden", sectionId, x: 0, y: 0, size: 0, overlap: 1 };
   }
 
-  const size = window.innerWidth >= 1360 ? 300 : 260;
+  const size = sectionId === "contact"
+    ? 260
+    : window.innerWidth >= 1360 ? 300 : 260;
   const rect = section.getBoundingClientRect();
   const headerBottom = document.querySelector(".site-header")?.getBoundingClientRect().bottom || 82;
   const minY = Math.max(size / 2 + 12, rect.top + size / 2 + 12, headerBottom + size / 2 + 16);
@@ -473,6 +475,7 @@ export default function AssemblyScene() {
       aria-hidden="true"
       data-section={sectionId}
       data-module-index={scene.sectionIndex}
+      data-assembled-count={Math.min(scene.sectionIndex + (pullProgress >= 95 ? 1 : 0), MODULES.length)}
       data-placement={scene.placement.name}
       data-hidden={!scene.placement.visible}
       data-overlap={scene.placement.overlap}
