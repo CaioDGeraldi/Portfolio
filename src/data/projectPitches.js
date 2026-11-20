@@ -83,7 +83,7 @@ export const projectPitches = {
         scenario: "Muitos sistemas de gestão são comercializados em pacotes amplos e rígidos. As organizações acabam pagando por funcionalidades que não fazem parte de sua operação, enquanto limitações ou uma separação ruim entre módulos dificultam a adaptação e a evolução do sistema. Uma escola e um depósito de bebidas, por exemplo, possuem rotinas muito diferentes e não deveriam precisar das mesmas funcionalidades especializadas.",
         proposal: "Construir um ecossistema de gestão modular a partir de uma base compartilhada. Cada organização pode compor seu ambiente com as capacidades de que realmente precisa, sem carregar funcionalidades que não têm relação com sua operação.",
         solution: "O Fractaw separa capacidades compartilhadas de módulos especializados para cada tipo de organização. A direção do produto inclui fluxos de educação, como gestão de horários e disponibilidade, e de distribuição de bebidas, como estoque e operação diária. A arquitetura busca permitir que esses módulos evoluam de forma independente, utilizando fundamentos comuns. O protótipo atual demonstra a seleção e a aplicabilidade de módulos para uma organização.",
-        image: "https://raw.githubusercontent.com/CaioDGeraldi/FractawModules/1449d4d8633c32edbdfdd01e0649b47b869b307c/docs/evidencias/ux143/modularidade-1440.png",
+        image: "https://raw.githubusercontent.com/CaioDGeraldi/FractawModules/main/docs/evidencias/ux143/modularidade-1440.png",
         imageAlt: "Protótipo do Fractaw mostrando a administração de módulos para uma escola fictícia",
         visual: "image",
         tags: ["Python", "Django", "Modelagem de domínio"],
@@ -98,7 +98,7 @@ export const projectPitches = {
         scenario: "Uma estratégia de fidelidade que funciona para uma empresa pode não servir para outra. Até filiais da mesma rede podem precisar de políticas, recompensas e campanhas diferentes. Ao mesmo tempo, substituir um PDV ou ERP existente apenas para adicionar funcionalidades de fidelidade costuma ser pouco viável.",
         proposal: "Criar uma plataforma de fidelidade multiempresa e configurável, integrada aos sistemas comerciais existentes e capaz de centralizar as regras e operações de pontos, campanhas, saldos e resgates.",
         solution: "Cada empresa configura suas regras de acúmulo e resgate, que podem variar por estabelecimento. Eventos de venda chegam por uma API e são processados conforme a configuração aplicável. A plataforma administra clientes, saldos de pontos e um histórico rastreável de movimentações, incluindo expiração e resgate por lotes com priorização FEFO. Operações transacionais protegem as alterações de saldo.",
-        visual: "flow",
+        visual: "retorna",
         tags: ["Django REST Framework", "PostgreSQL", "Regras de negócio"],
         slug: "retorna"
       },
