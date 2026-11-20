@@ -4,64 +4,69 @@ import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 
 const SECTION_IDS = ["top", "projects", "about", "experience", "skills", "ai", "contact"];
+const SOURCE_POSITION = [0, -1.72, 0.74];
 
-const PLACEMENT_HINTS = {
-  top: [
-    { name: "right-center", x: 0.8, y: 0.48 },
-    { name: "right-lower", x: 0.82, y: 0.73 },
-    { name: "right-upper", x: 0.82, y: 0.3 },
-    { name: "left-lower", x: 0.19, y: 0.73 }
-  ],
-  projects: [
-    { name: "right-upper", x: 0.83, y: 0.31 },
-    { name: "left-lower", x: 0.18, y: 0.73 },
-    { name: "right-lower", x: 0.83, y: 0.73 },
-    { name: "left-upper", x: 0.18, y: 0.31 },
-    { name: "right-center", x: 0.83, y: 0.52 }
-  ],
-  about: [
-    { name: "left-lower", x: 0.18, y: 0.73 },
-    { name: "right-upper", x: 0.82, y: 0.31 },
-    { name: "right-lower", x: 0.82, y: 0.73 },
-    { name: "left-upper", x: 0.18, y: 0.31 }
-  ],
-  experience: [
-    { name: "right-upper", x: 0.83, y: 0.31 },
-    { name: "left-lower", x: 0.18, y: 0.73 },
-    { name: "right-lower", x: 0.83, y: 0.73 },
-    { name: "left-upper", x: 0.18, y: 0.31 }
-  ],
-  skills: [
-    { name: "left-lower", x: 0.18, y: 0.73 },
-    { name: "right-upper", x: 0.82, y: 0.31 },
-    { name: "right-lower", x: 0.82, y: 0.73 },
-    { name: "left-upper", x: 0.18, y: 0.31 }
-  ],
-  ai: [
-    { name: "right-lower", x: 0.82, y: 0.73 },
-    { name: "left-upper", x: 0.18, y: 0.31 },
-    { name: "right-upper", x: 0.82, y: 0.31 },
-    { name: "left-lower", x: 0.18, y: 0.73 }
-  ],
-  contact: [
-    { name: "right-center", x: 0.82, y: 0.5 },
-    { name: "left-upper", x: 0.18, y: 0.31 },
-    { name: "left-lower", x: 0.18, y: 0.73 },
-    { name: "right-lower", x: 0.82, y: 0.73 }
-  ]
+const PLACEMENT_PREFERENCES = {
+  top: [0.86, 0.44],
+  projects: [0.7, 0.44],
+  about: [0.14, 0.68],
+  experience: [0.86, 0.68],
+  skills: [0.86, 0.76],
+  ai: [0.86, 0.32],
+  contact: [0.86, 0.68]
 };
 
 const MODULES = [
-  { id: "backbone", target: [0, 0, 0], source: [1.92, 0.82, 0.45], size: [0.56, 2.42, 0.42], startRotation: [0.18, 0.32, 1.18], rotation: [0, 0, 0], color: "#303b40", kind: "spine" },
-  { id: "upper-left", target: [-0.5, 0.73, 0.19], source: [-1.92, 1.12, 0.52], size: [0.94, 0.69, 0.34], startRotation: [0.28, -0.18, 0.88], rotation: [0.05, 0.1, -0.22], color: "#f4b942", kind: "plate" },
-  { id: "upper-right", target: [0.5, 0.73, -0.05], source: [1.94, 1.04, 0.58], size: [0.94, 0.69, 0.34], startRotation: [-0.22, 0.28, -0.8], rotation: [-0.05, -0.1, 0.22], color: "#b8c0c5", kind: "plate" },
-  { id: "middle-left", target: [-0.58, 0, 0.22], source: [-1.96, 0.02, 0.58], size: [0.88, 0.67, 0.34], startRotation: [0.22, -0.2, -0.76], rotation: [0.04, 0.1, 0.18], color: "#4fa7a3", kind: "plate" },
-  { id: "middle-right", target: [0.58, 0, -0.06], source: [1.96, -0.12, 0.58], size: [0.88, 0.67, 0.34], startRotation: [-0.2, 0.2, 0.84], rotation: [-0.04, -0.1, -0.18], color: "#f4b942", kind: "plate" },
-  { id: "lower-left", target: [-0.5, -0.73, 0.18], source: [-1.92, -1.08, 0.52], size: [0.94, 0.69, 0.34], startRotation: [0.2, -0.25, 0.82], rotation: [0.05, 0.1, -0.22], color: "#b8c0c5", kind: "plate" },
-  { id: "lower-right", target: [0.5, -0.73, -0.04], source: [1.9, -1.05, 0.52], size: [0.94, 0.69, 0.34], startRotation: [-0.2, 0.24, -0.82], rotation: [-0.05, -0.1, 0.22], color: "#4fa7a3", kind: "plate" }
+  {
+    id: "top-left",
+    target: [-0.69, 0.96, 0.025],
+    size: [1.32, 0.82, 0.24],
+    color: "#f4b942",
+    rotation: [0, 0, -0.012]
+  },
+  {
+    id: "top-right",
+    target: [0.69, 0.96, 0.025],
+    size: [1.32, 0.82, 0.24],
+    color: "#b8c0c5",
+    rotation: [0, 0, 0.012]
+  },
+  {
+    id: "middle-left",
+    target: [-0.94, 0, 0.025],
+    size: [0.84, 0.82, 0.24],
+    color: "#4fa7a3",
+    rotation: [0, 0, -0.01]
+  },
+  {
+    id: "middle-center",
+    target: [0, 0, 0.025],
+    size: [0.84, 0.82, 0.24],
+    color: "#f4b942",
+    rotation: [0, 0, 0]
+  },
+  {
+    id: "middle-right",
+    target: [0.94, 0, 0.025],
+    size: [0.84, 0.82, 0.24],
+    color: "#b8c0c5",
+    rotation: [0, 0, 0.01]
+  },
+  {
+    id: "bottom-left",
+    target: [-0.69, -0.96, 0.025],
+    size: [1.32, 0.82, 0.24],
+    color: "#4fa7a3",
+    rotation: [0, 0, 0.01]
+  },
+  {
+    id: "bottom-right",
+    target: [0.69, -0.96, 0.025],
+    size: [1.32, 0.82, 0.24],
+    color: "#f4b942",
+    rotation: [0, 0, -0.01]
+  }
 ];
-
-const CONTENT_SELECTORS = "h1, h2, h3, p, a, button, li, img, figure, .project-visual, .pitch-visual";
 
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
@@ -72,29 +77,81 @@ function smoothStep(value) {
   return amount * amount * (3 - 2 * amount);
 }
 
-function measureContentRects(section) {
-  return Array.from(section.querySelectorAll(CONTENT_SELECTORS))
-    .filter(element => {
-      const style = window.getComputedStyle(element);
-      return style.display !== "none" && style.visibility !== "hidden" && Number(style.opacity) > 0;
-    })
-    .map(element => {
-      const rect = element.getBoundingClientRect();
-      return { left: rect.left - 7, right: rect.right + 7, top: rect.top - 7, bottom: rect.bottom + 7 };
-    })
-    .filter(rect => rect.right > 0 && rect.left < window.innerWidth && rect.bottom > 80 && rect.top < window.innerHeight);
+function visibleRect(rect) {
+  return rect.width > 0
+    && rect.height > 0
+    && rect.right > 0
+    && rect.left < window.innerWidth
+    && rect.bottom > 0
+    && rect.top < window.innerHeight;
+}
+
+function measureContentRects() {
+  const root = document.querySelector("main") || document.body;
+  const obstacles = [];
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+
+  while (walker.nextNode()) {
+    const node = walker.currentNode;
+    if (!node.nodeValue.trim()) continue;
+
+    const parent = node.parentElement;
+    if (!parent || parent.closest("script, style, noscript, svg, [aria-hidden='true']")) continue;
+
+    const style = window.getComputedStyle(parent);
+    if (style.display === "none" || style.visibility === "hidden" || Number(style.opacity) < 0.08) continue;
+
+    const range = document.createRange();
+    range.selectNodeContents(node);
+
+    for (const rect of range.getClientRects()) {
+      if (!visibleRect(rect)) continue;
+      obstacles.push({
+        left: rect.left - 5,
+        right: rect.right + 5,
+        top: rect.top - 5,
+        bottom: rect.bottom + 5
+      });
+    }
+  }
+
+  const media = root.querySelectorAll(
+    "img, video, canvas, figure, .project-visual, .pitch-visual, .integration-visual, .workbench"
+  );
+
+  for (const element of media) {
+    const style = window.getComputedStyle(element);
+    if (style.display === "none" || style.visibility === "hidden" || Number(style.opacity) < 0.08) continue;
+
+    const rect = element.getBoundingClientRect();
+    if (!visibleRect(rect)) continue;
+    obstacles.push({
+      left: rect.left - 7,
+      right: rect.right + 7,
+      top: rect.top - 7,
+      bottom: rect.bottom + 7
+    });
+  }
+
+  return obstacles;
 }
 
 function overlapScore(rect, obstacles) {
-  const columns = 9;
-  const rows = 9;
+  const columns = 11;
+  const rows = 11;
   let covered = 0;
 
   for (let row = 0; row < rows; row += 1) {
     for (let column = 0; column < columns; column += 1) {
       const x = rect.left + ((column + 0.5) / columns) * rect.width;
       const y = rect.top + ((row + 0.5) / rows) * rect.height;
-      if (obstacles.some(obstacle => x >= obstacle.left && x <= obstacle.right && y >= obstacle.top && y <= obstacle.bottom)) {
+
+      if (obstacles.some(obstacle => (
+        x >= obstacle.left
+        && x <= obstacle.right
+        && y >= obstacle.top
+        && y <= obstacle.bottom
+      ))) {
         covered += 1;
       }
     }
@@ -104,140 +161,288 @@ function overlapScore(rect, obstacles) {
 }
 
 function choosePlacement(section, previousPlacement) {
-  const mobile = window.innerWidth <= 600;
-  const size = mobile ? clamp(window.innerWidth * 0.36, 116, 150) : clamp(window.innerWidth * 0.22, 190, 280);
-  const obstacles = measureContentRects(section);
-  const hints = PLACEMENT_HINTS[section.id] || PLACEMENT_HINTS.top;
+  const mobile = window.innerWidth <= 760;
+  const sizes = mobile ? [120, 104, 88] : [228, 204, 184, 164, 144, 128];
+  const xPositions = mobile ? [0.16, 0.5, 0.84] : [0.14, 0.3, 0.5, 0.7, 0.86];
+  const yPositions = mobile ? [0.22, 0.5, 0.78] : [0.2, 0.32, 0.44, 0.56, 0.68, 0.78];
+  const preferred = PLACEMENT_PREFERENCES[section.id] || PLACEMENT_PREFERENCES.top;
+  const sectionRect = section.getBoundingClientRect();
+  const headerBottom = document.querySelector(".site-header")?.getBoundingClientRect().bottom || 82;
+  const obstacles = measureContentRects();
 
-  const candidates = hints.map(hint => {
-    const centerX = clamp(window.innerWidth * hint.x, size / 2 + 12, window.innerWidth - size / 2 - 12);
-    const centerY = clamp(window.innerHeight * hint.y, size / 2 + 106, window.innerHeight - size / 2 - 18);
-    const rect = {
-      left: centerX - size / 2,
-      right: centerX + size / 2,
-      top: centerY - size / 2,
-      bottom: centerY + size / 2,
-      width: size,
-      height: size
-    };
+  for (const size of sizes) {
+    const height = size * 1.25;
+    const minY = Math.max(height / 2 + 12, sectionRect.top + height / 2 + 10, headerBottom + height / 2 + 12);
+    const maxY = Math.min(
+      window.innerHeight - height / 2 - 12,
+      sectionRect.bottom - height / 2 - 10
+    );
 
-    return { name: hint.name, x: centerX, y: centerY, size, score: overlapScore(rect, obstacles) };
-  });
+    if (maxY < minY) continue;
 
-  const best = candidates.reduce((current, candidate) => candidate.score < current.score ? candidate : current);
-  const previous = previousPlacement && previousPlacement.sectionId === section.id
-    ? candidates.find(candidate => candidate.name === previousPlacement.name)
-    : null;
+    const candidates = [];
 
-  if (previous && previous.score <= best.score + 0.12) {
-    return { ...previous, sectionId: section.id };
+    for (let xIndex = 0; xIndex < xPositions.length; xIndex += 1) {
+      for (let yIndex = 0; yIndex < yPositions.length; yIndex += 1) {
+        const xFraction = xPositions[xIndex];
+        const yFraction = yPositions[yIndex];
+        const centerX = clamp(
+          window.innerWidth * xFraction,
+          size / 2 + 12,
+          window.innerWidth - size / 2 - 12
+        );
+        const centerY = clamp(window.innerHeight * yFraction, minY, maxY);
+        const rect = {
+          left: centerX - size / 2,
+          right: centerX + size / 2,
+          top: centerY - height / 2,
+          bottom: centerY + height / 2,
+          width: size,
+          height
+        };
+
+        const overlap = overlapScore(rect, obstacles);
+        const distance = Math.hypot(xFraction - preferred[0], yFraction - preferred[1]);
+        const samePosition = previousPlacement
+          && previousPlacement.sectionId !== section.id
+          && previousPlacement.name === `${xIndex}-${yIndex}`;
+        const movementPenalty = samePosition ? 0.018 : 0;
+
+        candidates.push({
+          name: `${xIndex}-${yIndex}`,
+          x: centerX,
+          y: centerY,
+          size,
+          height,
+          score: overlap,
+          rank: overlap * 5 + distance * 0.05 + movementPenalty
+        });
+      }
+    }
+
+    const safeCandidates = candidates
+      .filter(candidate => candidate.score <= 0.06)
+      .sort((a, b) => a.rank - b.rank);
+
+    if (!safeCandidates.length) continue;
+
+    const best = safeCandidates[0];
+    const previous = previousPlacement
+      && previousPlacement.sectionId === section.id
+      && previousPlacement.size === size
+      ? candidates.find(candidate => candidate.name === previousPlacement.name)
+      : null;
+
+    if (previous && previous.score <= best.score + 0.02) {
+      return { ...previous, sectionId: section.id, visible: true };
+    }
+
+    return { ...best, sectionId: section.id, visible: true };
   }
 
-  return { ...best, sectionId: section.id };
+  return {
+    name: "hidden",
+    sectionId: section.id,
+    x: 0,
+    y: 0,
+    size: 0,
+    height: 0,
+    score: 1,
+    visible: false
+  };
 }
 
 function createPullCurves() {
+  const start = new THREE.Vector3(...SOURCE_POSITION);
+
   return MODULES.map(part => {
-    const start = new THREE.Vector3(...part.source);
-    const end = new THREE.Vector3(...part.target);
-    const direction = part.source[0] >= 0 ? -1 : 1;
-    const lift = part.source[1] >= 0 ? 0.42 : -0.32;
-    const firstControl = start.clone().lerp(end, 0.28).add(new THREE.Vector3(direction * 0.18, lift, 0.48));
-    const secondControl = start.clone().lerp(end, 0.72).add(new THREE.Vector3(direction * -0.24, 0.24, 0.34));
+    const end = new THREE.Vector3(...part.target).add(new THREE.Vector3(0, 0, 0.06));
+    const horizontal = part.target[0] * 0.2;
+    const firstControl = start.clone()
+      .lerp(end, 0.3)
+      .add(new THREE.Vector3(horizontal, 0.34, 0.42));
+    const secondControl = start.clone()
+      .lerp(end, 0.72)
+      .add(new THREE.Vector3(horizontal * 0.35, 0.18, 0.3));
+
     return new THREE.CubicBezierCurve3(start, firstControl, secondControl, end);
   });
 }
 
-function ModulePiece({ part, groupRef, geometry, edgeGeometry, trimGeometry, boltGeometry, material, edgeMaterial, detailMaterial, boltMaterial }) {
-  const depth = part.size[2] / 2;
+function ModulePiece({
+  part,
+  groupRef,
+  bodyGeometry,
+  faceGeometry,
+  edgeGeometry,
+  accentGeometry,
+  boltGeometry,
+  bodyMaterial,
+  faceMaterial,
+  edgeMaterial,
+  detailMaterial,
+  boltMaterial
+}) {
+  const [width, height, depth] = part.size;
+  const faceZ = depth / 2 + 0.02;
+  const boltX = width / 2 - 0.11;
+  const boltY = height / 2 - 0.11;
 
   return (
     <group ref={groupRef}>
-      <mesh geometry={geometry} material={material} castShadow receiveShadow />
+      <mesh geometry={bodyGeometry} material={bodyMaterial} castShadow receiveShadow />
       <lineSegments geometry={edgeGeometry} material={edgeMaterial} />
-      <mesh geometry={trimGeometry} material={detailMaterial} position={[0, 0, depth + 0.022]} />
-      {part.kind === "plate" && [-1, 1].map(side => (
+      <mesh geometry={faceGeometry} material={faceMaterial} position={[0, 0, faceZ]} />
+      <mesh geometry={accentGeometry} material={detailMaterial} position={[0, height * 0.28, faceZ + 0.018]} />
+      {[-1, 1].flatMap(xSide => [-1, 1].map(ySide => (
         <mesh
-          key={side}
+          key={`${xSide}-${ySide}`}
           geometry={boltGeometry}
           material={boltMaterial}
-          position={[side * part.size[0] * 0.36, 0, depth + 0.045]}
+          position={[xSide * boltX, ySide * boltY, faceZ + 0.035]}
           rotation={[Math.PI / 2, 0, 0]}
         />
-      ))}
+      )))}
     </group>
   );
 }
 
 function AssemblyModel({ sectionIndex, sectionProgress }) {
-  const partRefs = useRef([]);
-  const dockRefs = useRef([]);
+  const pieceRefs = useRef([]);
+  const slotRefs = useRef([]);
   const pathRefs = useRef([]);
-  const pulseRefs = useRef([]);
-  const assemblyRef = useRef();
+  const pulseRef = useRef();
+  const dockRef = useRef();
+  const pathMaterialRef = useRef();
 
-  const geometries = useMemo(() => MODULES.map(part => new RoundedBoxGeometry(
-    part.size[0], part.size[1], part.size[2], 6, part.kind === "spine" ? 0.085 : 0.065
+  const boardGeometry = useMemo(
+    () => new RoundedBoxGeometry(2.94, 2.94, 0.2, 8, 0.075),
+    []
+  );
+  const boardEdgeGeometry = useMemo(() => new THREE.EdgesGeometry(boardGeometry, 24), [boardGeometry]);
+
+  const bodyGeometries = useMemo(() => MODULES.map(part => (
+    new RoundedBoxGeometry(part.size[0], part.size[1], part.size[2], 6, 0.065)
   )), []);
-  const edgeGeometries = useMemo(() => geometries.map(geometry => new THREE.EdgesGeometry(geometry, 24)), [geometries]);
-  const trimGeometries = useMemo(() => MODULES.map(part => new RoundedBoxGeometry(
-    part.kind === "spine" ? 0.095 : 0.47,
-    part.kind === "spine" ? 1.78 : 0.055,
-    0.035,
-    4,
-    0.014
+  const faceGeometries = useMemo(() => MODULES.map(part => (
+    new RoundedBoxGeometry(part.size[0] - 0.12, part.size[1] - 0.12, 0.035, 5, 0.035)
   )), []);
+  const edgeGeometries = useMemo(() => bodyGeometries.map(geometry => new THREE.EdgesGeometry(geometry, 22)), [bodyGeometries]);
+  const accentGeometries = useMemo(() => MODULES.map(part => (
+    new RoundedBoxGeometry(part.size[0] * 0.5, 0.025, 0.018, 3, 0.009)
+  )), []);
+  const slotGeometries = useMemo(() => MODULES.map(part => (
+    new RoundedBoxGeometry(part.size[0] - 0.055, part.size[1] - 0.055, 0.065, 6, 0.055)
+  )), []);
+  const slotEdgeGeometries = useMemo(() => slotGeometries.map(geometry => new THREE.EdgesGeometry(geometry, 24)), [slotGeometries]);
+
   const curves = useMemo(createPullCurves, []);
-  const pathGeometries = useMemo(() => curves.map(curve => new THREE.TubeGeometry(curve, 42, 0.012, 7, false)), [curves]);
-  const dockGeometry = useMemo(() => new THREE.CylinderGeometry(0.39, 0.45, 0.075, 6), []);
-  const pulseGeometry = useMemo(() => new THREE.SphereGeometry(0.055, 16, 12), []);
-  const boltGeometry = useMemo(() => new THREE.CylinderGeometry(0.035, 0.035, 0.03, 12), []);
+  const pathGeometries = useMemo(() => curves.map(curve => (
+    new THREE.TubeGeometry(curve, 54, 0.012, 8, false)
+  )), [curves]);
 
-  const materials = useMemo(() => MODULES.map(part => new THREE.MeshPhysicalMaterial({
-    color: part.color,
-    metalness: part.kind === "spine" ? 0.72 : 0.58,
-    roughness: part.kind === "spine" ? 0.3 : 0.24,
-    clearcoat: 0.72,
-    clearcoatRoughness: 0.22
-  })), []);
-  const edgeMaterial = useMemo(() => new THREE.LineBasicMaterial({ color: "#e7ecef", transparent: true, opacity: 0.3 }), []);
-  const detailMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
-    color: "#1e2327", metalness: 0.72, roughness: 0.28, clearcoat: 0.6
+  const boltGeometry = useMemo(() => new THREE.CylinderGeometry(0.032, 0.032, 0.028, 12), []);
+  const dockGeometry = useMemo(() => new RoundedBoxGeometry(1.08, 0.15, 0.43, 6, 0.055), []);
+  const dockRailGeometry = useMemo(() => new RoundedBoxGeometry(0.76, 0.025, 0.035, 4, 0.012), []);
+  const pulseGeometry = useMemo(() => new THREE.SphereGeometry(0.045, 16, 12), []);
+
+  const boardMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
+    color: "#252b30",
+    metalness: 0.62,
+    roughness: 0.34,
+    clearcoat: 0.42,
+    clearcoatRoughness: 0.32
   }), []);
-  const boltMaterial = useMemo(() => new THREE.MeshStandardMaterial({ color: "#e7ecef", metalness: 0.82, roughness: 0.2 }), []);
-  const dockMaterial = useMemo(() => new THREE.MeshStandardMaterial({ color: "#252b30", metalness: 0.68, roughness: 0.32 }), []);
-  const pathMaterial = useMemo(() => new THREE.MeshBasicMaterial({ color: "#4fa7a3", transparent: true, opacity: 0.48 }), []);
+  const boardEdgeMaterial = useMemo(() => new THREE.LineBasicMaterial({
+    color: "#aeb9bd",
+    transparent: true,
+    opacity: 0.36
+  }), []);
+  const slotMaterial = useMemo(() => new THREE.MeshStandardMaterial({
+    color: "#151c20",
+    metalness: 0.48,
+    roughness: 0.52
+  }), []);
+  const slotEdgeMaterial = useMemo(() => new THREE.LineBasicMaterial({
+    color: "#718087",
+    transparent: true,
+    opacity: 0.44
+  }), []);
+  const bodyMaterials = useMemo(() => MODULES.map(part => new THREE.MeshPhysicalMaterial({
+    color: part.color,
+    metalness: 0.58,
+    roughness: 0.28,
+    clearcoat: 0.82,
+    clearcoatRoughness: 0.2
+  })), []);
+  const faceMaterials = useMemo(() => MODULES.map(part => new THREE.MeshPhysicalMaterial({
+    color: part.color,
+    metalness: 0.38,
+    roughness: 0.23,
+    clearcoat: 1,
+    clearcoatRoughness: 0.16
+  })), []);
+  const edgeMaterial = useMemo(() => new THREE.LineBasicMaterial({
+    color: "#edf2f3",
+    transparent: true,
+    opacity: 0.48
+  }), []);
+  const detailMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
+    color: "#303b40",
+    metalness: 0.72,
+    roughness: 0.28,
+    clearcoat: 0.68
+  }), []);
+  const boltMaterial = useMemo(() => new THREE.MeshStandardMaterial({
+    color: "#e7ecef",
+    metalness: 0.86,
+    roughness: 0.2
+  }), []);
+  const dockMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
+    color: "#303b40",
+    metalness: 0.74,
+    roughness: 0.28,
+    clearcoat: 0.6
+  }), []);
+  const pathMaterial = useMemo(() => new THREE.MeshBasicMaterial({
+    color: "#4fa7a3",
+    transparent: true,
+    opacity: 0.24
+  }), []);
   const pulseMaterial = useMemo(() => new THREE.MeshStandardMaterial({
-    color: "#f4b942", emissive: "#f4b942", emissiveIntensity: 1.4, metalness: 0.25, roughness: 0.22
+    color: "#f4b942",
+    emissive: "#f4b942",
+    emissiveIntensity: 1.6,
+    metalness: 0.2,
+    roughness: 0.2
   }), []);
 
   useFrame(state => {
     const currentIndex = clamp(sectionIndex, 0, MODULES.length - 1);
-    const pull = smoothStep((sectionProgress - 0.34) / 0.48);
+    const pull = smoothStep((sectionProgress - 0.24) / 0.54);
 
     MODULES.forEach((part, index) => {
-      const piece = partRefs.current[index];
-      const dock = dockRefs.current[index];
+      const piece = pieceRefs.current[index];
+      const slot = slotRefs.current[index];
       const path = pathRefs.current[index];
-      const pulse = pulseRefs.current[index];
       if (!piece) return;
+
+      if (slot) {
+        slot.visible = index >= currentIndex;
+      }
 
       if (index < currentIndex) {
         piece.visible = true;
         piece.position.set(...part.target);
         piece.rotation.set(...part.rotation);
         piece.scale.setScalar(1);
-        if (dock) dock.visible = false;
         if (path) path.visible = false;
-        if (pulse) pulse.visible = false;
         return;
       }
 
       if (index > currentIndex) {
         piece.visible = false;
-        if (dock) dock.visible = false;
         if (path) path.visible = false;
-        if (pulse) pulse.visible = false;
         return;
       }
 
@@ -245,77 +450,90 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
       const point = curves[index].getPoint(pull);
       piece.position.copy(point);
       piece.rotation.set(
-        THREE.MathUtils.lerp(part.startRotation[0], part.rotation[0], pull),
-        THREE.MathUtils.lerp(part.startRotation[1], part.rotation[1], pull),
-        THREE.MathUtils.lerp(part.startRotation[2], part.rotation[2], pull)
+        THREE.MathUtils.lerp(0.16, part.rotation[0], pull),
+        THREE.MathUtils.lerp(-0.24, part.rotation[1], pull),
+        THREE.MathUtils.lerp(0.22, part.rotation[2], pull)
       );
-      piece.scale.setScalar(0.9 + pull * 0.1);
+      piece.scale.setScalar(0.72 + pull * 0.28);
 
-      if (pull < 0.015) piece.position.y += Math.sin(state.clock.elapsedTime * 1.6) * 0.022;
-      if (dock) dock.visible = pull < 0.96;
-      if (path) path.visible = pull > 0.015 && pull < 0.995;
-      if (pulse) {
-        pulse.visible = pull > 0.015 && pull < 0.995;
-        if (pulse.visible) pulse.position.copy(point);
+      if (pull < 0.015) {
+        piece.position.y += Math.sin(state.clock.elapsedTime * 1.25) * 0.016;
+      }
+
+      if (path) path.visible = true;
+      if (pathMaterialRef.current) {
+        pathMaterialRef.current.opacity = pull < 0.015 ? 0.2 : 0.66;
+      }
+      if (pulseRef.current) {
+        pulseRef.current.visible = pull > 0.01 && pull < 0.995;
+        if (pulseRef.current.visible) pulseRef.current.position.copy(point);
       }
     });
 
-    if (assemblyRef.current) assemblyRef.current.rotation.set(-0.035, -0.16, 0.012);
+    if (dockRef.current) {
+      dockRef.current.visible = pull < 0.98;
+    }
   });
 
   return (
     <>
-      <group ref={assemblyRef}>
+      <group rotation={[-0.035, -0.11, 0.008]}>
+        <mesh geometry={boardGeometry} material={boardMaterial} position={[0, 0, -0.19]} castShadow receiveShadow />
+        <lineSegments geometry={boardEdgeGeometry} material={boardEdgeMaterial} position={[0, 0, -0.19]} />
+
+        {MODULES.map((part, index) => (
+          <group key={part.id + "-slot"} ref={node => { slotRefs.current[index] = node; }} position={part.target}>
+            <mesh geometry={slotGeometries[index]} material={slotMaterial} position={[0, 0, -0.075]} />
+            <lineSegments geometry={slotEdgeGeometries[index]} material={slotEdgeMaterial} position={[0, 0, -0.075]} />
+          </group>
+        ))}
+
         {MODULES.map((part, index) => (
           <ModulePiece
             key={part.id}
             part={part}
-            groupRef={node => { partRefs.current[index] = node; }}
-            geometry={geometries[index]}
+            groupRef={node => { pieceRefs.current[index] = node; }}
+            bodyGeometry={bodyGeometries[index]}
+            faceGeometry={faceGeometries[index]}
             edgeGeometry={edgeGeometries[index]}
-            trimGeometry={trimGeometries[index]}
+            accentGeometry={accentGeometries[index]}
             boltGeometry={boltGeometry}
-            material={materials[index]}
+            bodyMaterial={bodyMaterials[index]}
+            faceMaterial={faceMaterials[index]}
             edgeMaterial={edgeMaterial}
             detailMaterial={detailMaterial}
             boltMaterial={boltMaterial}
           />
         ))}
 
+        <mesh
+          ref={dockRef}
+          geometry={dockGeometry}
+          material={dockMaterial}
+          position={[0, -1.78, 0.14]}
+          castShadow
+        />
+        <mesh geometry={dockRailGeometry} material={pathMaterial} position={[0, -1.77, 0.37]} />
+
         {MODULES.map((part, index) => (
           <mesh
-            key={part.id + "-dock"}
-            ref={node => { dockRefs.current[index] = node; }}
-            geometry={dockGeometry}
-            material={dockMaterial}
-            position={[part.source[0], part.source[1] - 0.39, part.source[2] - 0.22]}
-            rotation={[Math.PI / 2, 0, 0]}
+            key={part.id + "-path"}
+            ref={node => {
+              pathRefs.current[index] = node;
+              if (index === 0) pathMaterialRef.current = pathMaterial;
+            }}
+            geometry={pathGeometries[index]}
+            material={pathMaterial}
             visible={false}
           />
         ))}
-
-        {MODULES.map((part, index) => (
-          <group key={part.id + "-pull"}>
-            <mesh
-              ref={node => { pathRefs.current[index] = node; }}
-              geometry={pathGeometries[index]}
-              material={pathMaterial}
-              visible={false}
-            />
-            <mesh
-              ref={node => { pulseRefs.current[index] = node; }}
-              geometry={pulseGeometry}
-              material={pulseMaterial}
-              visible={false}
-            />
-          </group>
-        ))}
+        <mesh ref={pulseRef} geometry={pulseGeometry} material={pulseMaterial} visible={false} />
       </group>
 
-      <ambientLight intensity={0.48} />
-      <hemisphereLight args={["#f3eee4", "#1e2327", 1.18]} />
-      <spotLight position={[3.8, 4.8, 6]} intensity={2.2} angle={0.5} penumbra={0.7} />
-      <directionalLight position={[-4, 2, 4]} intensity={1.2} />
+      <ambientLight intensity={0.54} />
+      <hemisphereLight args={["#f6f0e5", "#1e2327", 1.12]} />
+      <spotLight position={[3.6, 4.5, 6]} intensity={2.25} angle={0.48} penumbra={0.72} />
+      <directionalLight position={[-4, 2, 5]} intensity={1.18} />
       <pointLight position={[-3, -2, 3]} intensity={0.9} color="#4fa7a3" />
     </>
   );
@@ -323,15 +541,17 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
 
 function Fallback() {
   return (
-    <svg className="assembly-fallback" viewBox="0 0 280 280" role="img" aria-label="Interlocking modular structure">
+    <svg className="assembly-fallback" viewBox="0 0 280 320" role="img" aria-label="Interlocking modular structure">
       <g stroke="#1e2327" strokeWidth="2" strokeLinejoin="round">
-        <rect x="117" y="34" width="46" height="212" rx="8" fill="#303b40" />
-        <rect x="55" y="57" width="83" height="58" rx="7" fill="#f4b942" transform="rotate(-9 96 86)" />
-        <rect x="142" y="57" width="83" height="58" rx="7" fill="#b8c0c5" transform="rotate(9 183 86)" />
-        <rect x="48" y="112" width="88" height="58" rx="7" fill="#4fa7a3" transform="rotate(7 92 141)" />
-        <rect x="144" y="112" width="88" height="58" rx="7" fill="#f4b942" transform="rotate(-7 188 141)" />
-        <rect x="55" y="166" width="83" height="58" rx="7" fill="#b8c0c5" transform="rotate(9 96 195)" />
-        <rect x="142" y="166" width="83" height="58" rx="7" fill="#4fa7a3" transform="rotate(-9 183 195)" />
+        <rect x="16" y="10" width="248" height="248" rx="11" fill="#252b30" />
+        <rect x="23" y="17" width="114" height="76" rx="6" fill="#f4b942" />
+        <rect x="143" y="17" width="114" height="76" rx="6" fill="#b8c0c5" />
+        <rect x="23" y="99" width="74" height="76" rx="6" fill="#4fa7a3" />
+        <rect x="103" y="99" width="74" height="76" rx="6" fill="#f4b942" />
+        <rect x="183" y="99" width="74" height="76" rx="6" fill="#b8c0c5" />
+        <rect x="23" y="181" width="114" height="70" rx="6" fill="#4fa7a3" />
+        <rect x="143" y="181" width="114" height="70" rx="6" fill="#f4b942" />
+        <path d="M30 27h96M150 27h96M30 109h54M110 109h54M190 109h54" stroke="#ffffff" opacity=".46" strokeWidth="3" />
       </g>
     </svg>
   );
@@ -345,10 +565,12 @@ export default function AssemblyScene() {
     placement: {
       name: "right-center",
       sectionId: "top",
-      x: window.innerWidth * 0.8,
+      x: window.innerWidth * 0.82,
       y: window.innerHeight * 0.48,
-      size: window.innerWidth <= 600 ? 140 : 260,
-      score: 0
+      size: window.innerWidth <= 760 ? 120 : 228,
+      height: window.innerWidth <= 760 ? 150 : 285,
+      score: 0,
+      visible: true
     }
   }));
 
@@ -368,13 +590,19 @@ export default function AssemblyScene() {
       let active = measured.find(item => anchorY >= item.rect.top && anchorY < item.rect.bottom);
       if (!active) {
         active = measured.reduce((closest, item) => {
-          const distance = anchorY < item.rect.top ? item.rect.top - anchorY : anchorY - item.rect.bottom;
+          const distance = anchorY < item.rect.top
+            ? item.rect.top - anchorY
+            : anchorY - item.rect.bottom;
           return !closest || distance < closest.distance ? { ...item, distance } : closest;
         }, null);
       }
 
       const sectionIndex = sections.indexOf(active.section);
-      const sectionProgress = clamp((anchorY - active.rect.top) / Math.max(active.rect.height, 1), 0, 1);
+      const sectionProgress = clamp(
+        (anchorY - active.rect.top) / Math.max(active.rect.height, 1),
+        0,
+        1
+      );
       const placement = choosePlacement(active.section, previousPlacement);
       previousPlacement = placement;
       const reducedMotion = motion.matches;
@@ -383,7 +611,8 @@ export default function AssemblyScene() {
         const positionChanged = previous.placement.name !== placement.name
           || Math.abs(previous.placement.x - placement.x) > 3
           || Math.abs(previous.placement.y - placement.y) > 3
-          || Math.abs(previous.placement.size - placement.size) > 2;
+          || Math.abs(previous.placement.size - placement.size) > 2
+          || previous.placement.visible !== placement.visible;
         const progressChanged = Math.abs(previous.sectionProgress - sectionProgress) > 0.004;
 
         if (
@@ -408,7 +637,10 @@ export default function AssemblyScene() {
       if (!frame) frame = window.requestAnimationFrame(measure);
     };
 
-    const resizeObserver = typeof ResizeObserver !== "undefined" ? new ResizeObserver(scheduleMeasure) : null;
+    const resizeObserver = typeof ResizeObserver !== "undefined"
+      ? new ResizeObserver(scheduleMeasure)
+      : null;
+
     sections.forEach(section => resizeObserver?.observe(section));
     window.addEventListener("scroll", scheduleMeasure, { passive: true });
     window.addEventListener("resize", scheduleMeasure);
@@ -426,8 +658,9 @@ export default function AssemblyScene() {
   }, []);
 
   const sectionId = SECTION_IDS[scene.sectionIndex] || "top";
-  const pullProgress = scene.reducedMotion ? 100 : Math.round(smoothStep((scene.sectionProgress - 0.34) / 0.48) * 100);
-  const overallProgress = clamp(((scene.sectionIndex + pullProgress / 100) / SECTION_IDS.length) * 100, 0, 100);
+  const pullProgress = scene.reducedMotion
+    ? 100
+    : Math.round(smoothStep((scene.sectionProgress - 0.24) / 0.54) * 100);
 
   return (
     <aside
@@ -436,26 +669,24 @@ export default function AssemblyScene() {
       data-section={sectionId}
       data-step={scene.sectionIndex + 1}
       data-placement={scene.placement.name}
+      data-hidden={!scene.placement.visible}
+      data-overlap={scene.placement.score}
       data-pull-progress={pullProgress}
       style={{
         left: scene.placement.x + "px",
         top: scene.placement.y + "px",
         width: scene.placement.size + "px",
-        height: scene.placement.size + "px",
-        opacity: scene.placement.score > 0.64 ? 0.42 : 0.94
+        height: scene.placement.height + "px",
+        visibility: scene.placement.visible ? "visible" : "hidden",
+        opacity: scene.placement.visible ? 0.96 : 0
       }}
     >
-      <div className="assembly-caption">
-        <span>ASSEMBLY / {String(scene.sectionIndex + 1).padStart(2, "0")} OF 07</span>
-        <div className="assembly-progress"><i style={{ width: overallProgress + "%" }} /></div>
-      </div>
-
       {scene.reducedMotion ? (
         <Fallback />
-      ) : (
+      ) : scene.placement.visible ? (
         <Canvas
           fallback={<Fallback />}
-          dpr={[1, 1.75]}
+          dpr={[1, 1.7]}
           camera={{ position: [0, 0, 8], fov: 36 }}
           gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
           onCreated={({ gl }) => {
@@ -466,7 +697,7 @@ export default function AssemblyScene() {
         >
           <AssemblyModel sectionIndex={scene.sectionIndex} sectionProgress={scene.sectionProgress} />
         </Canvas>
-      )}
+      ) : null}
     </aside>
   );
 }
