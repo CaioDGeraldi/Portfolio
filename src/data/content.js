@@ -8,6 +8,7 @@ export const content = {
       about: "About",
       experience: "Experience",
       stack: "Technologies",
+      ai: "AI practice",
       contact: "Contact",
       menu: "Open navigation",
       closeMenu: "Close navigation"
@@ -139,6 +140,7 @@ export const content = {
       about: "Sobre",
       experience: "Experiência",
       stack: "Tecnologias",
+      ai: "IA",
       contact: "Contato",
       menu: "Abrir navegação",
       closeMenu: "Fechar navegação"
