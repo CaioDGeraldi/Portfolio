@@ -15,14 +15,15 @@ const fractaw = read("projects/fractaw.html");
 const retorna = read("projects/retorna.html");
 const centro = read("projects/centro-em-movimento.html");
 
-test("the homepage remains a conventional, bilingual scrolling document", () => {
+test("the homepage is a conventional, bilingual, projects-first document", () => {
   assert.match(home, /id="root"/);
   assert.match(home, /src="\/src\/main\.jsx"/);
   assert.match(app, /<main id="main">/);
-  for (const id of ["top", "projects", "about", "experience", "approach", "skills", "contact"]) {
+  for (const id of ["top", "projects", "about", "experience", "skills", "contact"]) {
     assert.match(app, new RegExp(`id="${id}"`));
   }
-  assert.doesNotMatch(app, /data-scene|stage-mode|scene-navigation/);
+  assert.doesNotMatch(app, /id="approach"|data-scene|stage-mode|scene-navigation/);
+  assert.ok(app.indexOf('id="projects"') < app.indexOf('id="about"'));
   assert.match(app, /data-language-toggle|Header/);
 });
 
@@ -30,12 +31,12 @@ test("project entries preserve their real case-study links and image description
   assert.match(projectCard, /id=\{project\.id\}/);
   assert.match(projectCard, /alt=\{project\.imageAlt/);
   assert.match(projectCard, /onError=/);
-  for (const id of ["centro-em-movimento", "fractaw", "retorna"]) {
-    assert.ok(copy.includes(`id: "${id}"`));
-    assert.ok(copy.includes(`slug: "${id}"`));
-  }
-  assert.match(copy, /1st place · Inova Araras 2026/);
-  assert.match(copy, /1º lugar · Inova Araras 2026/);
+  const order = ["fractaw", "retorna", "centro-em-movimento"];
+  const positions = order.map(id => copy.indexOf(`id: "${id}"`));
+  assert.ok(positions.every(position => position >= 0));
+  assert.ok(positions[0] < positions[1] && positions[1] < positions[2]);
+  assert.match(copy, /Fractaw Modules/);
+  assert.match(copy, /FEFO/);
   assert.match(copy, /Soma Soluções/);
   assert.match(copy, /ETEC Alberto Feres/);
   assert.match(fractaw, /No customer adoption, production deployment/);
@@ -44,11 +45,12 @@ test("project entries preserve their real case-study links and image description
 });
 
 test("public copy stays specific, bilingual and free of inflated claims", () => {
-  for (const phrase of ["I start with the", "Eu começo pela", "Soma Soluções", "ETEC Alberto Feres", "Open to backend opportunities", "Aberto a oportunidades em back-end"]) {
+  for (const phrase of ["Backend developer", "Desenvolvedor back-end", "Soma Soluções", "ETEC Alberto Feres", "Fractaw Modules", "Retorna"]) {
     assert.ok(copy.includes(phrase), `Missing content: ${phrase}`);
   }
   assert.doesNotMatch(copy, /10\\+ years|senior developer|millions of users|revenue growth|industry-leading/i);
   assert.doesNotMatch(copy, /I build software around real problems|Desenvolvo software a partir de problemas reais/i);
+  assert.doesNotMatch(copy, /Open to backend opportunities|Aberto a oportunidades em back-end/);
 });
 
 test("the visual system follows its design direction and supports small screens", () => {
@@ -59,7 +61,7 @@ test("the visual system follows its design direction and supports small screens"
   assert.match(styles, /@media \(max-width: 760px\)/);
   assert.match(styles, /@media \(max-width: 480px\)/);
   assert.match(styles, /prefers-reduced-motion: reduce/);
-  assert.match(styles, /project-card-featured/);
+  assert.match(styles, /project-grid \{ grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/);
   assert.doesNotMatch(styles, /radial-gradient|hover:scale/);
   assert.doesNotMatch(styles, /\\n/);
 });

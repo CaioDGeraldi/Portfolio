@@ -64,40 +64,6 @@ function ExperienceTimeline({ items }) {
   );
 }
 
-function ProjectWorkbench({ copy, projects }) {
-  return (
-    <aside className="workbench" data-hero-panel aria-label={copy.hero.panelLabel}>
-      <div className="workbench-heading">
-        <span className="workbench-indicator" aria-hidden="true" />
-        <span>{copy.hero.panelLabel}</span>
-        <span className="workbench-year">{copy.hero.panelYear}</span>
-      </div>
-      <div className="workbench-projects">
-        {projects.map((project, index) => (
-          <a className="workbench-project" href={`#${project.id}`} key={project.id}>
-            <span className="workbench-node" aria-hidden="true" />
-            <span className="workbench-project-copy">
-              <strong>{project.title}</strong>
-              <small>{project.status}</small>
-            </span>
-            <span className="workbench-project-type">{project.shortLabel}</span>
-          </a>
-        ))}
-      </div>
-      <div className="workbench-footer">
-        <span>{copy.hero.panelFooter}</span>
-        <span className="workbench-footer-mark" aria-hidden="true">C.</span>
-      </div>
-      <svg className="workbench-trace" viewBox="0 0 120 80" aria-hidden="true">
-        <path d="M8 68V44H42V18H78V44H112" />
-        <circle cx="8" cy="68" r="3" />
-        <circle cx="42" cy="18" r="3" />
-        <circle cx="112" cy="44" r="3" />
-      </svg>
-    </aside>
-  );
-}
-
 function Footer({ copy }) {
   return (
     <footer className="site-footer">
@@ -165,32 +131,17 @@ export default function App() {
         <section className="hero-section" id="top">
           <div className="content-shell hero-shell">
             <div className="hero-copy">
-              <p className="hero-eyebrow"><span className="hero-marker" aria-hidden="true" />{copy.hero.eyebrow}</p>
-              <p className="availability-line">{copy.hero.availability}</p>
+              <p className="hero-eyebrow">{copy.hero.eyebrow}</p>
               <h1 className="hero-title">
-                <span className="title-line"><span data-hero-line>{copy.hero.lineOne}</span></span>
+                <span className="title-line"><span data-hero-line>{copy.hero.lineOne}</span></span>{" "}
                 <span className="title-line"><span data-hero-line>{copy.hero.lineTwo}</span></span>
               </h1>
               <p className="hero-description">{copy.hero.description}</p>
               <div className="hero-actions">
                 <a className="button button-primary" href="#projects">{copy.hero.primary}<span aria-hidden="true">↓</span></a>
-                <a className="button button-text" href="#contact">{copy.hero.secondary}</a>
-              </div>
-              <div className="hero-facts" aria-label={language === "pt-BR" ? "Resumo profissional" : "Professional summary"}>
-                {copy.hero.facts.map(fact => (
-                  <div className="hero-fact" key={fact.label}>
-                    <span>{fact.label}</span>
-                    <strong>{fact.value}</strong>
-                  </div>
-                ))}
+                <a className="button button-text" href="https://github.com/CaioDGeraldi" target="_blank" rel="noopener noreferrer">{copy.hero.secondary}<ArrowUpRight /></a>
               </div>
             </div>
-
-            <ProjectWorkbench copy={copy} projects={copy.projects.items} />
-          </div>
-          <div className="hero-bottom-rule" aria-hidden="true">
-            <span>{language === "pt-BR" ? "PORTFÓLIO / PROJETOS E EXPERIÊNCIA" : "PORTFOLIO / PROJECTS AND EXPERIENCE"}</span>
-            <span>2026</span>
           </div>
         </section>
 
@@ -230,21 +181,6 @@ export default function App() {
           <div className="content-shell">
             <SectionHeading title={copy.experience.title} />
             <ExperienceTimeline items={copy.experience.items} />
-          </div>
-        </section>
-
-        <section className="approach-section" id="approach">
-          <div className="content-shell">
-            <SectionHeading title={copy.approach.title} />
-            <div className="project-notes">
-              {copy.approach.items.map(item => (
-                <article className="project-note" key={item.label} data-reveal>
-                  <p className="project-note-label">{item.label}</p>
-                  <h3>{item.title}</h3>
-                  <p>{item.body}</p>
-                </article>
-              ))}
-            </div>
           </div>
         </section>
 

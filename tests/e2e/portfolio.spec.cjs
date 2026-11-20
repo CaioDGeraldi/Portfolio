@@ -38,11 +38,11 @@ test("language switch updates copy, html lang and localized case study links", a
   await page.goto("");
   await page.locator("[data-language-toggle]").click();
   await expect(page.locator("html")).toHaveAttribute("lang", "pt-BR");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Eu começo pela");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Desenvolvedor back-end");
   await expect(page.locator("#projects .project-link").first()).toHaveAttribute("href", /lang=pt-BR/);
   await page.locator("[data-language-toggle]").click();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("I start with the");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Backend developer");
 });
 
 test("theme preference toggles without changing the page structure", async ({ page }) => {

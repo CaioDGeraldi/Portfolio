@@ -21,13 +21,14 @@ Grid: 4px base, 8px rhythm, 1280px max content width, 20px mobile gutters and 48
 
 ## Layout
 - Keep a conventional, naturally scrolling document.
-- Lead with an asymmetric two-column hero. The visual side is a single "workbench" index of Fractaw, Retorna and Centro em Movimento, with accurate project statuses. It is not a claim that those products share a technical architecture.
-- Treat the three projects differently: Centro em Movimento as the award-winning public-innovation proposal and prototype; Fractaw as a modular product in development; Retorna as a collaborative loyalty project with public code.
-- Replace generic feature-card rows with project evidence, real screenshots, concise notes and an experience timeline.
+- Lead with a restrained, single-column introduction based on the résumé. Avoid status dashboards, résumé statistics and decorative project indexes.
+- Put the project collection immediately after the introduction. Give Fractaw Modules, Retorna and Centro em Movimento equal visual weight; order Fractaw and Retorna first because they are the selected projects in the résumé.
+- Describe what each project is, the problem or business rules it addresses, the user's role and its actual stage. Keep awards and outcomes secondary to the work itself.
+- Keep experience, education and skills as supporting context after the projects. Do not repeat project summaries in a separate generic "approach" section.
 - Keep bilingual copy, theme switching, semantic navigation, keyboard focus and reduced-motion support.
 
 ## Copy direction
-Write in first person and name specific work: legacy ERP maintenance, Delphi/Object Pascal, Oracle, forms, Excel exports, relational searches, Python, Django, PostgreSQL and the three projects. Distinguish internship work from personal projects and collaborative work. Do not invent metrics, adoption, customers, partnerships, deployments, responsibilities or skills. Avoid vague slogans, hype, adjective triplets and repeated explanations.
+Write in first person and use the résumé as the factual baseline: internship maintenance of a legacy ERP, Delphi/Object Pascal, SQL, Oracle, forms, Excel exports and relational searches; Python, Django and PostgreSQL in projects. Describe the projects before describing their outcomes. Distinguish internship work from personal projects and collaborative work. Do not invent metrics, adoption, customers, partnerships, deployments, responsibilities or skills. Avoid vague slogans, hype, adjective triplets and repeated explanations.
 
 ## Motion direction
 - Supahero: use real hero layouts as anatomy references; keep the opening asymmetrical and evidence-led.

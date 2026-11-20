@@ -1412,3 +1412,47 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.6; strok
     transition-duration: .01ms !important;
   }
 }
+
+
+/* Projects-first portfolio layout */
+
+.hero-section { padding-top: clamp(76px, 9vw, 124px); }
+.hero-shell { display: block; padding-bottom: clamp(68px, 8vw, 104px); }
+.hero-copy { max-width: 900px; }
+.hero-eyebrow { margin-bottom: 24px; color: var(--teal); font-size: .68rem; letter-spacing: .045em; }
+.site-root[data-theme="dark"] .hero-eyebrow { color: var(--teal-bright); }
+.hero-title { max-width: 900px; font-size: clamp(4rem, 8.2vw, 7.7rem); line-height: .94; }
+.hero-description { max-width: 690px; margin-top: 27px; font-size: 1.05rem; }
+.hero-actions { margin-top: 28px; }
+.hero-bottom-rule, .hero-facts, .workbench { display: none; }
+.projects-section { padding-top: clamp(58px, 7vw, 92px); }
+.projects-section .section-heading { margin-bottom: 42px; }
+.project-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 34px 24px; }
+.project-card { border-top: 1px solid var(--line-strong); }
+.project-card .project-visual, .project-card-featured .project-visual { aspect-ratio: 1.45 / 1; }
+.project-card-content, .project-card-featured .project-card-content { justify-content: flex-start; padding: 20px 0 0; }
+.project-card h3 { margin-top: 14px; font-size: clamp(2rem, 3vw, 2.8rem); }
+.project-summary { font-size: .9rem; line-height: 1.72; }
+.project-bottom { align-items: flex-start; flex-direction: column; gap: 17px; padding-top: 22px; }
+.project-link { margin-top: auto; }
+.project-status { font-family: var(--body); font-size: .72rem; font-weight: 600; }
+
+@media (max-width: 1080px) {
+  .hero-shell { grid-template-columns: minmax(0, 1fr); }
+  .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  .hero-section { padding-top: 64px; }
+  .hero-shell { padding-bottom: 64px; }
+  .hero-title { font-size: clamp(3.8rem, 11vw, 6.4rem); }
+  .project-grid { grid-template-columns: 1fr; gap: 42px; }
+  .project-card .project-visual, .project-card-featured .project-visual { aspect-ratio: 1.65 / 1; }
+}
+
+@media (max-width: 480px) {
+  .hero-section { padding-top: 50px; }
+  .hero-title { font-size: clamp(3.1rem, 13.5vw, 4.6rem); }
+  .hero-description { font-size: .96rem; }
+  .projects-section { padding-top: 48px; }
+}
