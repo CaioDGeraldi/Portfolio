@@ -124,46 +124,49 @@ test("Centro em Movimento includes the live prototype and hackathon build time",
   await expect(project).toContainText(/2 hours and 30 minutes|2 horas e 30 minutos|2h30/i);
 });
 
-test("3D assembly relocates and pulls one visible module in each section", async ({ page }) => {
+test("3D square assembly relocates without covering visible page content", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("");
 
   const scene = page.locator(".assembly-scene");
   await expect(scene).toHaveAttribute("data-section", "top");
-  await expect(scene).toHaveAttribute("data-step", "1");
+  await expect(scene).toHaveAttribute("data-hidden", "false");
+  await expect(scene.locator(".assembly-caption")).toHaveCount(0);
   const heroPlacement = await scene.getAttribute("data-placement");
 
   await page.evaluate(() => {
-    const section = document.querySelector("#projects");
-    const target = section.getBoundingClientRect().top + window.scrollY + section.offsetHeight * 0.08 - window.innerHeight * 0.48;
-    window.scrollTo(0, target);
-  });
-  await expect(scene).toHaveAttribute("data-section", "projects");
-  await expect(scene).toHaveAttribute("data-step", "2");
-  await expect(scene).toHaveAttribute("data-pull-progress", "0");
-  const projectPlacement = await scene.getAttribute("data-placement");
-  expect(projectPlacement).not.toBe(heroPlacement);
-
-  await page.evaluate(() => {
-    const section = document.querySelector("#projects");
-    const target = section.getBoundingClientRect().top + window.scrollY + section.offsetHeight * 0.55 - window.innerHeight * 0.48;
-    window.scrollTo(0, target);
+    const section = document.querySelector("#top");
+    window.scrollTo(0, section.offsetHeight * 0.42);
   });
   await expect(scene).toHaveAttribute("data-pull-progress", /[1-9][0-9]?/);
 
-  await page.evaluate(() => {
-    const section = document.querySelector("#about");
-    const target = section.getBoundingClientRect().top + window.scrollY + section.offsetHeight * 0.48 - window.innerHeight * 0.48;
-    window.scrollTo(0, target);
-  });
-  await expect(scene).toHaveAttribute("data-section", "about");
-  await expect(scene).toHaveAttribute("data-step", "3");
+  const visited = new Set([heroPlacement]);
+  for (const sectionId of ["projects", "about", "experience", "skills", "ai", "contact"]) {
+    await page.evaluate(id => {
+      const section = document.getElementById(id);
+      const target = section.getBoundingClientRect().top + window.scrollY + section.offsetHeight * 0.42 - window.innerHeight * 0.48;
+      window.scrollTo(0, target);
+    }, sectionId);
+
+    await expect(scene).toHaveAttribute("data-section", sectionId);
+    await expect(scene.locator(".assembly-caption")).toHaveCount(0);
+
+    const hidden = await scene.getAttribute("data-hidden");
+    if (hidden === "false") {
+      const overlap = Number(await scene.getAttribute("data-overlap"));
+      expect(overlap).toBeLessThanOrEqual(0.06);
+      visited.add(await scene.getAttribute("data-placement"));
+    }
+  }
+
+  expect(visited.size).toBeGreaterThan(1);
 });
 
-test("3D assembly respects reduced-motion fallback", async ({ page }) => {
+test("3D square assembly uses a static fallback for reduced motion", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("");
   await expect(page.locator(".assembly-scene")).toBeAttached();
   await expect(page.locator(".assembly-fallback")).toBeVisible();
   await expect(page.locator(".assembly-scene canvas")).toHaveCount(0);
+  await expect(page.locator(".assembly-caption")).toHaveCount(0);
 });
