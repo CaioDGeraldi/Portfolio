@@ -30,11 +30,13 @@ export default function Header({ copy, language, onLanguageToggle, theme, onThem
     setMenuOpen(false);
   }
 
+  const languageAction = language === "en" ? "PT" : "EN";
+
   return (
     <header className="site-header">
       <div className="header-inner">
-        <a className="brand" href="#top" onClick={closeMenu} aria-label="Caio Geraldi — home">
-          <span className="brand-mark">C<span>.</span></span>
+        <a className="brand" href="#top" onClick={closeMenu}>
+          <span className="brand-mark" aria-hidden="true">C<span>.</span></span>
           <span className="brand-name">Caio Geraldi</span>
         </a>
 
@@ -45,8 +47,8 @@ export default function Header({ copy, language, onLanguageToggle, theme, onThem
         </nav>
 
         <div className="header-tools">
-          <button className="language-toggle" type="button" onClick={onLanguageToggle} data-language-toggle aria-label={copy.languageLabel}>
-            {language === "en" ? "PT" : "EN"}
+          <button className="language-toggle" type="button" onClick={onLanguageToggle} data-language-toggle aria-label={`${languageAction}, ${copy.languageLabel}`}>
+            {languageAction}
           </button>
           <button className="icon-button" type="button" onClick={onThemeToggle} data-theme-toggle aria-label={theme === "dark" ? copy.themeToLight : copy.themeToDark} title={theme === "dark" ? copy.themeToLight : copy.themeToDark}>
             <ThemeIcon theme={theme} />

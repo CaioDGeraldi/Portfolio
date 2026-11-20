@@ -8,6 +8,7 @@ const script = fs.readFileSync(path.join(__dirname, "i18n.js"), "utf8");
 const profile = fs.readFileSync(path.join(__dirname, "..", "profile.html"), "utf8");
 const home = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
 const app = fs.readFileSync(path.join(__dirname, "..", "src", "App.jsx"), "utf8");
+const header = fs.readFileSync(path.join(__dirname, "..", "src", "components", "Header.jsx"), "utf8");
 
 function createPage({ search = "", saved = null, languages = ["en-US"] } = {}) {
   const url = new URL("https://example.com/Portfolio/" + search);
@@ -80,7 +81,7 @@ function createPage({ search = "", saved = null, languages = ["en-US"] } = {}) {
 
 test("the React homepage and static profile both expose language controls", () => {
   assert.match(home, /src="\/src\/main\.jsx"/);
-  assert.match(app, /data-language-toggle/);
+  assert.match(header, /data-language-toggle/);
   assert.match(profile, /data-portfolio-lang="en"/);
   assert.match(profile, /data-portfolio-lang="pt-BR"/);
   assert.match(profile, /scripts\/i18n\.js/);

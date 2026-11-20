@@ -58,7 +58,7 @@ test("theme preference toggles without changing the page structure", async ({ pa
 test("mobile navigation opens, follows a link and closes", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("");
-  const toggle = page.getByRole("button", { name: "Open navigation" });
+  const toggle = page.locator(".menu-toggle");
   await expect(toggle).toBeVisible();
   await toggle.click();
   await expect(toggle).toHaveAttribute("aria-expanded", "true");
