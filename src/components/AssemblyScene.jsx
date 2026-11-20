@@ -181,13 +181,13 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
     new RoundedBoxGeometry(part.size[0], part.size[1], part.size[2], 8, 0.085)
   )), []);
   const faceGeometries = useMemo(() => MODULES.map(part => (
-    new RoundedBoxGeometry(part.size[0] - 0.13, part.size[1] - 0.13, 0.035, 7, 0.045)
+    new RoundedBoxGeometry(part.size[0] - 0.18, part.size[1] - 0.18, 0.04, 7, 0.05)
   )), []);
   const accentGeometries = useMemo(() => MODULES.map(part => (
-    new RoundedBoxGeometry(Math.max(0.24, part.size[0] * 0.27), 0.022, 0.012, 4, 0.01)
+    new RoundedBoxGeometry(Math.max(0.24, part.size[0] * 0.27), 0.028, 0.014, 4, 0.012)
   )), []);
   const hairlineGeometries = useMemo(() => MODULES.map(part => (
-    new RoundedBoxGeometry(part.size[0] * 0.43, 0.009, 0.008, 3, 0.004)
+    new RoundedBoxGeometry(part.size[0] * 0.43, 0.012, 0.01, 3, 0.005)
   )), []);
   const socketRimGeometries = useMemo(() => MODULES.map(part => (
     new RoundedBoxGeometry(part.size[0] + 0.07, part.size[1] + 0.07, 0.12, 7, 0.065)
@@ -202,57 +202,57 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
   const middleDividerGeometry = useMemo(() => new RoundedBoxGeometry(0.055, 0.82, 0.1, 5, 0.025), []);
 
   const bodyMaterials = useMemo(() => [
-    "#66737a", "#58656c", "#626f75", "#718087", "#59666d", "#5e6d72", "#68757c"
+    "#89969c", "#7d8b91", "#8b989e", "#9aa6ab", "#829097", "#85949a", "#909ca2"
   ].map(color => new THREE.MeshPhysicalMaterial({
     color,
-    metalness: 0.84,
-    roughness: 0.29,
-    clearcoat: 0.38,
-    clearcoatRoughness: 0.28
+    metalness: 0.5,
+    roughness: 0.35,
+    clearcoat: 0.54,
+    clearcoatRoughness: 0.24
   })), []);
   const faceMaterials = useMemo(() => MODULES.map(() => new THREE.MeshPhysicalMaterial({
-    color: "#303b40",
-    metalness: 0.72,
-    roughness: 0.34,
-    clearcoat: 0.52,
-    clearcoatRoughness: 0.26
+    color: "#46545a",
+    metalness: 0.42,
+    roughness: 0.38,
+    clearcoat: 0.38,
+    clearcoatRoughness: 0.3
   })), []);
   const accentMaterials = useMemo(() => MODULES.map(part => new THREE.MeshStandardMaterial({
     color: part.accent,
-    metalness: 0.72,
-    roughness: 0.31
+    metalness: 0.48,
+    roughness: 0.36
   })), []);
   const hairlineMaterial = useMemo(() => new THREE.MeshStandardMaterial({
-    color: "#9aa6ab",
-    metalness: 0.8,
-    roughness: 0.36
+    color: "#c5cfd3",
+    metalness: 0.42,
+    roughness: 0.38
   }), []);
   const edgeMaterial = useMemo(() => new THREE.LineBasicMaterial({
-    color: "#d4dcdf",
+    color: "#f0f4f5",
     transparent: true,
-    opacity: 0.2
+    opacity: 0.42
   }), []);
   const rimMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
-    color: "#47545a",
-    metalness: 0.88,
-    roughness: 0.31,
-    clearcoat: 0.28
+    color: "#6f7c83",
+    metalness: 0.58,
+    roughness: 0.34,
+    clearcoat: 0.42
   }), []);
   const socketMaterial = useMemo(() => new THREE.MeshStandardMaterial({
-    color: "#172126",
-    metalness: 0.62,
-    roughness: 0.43
+    color: "#253238",
+    metalness: 0.48,
+    roughness: 0.38
   }), []);
   const railMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
-    color: "#303b40",
-    metalness: 0.86,
-    roughness: 0.32,
-    clearcoat: 0.34
+    color: "#3f4d53",
+    metalness: 0.56,
+    roughness: 0.36,
+    clearcoat: 0.42
   }), []);
   const railEdgeMaterial = useMemo(() => new THREE.LineBasicMaterial({
-    color: "#aab5ba",
+    color: "#d4dddf",
     transparent: true,
-    opacity: 0.34
+    opacity: 0.52
   }), []);
 
   const bodyEdgeGeometries = useMemo(() => bodyGeometries.map(geometry => new THREE.EdgesGeometry(geometry, 22)), [bodyGeometries]);
@@ -347,11 +347,11 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
         ))}
       </group>
 
-      <ambientLight intensity={0.36} />
-      <hemisphereLight args={["#f5f2e9", "#151d22", 1.18]} />
-      <directionalLight position={[3.5, 4.5, 6]} intensity={2.15} castShadow shadow-mapSize-width={1024} shadow-mapSize-height={1024} />
-      <directionalLight position={[-4, 1.5, 4]} intensity={0.72} color="#7eaaa6" />
-      <pointLight position={[0, -3, 3]} intensity={0.42} color="#c99537" />
+      <ambientLight intensity={0.62} />
+      <hemisphereLight args={["#f5f2e9", "#151d22", 1.45]} />
+      <directionalLight position={[3.5, 4.5, 6]} intensity={2.8} castShadow shadow-mapSize-width={1024} shadow-mapSize-height={1024} />
+      <directionalLight position={[-4, 1.5, 4]} intensity={0.95} color="#7eaaa6" />
+      <pointLight position={[0, -3, 3]} intensity={0.72} color="#c99537" />
     </>
   );
 }
@@ -509,7 +509,7 @@ export default function AssemblyScene() {
           gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
           onCreated={({ gl }) => {
             gl.toneMapping = THREE.ACESFilmicToneMapping;
-            gl.toneMappingExposure = 1.05;
+            gl.toneMappingExposure = 1.18;
             gl.outputColorSpace = THREE.SRGBColorSpace;
             gl.shadowMap.enabled = true;
             gl.shadowMap.type = THREE.PCFSoftShadowMap;
