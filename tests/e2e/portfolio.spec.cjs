@@ -100,3 +100,19 @@ test("favicon, GitHub avatar and project visual assets are present", async ({ pa
   });
   await expect(page.locator("#ai")).toBeAttached();
 });
+
+
+test("professional profile reflects verified CV experience and Inova recognition in both languages", async ({ page }) => {
+  await page.goto("/profile.html?lang=en");
+  await expect(page.locator(".profile-intro")).toContainText("Backend developer in training");
+  await expect(page.locator(".profile-intro")).toContainText("Delphi/Object Pascal");
+  await expect(page.locator(".profile-item").first()).toContainText("2 months");
+  await expect(page.locator(".profile-item").first()).toContainText("Excel exports");
+  await expect(page.locator(".profile-work")).toContainText("Fractaw");
+  await expect(page.locator(".profile-work")).toContainText("Retorna");
+  await expect(page.locator(".profile-work")).toContainText("1st place at the 1st Inova Araras 2026");
+  await page.locator('[data-portfolio-lang="pt-BR"]').click();
+  await expect(page.locator("html")).toHaveAttribute("lang", "pt-BR");
+  await expect(page.locator(".profile-intro")).toContainText("Desenvolvedor em formação");
+  await expect(page.locator(".profile-work")).toContainText("1º lugar no 1º Inova Araras 2026");
+});
