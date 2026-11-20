@@ -133,7 +133,7 @@ export default function App() {
             <div className="hero-copy">
               <p className="hero-eyebrow">{copy.hero.eyebrow}</p>
               <h1 className="hero-title">
-                <span className="title-line"><span data-hero-line>{copy.hero.lineOne}</span></span>
+                <span className="title-line"><span data-hero-line>{copy.hero.lineOne}</span></span>{" "}
                 <span className="title-line"><span data-hero-line>{copy.hero.lineTwo}</span></span>
               </h1>
               <p className="hero-description">{copy.hero.description}</p>
