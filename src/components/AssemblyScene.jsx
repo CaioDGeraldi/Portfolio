@@ -4,7 +4,7 @@ import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 
 const SECTION_IDS = ["top", "projects", "about", "experience", "skills", "ai", "contact"];
-const SOURCE_POSITION = [0, -1.72, 0.74];
+const SOURCE_POSITION = [0, -1.75, 0.48];
 
 const PLACEMENT_PREFERENCES = {
   top: [0.86, 0.44],
@@ -510,10 +510,10 @@ function AssemblyModel({ sectionIndex, sectionProgress }) {
           ref={dockRef}
           geometry={dockGeometry}
           material={dockMaterial}
-          position={[0, -1.78, 0.14]}
+          position={[0, -2.12, 0.14]}
           castShadow
         />
-        <mesh geometry={dockRailGeometry} material={pathMaterial} position={[0, -1.77, 0.37]} />
+        <mesh geometry={dockRailGeometry} material={pathMaterial} position={[0, -2.12, 0.38]} />
 
         {MODULES.map((part, index) => (
           <mesh
@@ -598,11 +598,17 @@ export default function AssemblyScene() {
       }
 
       const sectionIndex = sections.indexOf(active.section);
-      const sectionProgress = clamp(
-        (anchorY - active.rect.top) / Math.max(active.rect.height, 1),
-        0,
-        1
-      );
+      const sectionProgress = sectionIndex === 0
+        ? clamp(
+          window.scrollY / Math.max(active.rect.height - window.innerHeight * 0.48, 1),
+          0,
+          1
+        )
+        : clamp(
+          (anchorY - active.rect.top) / Math.max(active.rect.height, 1),
+          0,
+          1
+        );
       const placement = choosePlacement(active.section, previousPlacement);
       previousPlacement = placement;
       const reducedMotion = motion.matches;
