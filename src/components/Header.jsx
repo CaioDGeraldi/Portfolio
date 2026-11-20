@@ -49,14 +49,14 @@ export default function Header({ copy, language, onLanguageToggle, theme, onThem
           <span className="brand-name">Caio Geraldi</span>
         </a>
 
-        <nav id="primary-navigation" className={\`primary-nav \${menuOpen ? "is-open" : ""}\`} aria-label={copy.navLabel}>
+        <nav id="primary-navigation" className={`primary-nav ${menuOpen ? "is-open" : ""}`} aria-label={copy.navLabel}>
           {links.map(([href, label]) => (
             <a key={href} href={href} onClick={closeMenu}>{label}</a>
           ))}
         </nav>
 
         <div className="header-tools">
-          <button className="language-toggle" type="button" onClick={onLanguageToggle} data-language-toggle aria-label={\`\${languageAction}, \${copy.languageLabel}\`}>
+          <button className="language-toggle" type="button" onClick={onLanguageToggle} data-language-toggle aria-label={`${languageAction}, ${copy.languageLabel}`}>
             {languageAction}
           </button>
           <button className="icon-button" type="button" onClick={onThemeToggle} data-theme-toggle aria-label={theme === "dark" ? copy.themeToLight : copy.themeToDark} title={theme === "dark" ? copy.themeToLight : copy.themeToDark}>
