@@ -16,13 +16,13 @@ const PLACEMENT_OPTIONS = {
 };
 
 const MODULES = [
-  { id: "north-west", target: [-0.69, 0.94, 0.055], source: [-1.58, 1.38, 0.72], size: [1.32, 0.82, 0.22], accent: "#c99537", rotation: [0, 0, 0] },
-  { id: "north-east", target: [0.69, 0.94, 0.055], source: [1.58, 1.38, 0.72], size: [1.32, 0.82, 0.22], accent: "#6caaa5", rotation: [0, 0, 0] },
-  { id: "middle-west", target: [-0.94, 0, 0.055], source: [-1.62, 0.12, 0.72], size: [0.82, 0.82, 0.22], accent: "#6caaa5", rotation: [0, 0, 0] },
-  { id: "middle-centre", target: [0, 0, 0.055], source: [0, -1.56, 0.72], size: [0.82, 0.82, 0.22], accent: "#c99537", rotation: [0, 0, 0] },
-  { id: "middle-east", target: [0.94, 0, 0.055], source: [1.62, 0.12, 0.72], size: [0.82, 0.82, 0.22], accent: "#aab4b8", rotation: [0, 0, 0] },
-  { id: "south-west", target: [-0.69, -0.94, 0.055], source: [-1.58, -1.38, 0.72], size: [1.32, 0.82, 0.22], accent: "#6caaa5", rotation: [0, 0, 0] },
-  { id: "south-east", target: [0.69, -0.94, 0.055], source: [1.58, -1.38, 0.72], size: [1.32, 0.82, 0.22], accent: "#c99537", rotation: [0, 0, 0] }
+  { id: "north-west", target: [-0.69, 0.94, 0.055], source: [-1.35, 1.28, 0.62], size: [1.32, 0.82, 0.22], accent: "#c99537", rotation: [0, 0, 0] },
+  { id: "north-east", target: [0.69, 0.94, 0.055], source: [1.35, 1.28, 0.62], size: [1.32, 0.82, 0.22], accent: "#6caaa5", rotation: [0, 0, 0] },
+  { id: "middle-west", target: [-0.94, 0, 0.055], source: [-1.35, 0.08, 0.62], size: [0.82, 0.82, 0.22], accent: "#6caaa5", rotation: [0, 0, 0] },
+  { id: "middle-centre", target: [0, 0, 0.055], source: [0, -1.35, 0.62], size: [0.82, 0.82, 0.22], accent: "#c99537", rotation: [0, 0, 0] },
+  { id: "middle-east", target: [0.94, 0, 0.055], source: [1.35, 0.08, 0.62], size: [0.82, 0.82, 0.22], accent: "#aab4b8", rotation: [0, 0, 0] },
+  { id: "south-west", target: [-0.69, -0.94, 0.055], source: [-1.35, -1.28, 0.62], size: [1.32, 0.82, 0.22], accent: "#6caaa5", rotation: [0, 0, 0] },
+  { id: "south-east", target: [0.69, -0.94, 0.055], source: [1.35, -1.28, 0.62], size: [1.32, 0.82, 0.22], accent: "#c99537", rotation: [0, 0, 0] }
 ];
 
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -505,7 +505,7 @@ export default function AssemblyScene() {
         <Canvas
           shadows
           dpr={[1, 1.6]}
-          camera={{ position: [0, 0, 6.25], fov: 34 }}
+          camera={{ position: [0, 0, 6.7], fov: 34 }}
           gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
           onCreated={({ gl }) => {
             gl.toneMapping = THREE.ACESFilmicToneMapping;
