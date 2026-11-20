@@ -21,8 +21,7 @@ function Modules({ progress, reducedMotion }) {
     modules.forEach((part, index) => {
       const mesh = refs.current[index];
       if (!mesh) return;
-      const threshold = index / (modules.length - 1);
-      const amount = THREE.MathUtils.clamp((progress - threshold) * (modules.length - 1) + (index === 0 ? 1 : 0), 0, 1);
+      const amount = index === 0 ? 1 : THREE.MathUtils.clamp(progress * modules.length - index, 0, 1);
       const eased = amount * amount * (3 - 2 * amount);
       mesh.position.lerpVectors(new THREE.Vector3(...part.scatter), new THREE.Vector3(...part.target), eased);
       mesh.scale.set(part.scale[0] * (0.76 + 0.24 * eased), part.scale[1] * (0.76 + 0.24 * eased), part.scale[2] * (0.76 + 0.24 * eased));
