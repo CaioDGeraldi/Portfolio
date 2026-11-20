@@ -31,14 +31,7 @@ Grid: 4px base, 8px rhythm, 1280px max content width, 20px mobile gutters and 48
 Write in first person and use the résumé as the factual baseline: internship maintenance of a legacy ERP, Delphi/Object Pascal, SQL, Oracle, forms, Excel exports and relational searches; Python, Django and PostgreSQL in projects. Describe the projects before describing their outcomes. Distinguish internship work from personal projects and collaborative work. Do not invent metrics, adoption, customers, partnerships, deployments, responsibilities or skills. Avoid vague slogans, hype, adjective triplets and repeated explanations.
 
 ## Motion direction
-- Supahero: use real hero layouts as anatomy references; keep the opening asymmetrical and evidence-led.
-- 21st.dev: adapt one scroll/image reveal interaction, not a full component theme.
-- React Bits: use Fold Text as a reference for a one-time title reveal with an accessible static text equivalent.
-- MotionSites: use selective scroll choreography and image masks, not motion on every element.
-- Lenis + GSAP: preserve native scrolling and working anchors; Lenis must be configured to allow anchors. GSAP selectors must be scoped and cleaned up.
-- Kawaii text animation: restrict the playful effect to one tiny monogram or short hover detail. No pastel or childish page-wide styling.
-- Originkit: use previewed templates for pacing and section hierarchy. Do not assume premium templates are downloadable on a free account.
-- Fontshare: use Clash Grotesk and Satoshi; do not fall back to generic Inter/Roboto styling.
+Keep the page primarily static. Preserve native scrolling and working anchors. Use motion only where it clarifies hierarchy, and respect `prefers-reduced-motion`. The portfolio does not use a 3D scene, WebGL canvas, animated sculpture or decorative scroll choreography.
 
 ## Anti-patterns
 No floating rotated logo cards, repeated decorative 01/02/03 labels, all-caps eyebrow above every section, repeated sparkle glyphs, the same card three times, giant accent-colored final word, arrows on every link, endless tech marquee, vague "real problems" copy, or made-up social proof. Avoid purple gradients/glows, acid green, cream/serif/terracotta substitutions and generic glassmorphism.
